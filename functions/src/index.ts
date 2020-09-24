@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import * as express from 'express';
 import * as mg from './business/mg/parseNf';
 import * as rj from './business/rj/parseNf';
-import { saveNf, getApp, setupFirebase, saveThumbnail, normalizeProduct } from './business/firebaseServices';
+import { saveNf, getApp, setupFirebase, saveThumbnail, normalizeProduct, getProductById, getGeolocationApiKey } from './business/firebaseServices';
 import { getFullAddress, insertIntoElasticSearch, getAutocompleteByPhrasePrefix } from './business/apiServices';
 import { Purchase } from './model/Purchase';
 import * as cors from 'cors';
@@ -28,6 +28,18 @@ app.use((_req: any, _res: any, next: any) => {
     }
     next();
 });
+app.get('/geolocationApiKey'
+    , async (request, response) => {
+        try {
+            const geolocationApiKey: string = await getGeolocationApiKey();
+            response.status(200).send({ geolocationApiKey });
+            return;
+        } catch (error) {
+            response.status(500).send(error);
+            return;
+        }
+    }
+);
 app.get('/autocomplete/:phrase'
     , async (request, response) => {
         if (!request.params.phrase) {
@@ -35,7 +47,15 @@ app.get('/autocomplete/:phrase'
             return;
         }
         const responseData = await getAutocompleteByPhrasePrefix(request.params.phrase);
-        response.status(200).send(responseData);
+        const productList = await Promise.all(responseData.map(
+            async function mapToProduct(p: { firebaseDocId: string; }): Promise<Product | undefined> {
+                const product = getProductById(p.firebaseDocId);
+                return product;
+            }
+
+
+        ));
+        response.status(200).send(productList);
         return;
     }
 );

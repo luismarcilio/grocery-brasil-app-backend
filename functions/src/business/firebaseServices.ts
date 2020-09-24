@@ -252,4 +252,18 @@ export async function getSecret(secretId: string): Promise<string> {
     }
 }
 
+export async function getProductById(docId: string): Promise<Product | undefined> {
+    const db = admin.firestore();
+    const dbNormalizedProdRef = db.collection('PRODUTOS').doc(docId);
+    const docRef = await dbNormalizedProdRef.get();
+    if (!docRef.exists) {
+        return;
+    }
+    const data = docRef.data();
+    if (!data) {
+        return;
+    }
+    return <Product>data;
+}
+
 

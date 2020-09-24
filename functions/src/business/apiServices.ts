@@ -74,6 +74,10 @@ export async function getNormailizedProductByEanCode(eanCode: string): Promise<a
         if (error.response?.status && error.response?.status === 404) {
             return;
         }
+        if (error.response?.status && error.response?.status === 429) {
+            logger.error(`getNormailizedProductByEanCode:  ${error.response.status} - ${JSON.stringify(error.response.data)}`);
+            return;
+        }
         logger.error(`getNormailizedProductByEanCode:  ${JSON.stringify(error)}`);
         throw error;
     }
@@ -82,7 +86,7 @@ export async function getNormailizedProductByEanCode(eanCode: string): Promise<a
 export async function insertIntoElasticSearch(elasticSearchDocument: { eanCode: string, name: string, firebaseDocId: string }): Promise<any> {
     const secret = await getElasticSearchSecret();
     const { endpoint, backEndKey } = secret;
-    const path = '/produtos_autocomplete/_doc'
+    const path = `/produtos_autocomplete/_doc/${elasticSearchDocument.firebaseDocId}`
     const response: AxiosResponse = await axios.post(`${endpoint}${path}`,
         elasticSearchDocument,
         {
