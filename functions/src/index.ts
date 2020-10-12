@@ -3,8 +3,10 @@ import * as express from 'express';
 import * as cors from 'cors';
 import { getGeolocationApiKey } from './functions/getGeolocationApiKey';
 import { getAutocompleteByPhrasePrefix } from './functions/getAutocompleteByPhrasePrefix';
-import { authenticate, initializeFirebase } from './business/expressMiddleware';
+import { initializeFirebase, authenticate } from './business/expressMiddleware';
 import { parseAndSaveNf } from './functions/parseAndSaveNf';
+import { getJavascriptFunctions } from './functions/getJavascriptFunctions';
+import { getNfDataByInitialUrl } from './functions/getNfDataByInitialUrl';
 
 
 
@@ -16,13 +18,16 @@ app.use(initializeFirebase);
 app.get('/geolocationApiKey', getGeolocationApiKey);
 app.get('/autocomplete/:phrase', getAutocompleteByPhrasePrefix);
 app.post('/parseAndSaveNf/:state', parseAndSaveNf);
-app.get('*', function (req, res) {
-    res.status(404).send('Not Found');
-});
+app.get('/javascriptFunctions/:state', getJavascriptFunctions);
+app.get('/nfDataByInitialUrl', getNfDataByInitialUrl);
 
-app.post('*', function (req, res) {
-    res.status(404).send('Not Found');
-});
+// app.get('*', function (req, res) {
+//     res.status(404).send('Not Found');
+// });
+
+// app.post('*', function (req, res) {
+//     res.status(404).send('Not Found');
+// });
 
 //http functions
 exports.v1 = functions.https.onRequest(app);
