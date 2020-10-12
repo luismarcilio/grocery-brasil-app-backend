@@ -3,8 +3,12 @@ import { readFile } from 'fs';
 import { promisify } from 'util';
 import * as parseNfMg from '../src/business/mg/parseNf';
 import * as parseNfRj from '../src/business/rj/parseNf';
-import { setupFirebase } from '../src/business/firebaseServices';
-import { getFullAddress } from '../src/business/apiServices';
+import { FirebaseRepository } from '../src/repository/FirebaseRepository';
+import { GeolocationApiServicesImplementation } from "../src/services/GeolocationApiServices";
+import { GCPGeolocationApiRepository } from "../src/repository/GeoocationApiRepository";
+import { FirebaseSecretManagerService, } from '../src/services/SecretManagerServices';
+import { GCPSecretManagerRepository } from '../src/repository/SecretManagerRepository';
+import { project_id } from '../src/configuration';
 
 
 
@@ -71,14 +75,21 @@ describe("parse NF", () => {
 
 describe('Integrated tests', () => {
     beforeAll(() => {
-        setupFirebase();
+        FirebaseRepository.getIinstance();
     });
 
     it("should return the address", async () => {
         jest.setTimeout(10000);
+        const firebaseSecretManagerService = FirebaseSecretManagerService.getInstance(
+            GCPSecretManagerRepository.getInstance(project_id)
+        );
+        const secret = await firebaseSecretManagerService.getGeolocationApiKey();
+        const geolocationApiServices = GeolocationApiServicesImplementation.getInstance(
+            GCPGeolocationApiRepository.getInstance(secret)
+        );
 
         const rawAddress = 'R. NOVO HORIZONTE, 948, SAO SEBASTIAO, 3170107 - UBERABA, MG';
-        const address = await getFullAddress(rawAddress);
+        const address = await geolocationApiServices.getFullAddress(rawAddress);
         expect(address).toStrictEqual({
             'rawAddress':
                 'R. Novo Horizonte, 948 - Mercês, Uberaba - MG, 38060-480, Brazil',
