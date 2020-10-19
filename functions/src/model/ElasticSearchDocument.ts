@@ -1,6 +1,6 @@
-export type ElasticSearchDocument = {
-    eanCode: string;
-    name: string;
-    firebaseDocId: string;
-    thumbnail: string
+export interface ElasticSearchDocument {
+  eanCode: string
+  name: string
+  firebaseDocId: string
+  thumbnail: string
 }

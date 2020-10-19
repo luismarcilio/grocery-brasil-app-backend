@@ -1,3 +1,3 @@
-export type City = {
-  name: string;
+export interface City {
+  name: string
 }

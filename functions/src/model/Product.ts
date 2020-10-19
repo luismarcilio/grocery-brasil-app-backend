@@ -1,17 +1,17 @@
-import { Unity } from "./Unity";
-import { Company } from "./Company";
-export type Product = {
-  name: string;
-  eanCode: string;
-  ncmCode: string;
-  unity: Unity;
-  normalized?: boolean;
-  thumbnail?: string;
-  normalizationStatus?: number;
+import { Unity } from './Unity'
+import { Company } from './Company'
+export interface Product {
+  name: string
+  eanCode: string
+  ncmCode: string
+  unity: Unity
+  normalized?: boolean
+  thumbnail?: string
+  normalizationStatus?: number
 }
 
-export type ProductPurchase = {
-  company: Company,
-  date: Date,
+export interface ProductPurchase {
+  company: Company
+  date: Date
   unityValue: number
 }

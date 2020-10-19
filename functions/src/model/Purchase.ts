@@ -1,17 +1,17 @@
-import { User } from "./User";
-import { PurchaseItem } from "./PurchaseItem";
-import { FiscalNote } from "./FiscalNote";
-import { Company } from "./Company";
+import { User } from './User'
+import { PurchaseItem } from './PurchaseItem'
+import { FiscalNote } from './FiscalNote'
+import { Company } from './Company'
 
-export type Purchase = {
-  user?: User;
-  fiscalNote: FiscalNote;
-  totalAmount: number;
-  purchaseItemList: Array<PurchaseItem>;
+export interface Purchase {
+  user?: User
+  fiscalNote: FiscalNote
+  totalAmount: number
+  purchaseItemList: PurchaseItem[]
 }
 
-export type PurchaseResume = {
-  company: Company;
-  date: Date;
-  totalAmount: number;
+export interface PurchaseResume {
+  company: Company
+  date: Date
+  totalAmount: number
 }

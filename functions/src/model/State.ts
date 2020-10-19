@@ -1,4 +1,4 @@
-export type State = {
-  name: string;
-  acronnym?: string;
+export interface State {
+  name: string
+  acronnym?: string
 }

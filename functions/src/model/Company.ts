@@ -1,7 +1,7 @@
-import { Address } from "./Address";
+import { Address } from './Address'
 
-export type Company = {
-  name: string;
-  taxIdentification: string;
-  address: Address;
+export interface Company {
+  name: string
+  taxIdentification: string
+  address: Address
 }

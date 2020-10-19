@@ -1,9 +1,9 @@
-import { Company } from "./Company";
-import { Product } from "./Product";
+import { Company } from './Company'
+import { Product } from './Product'
 
-export type ProductValue = {
-  company: Company;
-  product: Product;
-  date: Date;
-  value: number;
+export interface ProductValue {
+  company: Company
+  product: Product
+  date: Date
+  value: number
 }

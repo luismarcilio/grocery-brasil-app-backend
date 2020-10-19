@@ -1,3 +1,3 @@
-export type Country = {
-  name: string;
+export interface Country {
+  name: string
 }

@@ -1,9 +1,10 @@
-import { Company } from "./Company";
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+import { Company } from './Company'
 
-export type FiscalNote = {
-  accessKey: string;
-  number: string;
-  series: string;
-  company: Company;
-  date: Date;
+export interface FiscalNote {
+  accessKey: string
+  number: string
+  series: string
+  company: Company
+  date: Date
 }

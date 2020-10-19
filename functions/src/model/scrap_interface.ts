@@ -1,5 +1,3 @@
-import { Purchase } from "./Purchase";
+import { Purchase } from './Purchase'
 
-export interface scrap_function {
-    (html: string): Purchase | undefined
-}
+export type scrap_function = (html: string) => Purchase | undefined

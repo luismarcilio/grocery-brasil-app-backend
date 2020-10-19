@@ -1,3 +1,3 @@
-export type Unity = {
-  name: string;
+export interface Unity {
+  name: string
 }
