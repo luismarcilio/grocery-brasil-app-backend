@@ -12,6 +12,6 @@ export class CreateUser implements UseCase<User> {
   }
 
   execute =  async (user: User): Promise<User|Failure> => {
-    return this.repository.createuser(user)
+    return this.repository.createUser(user)
   }
 }
