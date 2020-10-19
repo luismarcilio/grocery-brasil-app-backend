@@ -7,7 +7,9 @@ import { Failure } from '../../../../src/core/Failure';
 
 describe('create user', () => {
         const userRepositoryStub: UserRepository = {
-            createuser : (user: User):Promise<User|Failure> =>  {return( Promise.resolve(user))}
+            createUser: (user: User): Promise<User | Failure> => { return (Promise.resolve(user)) },
+            updateUser: (user: User): Promise<User | Failure> => { return (Promise.resolve(user)) }
+            
         }
 
     it('should call create user on repository and return status', async () => {
