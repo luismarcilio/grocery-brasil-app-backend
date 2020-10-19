@@ -2,7 +2,5 @@
 import { Failure } from './Failure'
 
 export interface UseCase<T> {
-  execute: (p: Param) => Promise<T|Failure>
+  execute: (p: unknown) => Promise<T | Failure>
 }
-
-class Param {}
