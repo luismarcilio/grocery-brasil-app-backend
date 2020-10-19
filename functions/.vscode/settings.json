@@ -1,0 +1,5 @@
+{
+    "files.autoSave": "afterDelay",
+    "eslint.format.enable": true,
+    "eslint.alwaysShowStatus": true
+}
