@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/return-await */
 import { UseCase } from "../../../core/UseCase";
 import { User } from "../../../model/User";
-import { Failure } from "../../../core/Failure";
 import { UserRepository } from "../repository/UserRepository";
+import { UserException } from "../../../core/ApplicationException";
 
 export class CreateUser implements UseCase<User> {
   repository: UserRepository;
@@ -11,7 +11,7 @@ export class CreateUser implements UseCase<User> {
     this.repository = repository;
   }
 
-  execute = async (user: User): Promise<User | Failure> => {
+  execute = async (user: User): Promise<User | UserException> => {
     return this.repository.createUser(user);
   };
 }

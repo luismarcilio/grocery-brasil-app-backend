@@ -1,8 +1,8 @@
 import { UseCase } from "../../../core/UseCase";
 import { Purchase } from "../../../model/Purchase";
-import { Failure } from "../../../core/Failure";
 import { HtmlFiscalNote } from "../../../model/HtmlFiscalNote";
 import { ScrapNFService } from "../service/ScrapNFService";
+import { ScrapNfException } from "../../../core/ApplicationException";
 
 export class ScrapNFUseCase implements UseCase<Purchase> {
   scrapNFService: ScrapNFService;
@@ -10,7 +10,9 @@ export class ScrapNFUseCase implements UseCase<Purchase> {
     this.scrapNFService = scrapNFService;
   }
 
-  execute = (htmlFiscalNote: HtmlFiscalNote): Promise<Purchase | Failure> => {
+  execute = (
+    htmlFiscalNote: HtmlFiscalNote
+  ): Promise<Purchase | ScrapNfException> => {
     return this.scrapNFService.scrapNf(htmlFiscalNote);
   };
 }
