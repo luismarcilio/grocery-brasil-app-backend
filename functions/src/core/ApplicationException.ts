@@ -1,9 +1,10 @@
 export interface ApplicationException {
   messageId: MessageIds;
-  message: string;
+  message?: string;
 }
 export enum MessageIds {
   UNEXPECTED,
+  UNIMPLEMENTED,
 }
 
 export class ScrapNfException implements ApplicationException {
