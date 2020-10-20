@@ -2,12 +2,14 @@ import { User } from "../../../../src/model/User";
 import { UseCase } from "../../../../src/core/UseCase";
 import { CreateUser } from "../../../../src/features/User/useCase/CreateUser";
 import { UserRepository } from "../../../../src/features/User/repository/UserRepository";
-import { Failure } from "../../../../src/core/Failure";
+import { UserException } from "../../../../src/core/ApplicationException";
 
 describe("create user", () => {
   const userRepositoryStub: UserRepository = {
-    createUser: (user: User): Promise<User | Failure> => Promise.resolve(user),
-    updateUser: (user: User): Promise<User | Failure> => Promise.resolve(user),
+    createUser: (user: User): Promise<User | UserException> =>
+      Promise.resolve(user),
+    updateUser: (user: User): Promise<User | UserException> =>
+      Promise.resolve(user),
   };
 
   it("should call create user on repository and return status", async () => {

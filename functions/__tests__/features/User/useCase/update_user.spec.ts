@@ -2,14 +2,14 @@ import { User } from "../../../../src/model/User";
 import { UseCase } from "../../../../src/core/UseCase";
 import { UpdateUser } from "../../../../src/features/User/useCase/UpdateUser";
 import { UserRepository } from "../../../../src/features/User/repository/UserRepository";
-import { Failure } from "../../../../src/core/Failure";
+import { UserException } from "../../../../src/core/ApplicationException";
 
 describe("update user address and prefferences", () => {
   const userRepositoryStub: UserRepository = {
-    createUser: (user: User): Promise<User | Failure> => {
+    createUser: (user: User): Promise<User | UserException> => {
       return Promise.resolve(user);
     },
-    updateUser: (user: User): Promise<User | Failure> => {
+    updateUser: (user: User): Promise<User | UserException> => {
       const response = { ...user };
       response.address = user.address;
       response.preferences = user.preferences;
