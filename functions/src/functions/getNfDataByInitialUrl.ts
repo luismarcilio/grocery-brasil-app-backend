@@ -1,3 +1,4 @@
+import * as minify from 'minify';
 
 export const getNfDataByInitialUrl = async (request: any, response: any) => {
 
@@ -15,8 +16,11 @@ export const getNfDataByInitialUrl = async (request: any, response: any) => {
         response.status(404).send(`Not Found. State for URL not implemented: ${urlString}`);
     }
 
-    const accessKey = getAccessKey(urlString);
-    response.status(200).send({ 'url': initalUrl, 'state': stateFromUrl, accessKey });
+    const accessKey = getAccessKey(urlString) || '';
+    let javaScriptFunctions = await getJavascriptFunctionsByState(stateFromUrl);
+    javaScriptFunctions = `javascript:${javaScriptFunctions}`;
+    javaScriptFunctions = javaScriptFunctions.replace('$$ACCESS_KEY$$', accessKey);
+    response.status(200).send({ 'initialUrl': initalUrl, 'state': stateFromUrl, 'accessKey': accessKey, 'javascriptFunctions': javaScriptFunctions });
 
 }
 
@@ -38,3 +42,15 @@ const initialUrlConfig: any = {
     'RJ': 'http://www4.fazenda.rj.gov.br/consultaDFe/paginas/consultaChaveAcesso.faces',
     'MG': 'http://nfce.fazenda.mg.gov.br/portalnfce/sistema/consultaarg.xhtml'
 }
+
+const getJavascriptFunctionsByState = async (state: string) => {
+    const fileName = `src/functions/javascriptFunctions.${state}.js`;
+    const options = {
+        html: {
+            removeAttributeQuotes: false,
+            removeOptionalTags: false
+        },
+    };
+    const fileData: string = await minify(fileName, options)
+    return fileData;
+} 
