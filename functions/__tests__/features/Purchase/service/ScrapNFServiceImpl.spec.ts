@@ -24,42 +24,32 @@ describe("ScrapNFServiceImpl", () => {
     totalAmount: 10.5,
     purchaseItemList: [],
   };
+  class ScrapNfProviderStub {
+    scrap = (html: string): Purchase => {
+      return sample;
+    };
+  }
+
+  class ScrapNfProviderFactoryStub {
+    get = (nf: string): ScrapNfProviderStub => {
+      return new ScrapNfProviderStub();
+    };
+  }
+  const scrapNfProviderFactoryStub: ScrapNfProviderFactoryStub = new ScrapNfProviderFactoryStub();
+  const sut = new ScrapNFServiceImpl(scrapNfProviderFactoryStub);
 
   it("should call parser and return success if all ok", async () => {
-    class ScrapNfProviderStub {
-      scrap = (html: string): Purchase => {
-        return sample;
-      };
-    }
-
-    class ScrapNfProviderFactoryStub {
-      get = (nf: string): ScrapNfProviderStub => {
-        return new ScrapNfProviderStub();
-      };
-    }
-    const scrapNfProviderFactoryStub: ScrapNfProviderFactoryStub = new ScrapNfProviderFactoryStub();
-    const sut = new ScrapNFServiceImpl(scrapNfProviderFactoryStub);
     const actual = await sut.scrapNf({ html: "html", uf: "MG" });
     expect(actual).toEqual(sample);
   });
 
   it("should call parser and return exception if an error occurs", async () => {
-    class ScrapNfProviderStub {
-      scrap = (html: string): Purchase => {
-        throw new ScrapNfException({
-          messageId: MessageIds.UNEXPECTED,
-          message: "erro",
-        });
-      };
-    }
-
-    class ScrapNfProviderFactoryStub {
-      get = (nf: string): ScrapNfProviderStub => {
-        return new ScrapNfProviderStub();
-      };
-    }
-    const scrapNfProviderFactoryStub: ScrapNfProviderFactoryStub = new ScrapNfProviderFactoryStub();
-    const sut = new ScrapNFServiceImpl(scrapNfProviderFactoryStub);
+    jest.spyOn(scrapNfProviderFactoryStub, "get").mockImplementationOnce(() => {
+      throw new ScrapNfException({
+        messageId: MessageIds.UNEXPECTED,
+        message: "erro",
+      });
+    });
     const actual = await sut.scrapNf({ html: "html", uf: "MG" });
     console.log(actual);
     expect(actual).toEqual(
