@@ -8,7 +8,7 @@ import {
 import { ScrapNfProviderFactory } from "../provider/ScrapNfProviderFactory";
 
 export class ScrapNFServiceImpl implements ScrapNFService {
-  scrapNfProviderFactory: ScrapNfProviderFactory;
+  private readonly scrapNfProviderFactory: ScrapNfProviderFactory;
 
   constructor(scrapNfProviderFactory: ScrapNfProviderFactory) {
     this.scrapNfProviderFactory = scrapNfProviderFactory;

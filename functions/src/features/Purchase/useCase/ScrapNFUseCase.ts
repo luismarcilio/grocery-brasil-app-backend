@@ -5,7 +5,7 @@ import { ScrapNFService } from "../service/ScrapNFService";
 import { ScrapNfException } from "../../../core/ApplicationException";
 
 export class ScrapNFUseCase implements UseCase<Purchase> {
-  scrapNFService: ScrapNFService;
+  private readonly scrapNFService: ScrapNFService;
   constructor(scrapNFService: ScrapNFService) {
     this.scrapNFService = scrapNFService;
   }

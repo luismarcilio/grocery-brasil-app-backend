@@ -6,7 +6,10 @@ import {
 } from "../../../core/ApplicationException";
 
 export class ScrapNfProviderFactoryImpl implements ScrapNfProviderFactory {
-  providerConfiguration: { uf: string; scrapNfProvider: ScrapNFProvider }[];
+  private readonly providerConfiguration: {
+    uf: string;
+    scrapNfProvider: ScrapNFProvider;
+  }[];
   constructor(
     providerConfiguration: { uf: string; scrapNfProvider: ScrapNFProvider }[]
   ) {

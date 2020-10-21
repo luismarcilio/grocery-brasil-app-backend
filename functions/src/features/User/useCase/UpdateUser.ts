@@ -5,7 +5,7 @@ import { UserRepository } from "../repository/UserRepository";
 import { UserException } from "../../../core/ApplicationException";
 
 export class UpdateUser implements UseCase<User> {
-  repository: UserRepository;
+  private readonly repository: UserRepository;
 
   constructor(repository: UserRepository) {
     this.repository = repository;
