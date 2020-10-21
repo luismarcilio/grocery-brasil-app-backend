@@ -8,7 +8,7 @@ const htmlFile =
   "__tests__/features/Purchase/service/fixtures/valid_nf_from_rj.xhtml";
 const readFilePromise = promisify(readFile);
 
-describe("ScrapNFServiceRJ", async () => {
+describe("ScrapNFServiceRJ", () => {
   it("should ScrapNFServiceRJ", async () => {
     const sut: ScrapNFProvider = ScrapNFServiceRJ.instance();
     const html = await readFilePromise(htmlFile);
