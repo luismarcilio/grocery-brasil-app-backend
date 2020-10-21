@@ -44,12 +44,14 @@ describe("ScrapNFServiceImpl", () => {
   });
 
   it("should call parser and return exception if an error occurs", async () => {
-    jest.spyOn(scrapNfProviderFactoryStub, "get").mockImplementationOnce(() => {
-      throw new ScrapNfException({
-        messageId: MessageIds.UNEXPECTED,
-        message: "erro",
+    const spy = jest
+      .spyOn(scrapNfProviderFactoryStub, "get")
+      .mockImplementationOnce(() => {
+        throw new ScrapNfException({
+          messageId: MessageIds.UNEXPECTED,
+          message: "erro",
+        });
       });
-    });
     const actual = await sut.scrapNf({ html: "html", uf: "MG" });
     console.log(actual);
     expect(actual).toEqual(
@@ -58,5 +60,6 @@ describe("ScrapNFServiceImpl", () => {
         message: "erro",
       })
     );
+    expect(spy).toHaveBeenCalledWith("MG");
   });
 });
