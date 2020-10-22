@@ -1,17 +1,19 @@
-import { User } from './User'
-import { PurchaseItem } from './PurchaseItem'
-import { FiscalNote } from './FiscalNote'
-import { Company } from './Company'
+import { User } from "./User";
+import { PurchaseItem } from "./PurchaseItem";
+import { FiscalNote } from "./FiscalNote";
+import { Company } from "./Company";
 
 export interface Purchase {
-  user?: User
-  fiscalNote: FiscalNote
-  totalAmount: number
-  purchaseItemList: PurchaseItem[]
+  user?: User;
+  fiscalNote: FiscalNote;
+  totalAmount: number;
+  purchaseItemList: PurchaseItem[];
 }
 
 export interface PurchaseResume {
-  company: Company
-  date: Date
-  totalAmount: number
+  user?: User;
+  accessKey: string;
+  company: Company;
+  date: Date;
+  totalAmount: number;
 }

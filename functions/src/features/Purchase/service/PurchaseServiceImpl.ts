@@ -47,6 +47,8 @@ export class PurchaseServiceImpl implements PurchaseService {
 
   private saveResume = async (purchase: Purchase): Promise<boolean> => {
     const purchaseResume: PurchaseResume = {
+      user: purchase.user,
+      accessKey: purchase.fiscalNote.accessKey,
       company: purchase.fiscalNote.company,
       totalAmount: purchase.totalAmount,
       date: purchase.fiscalNote.date,
