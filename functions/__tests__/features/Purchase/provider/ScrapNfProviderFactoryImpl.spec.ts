@@ -3,32 +3,14 @@ import { ScrapNFProvider } from "../../../../src/features/Purchase/provider/Scra
 import { ScrapNfProviderFactory } from "../../../../src/features/Purchase/provider/ScrapNfProviderFactory";
 import { ScrapNfProviderFactoryImpl } from "../../../../src/features/Purchase/provider/ScrapNfProviderFactoryImpl";
 import { ScrapNfException } from "../../../../src/core/ApplicationException";
-import { Purchase } from "../../../../src/model/Purchase";
-
-const sample: Purchase = {
-  fiscalNote: {
-    date: new Date(),
-    accessKey: "lsdfaslkjfls",
-    number: "87687",
-    series: "98",
-    company: {
-      name: "iuoi",
-      taxIdentification: "9879",
-      address: {
-        rawAddress: "kjhkj",
-      },
-    },
-  },
-  totalAmount: 10.5,
-  purchaseItemList: [],
-};
+import { purchase } from "../fixtures/purchases";
 
 class ScrapProviderMG implements ScrapNFProvider {
   static instance = () => {
     return new ScrapProviderMG();
   };
   scrap = (html: string) => {
-    return sample;
+    return purchase;
   };
 }
 
@@ -37,7 +19,7 @@ class ScrapProviderRJ implements ScrapNFProvider {
     return new ScrapProviderRJ();
   };
   scrap = (html: string) => {
-    return sample;
+    return purchase;
   };
 }
 

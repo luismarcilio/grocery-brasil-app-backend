@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PurchaseProvider } from "../../../../src/features/Purchase/provider/PurchaseProvider";
-import { Purchase, PurchaseResume } from "../../../../src/model/Purchase";
 import { PurchaseService } from "../../../../src/features/Purchase/service/PurchaseService";
 import { PurchaseServiceImpl } from "../../../../src/features/Purchase/service/PurchaseServiceImpl";
 import { ProductService } from "../../../../src/features/Product/service/ProductService";
@@ -9,49 +8,7 @@ import {
   MessageIds,
 } from "../../../../src/core/ApplicationException";
 import { PurchaseException } from "../../../../src/core/ApplicationException";
-
-const purchase: Purchase = {
-  fiscalNote: {
-    date: new Date(),
-    accessKey: "lsdfaslkjfls",
-    number: "87687",
-    series: "98",
-    company: {
-      name: "iuoi",
-      taxIdentification: "9879",
-      address: {
-        rawAddress: "kjhkj",
-      },
-    },
-  },
-  totalAmount: 10.5,
-  purchaseItemList: [
-    {
-      product: {
-        eanCode: "00001",
-        name: "product1",
-        ncmCode: "00001",
-        unity: { name: "UN" },
-      },
-      unity: { name: "UN" },
-      unityValue: 11.5,
-      units: 1,
-      totalValue: 11.5,
-    },
-    {
-      product: {
-        eanCode: "00002",
-        name: "product2",
-        ncmCode: "00002",
-        unity: { name: "UN" },
-      },
-      unity: { name: "UN" },
-      unityValue: 12.5,
-      units: 1,
-      totalValue: 12.5,
-    },
-  ],
-};
+import { resume, purchase } from "../fixtures/purchases";
 
 class PurchaseProviderStub implements PurchaseProvider {
   save = (): Promise<boolean> => {
@@ -89,19 +46,8 @@ describe("save purchase service", () => {
     );
 
     const actual = await sut.save(purchase);
-    const purchaseResume: PurchaseResume = {
-      company: {
-        name: "iuoi",
-        taxIdentification: "9879",
-        address: {
-          rawAddress: "kjhkj",
-        },
-      },
-      date: purchase.fiscalNote.date,
-      totalAmount: 10.5,
-    };
     expect(actual).toEqual(true);
-    expect(purchaseProviderStubSpy).toHaveBeenCalledWith(purchaseResume);
+    expect(purchaseProviderStubSpy).toHaveBeenCalledWith(resume);
   });
 
   it("should save individual products", async () => {
