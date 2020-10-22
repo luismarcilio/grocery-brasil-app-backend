@@ -5,6 +5,7 @@ export interface ApplicationException {
 export enum MessageIds {
   UNEXPECTED,
   UNIMPLEMENTED,
+  INVALID_ARGUMENT,
 }
 
 export class ScrapNfException implements ApplicationException {
