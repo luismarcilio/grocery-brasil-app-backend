@@ -84,7 +84,7 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
     };
 
     let purchaseItem: PurchaseItem;
-    $("#Prod > fieldset > div > table").each((_, element: CheerioElement) => {
+    $("#Prod > fieldset > div > table").each((_, element: cheerio.Element) => {
       if ($(element).attr("class") === "toggle box") {
         purchaseItem = {
           product: {

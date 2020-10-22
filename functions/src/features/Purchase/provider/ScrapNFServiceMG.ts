@@ -74,7 +74,7 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
       totalAmount,
       purchaseItemList: [],
     };
-    $("#accordion1 > div").each((_, element: CheerioElement) => {
+    $("#accordion1 > div").each((_, element: cheerio.Element) => {
       const eanCode = +$(element)
         .find(
           "div.panel-body.collapse  > table:nth-child(13) > tbody > tr > td:nth-child(1)"
