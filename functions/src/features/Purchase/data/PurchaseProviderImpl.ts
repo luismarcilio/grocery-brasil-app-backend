@@ -1,20 +1,20 @@
 import { PurchaseProvider } from "../provider/PurchaseProvider";
 import { Purchase, PurchaseResume } from "../../../model/Purchase";
-import { PurchaseDAO } from "./PurchaseDAO";
+import { PurchaseRepository } from "./PurchaseRepository";
 import {
   PurchaseException,
   MessageIds,
 } from "../../../core/ApplicationException";
 
 export class PurchaseProviderImpl implements PurchaseProvider {
-  private readonly purchaseDAO: PurchaseDAO;
-  constructor(purchaseDAO: PurchaseDAO) {
-    this.purchaseDAO = purchaseDAO;
+  private readonly purchaseRepository: PurchaseRepository;
+  constructor(purchaseRepository: PurchaseRepository) {
+    this.purchaseRepository = purchaseRepository;
   }
 
   save = async (purchase: Purchase): Promise<boolean> => {
     try {
-      return await this.purchaseDAO.savePurchase(purchase);
+      return await this.purchaseRepository.savePurchase(purchase);
     } catch (error) {
       console.log("PurchaseException thrown");
       throw new PurchaseException({
@@ -25,7 +25,7 @@ export class PurchaseProviderImpl implements PurchaseProvider {
   };
   saveResume = async (purchaseResume: PurchaseResume): Promise<boolean> => {
     try {
-      return await this.purchaseDAO.savePurchaseResume(purchaseResume);
+      return await this.purchaseRepository.savePurchaseResume(purchaseResume);
     } catch (error) {
       console.log("PurchaseException thrown");
       throw new PurchaseException({
