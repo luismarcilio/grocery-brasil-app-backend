@@ -22,10 +22,9 @@ export class ProductServiceImpl implements ProductService {
         const docId: string = this.productProvider.getDocId(
           purchaseItem.product
         );
-        const existingProduct = await this.productProvider.getProductById(
-          docId
-        );
-        if (!existingProduct) {
+        try {
+          await this.productProvider.getProductById(docId);
+        } catch (error) {
           await this.productProvider.save(purchaseItem.product);
         }
         const productPurchase: ProductPurchase = {
