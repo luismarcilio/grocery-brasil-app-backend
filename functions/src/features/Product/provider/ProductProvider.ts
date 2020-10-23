@@ -6,4 +6,6 @@ export interface ProductProvider {
     product: Product,
     productPurchase: ProductPurchase
   ) => Promise<boolean>;
+  getProductById: (docId: string) => Promise<Product | undefined>;
+  getDocId: (product: Product) => string;
 }
