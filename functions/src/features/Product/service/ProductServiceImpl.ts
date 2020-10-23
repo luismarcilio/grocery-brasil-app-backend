@@ -1,11 +1,9 @@
 import { ProductService } from "./ProductService";
-import {
-  ProductException,
-  MessageIds,
-} from "../../../core/ApplicationException";
+import { ProductException } from "../../../core/ApplicationException";
 import { Purchase } from "../../../model/Purchase";
 import { ProductProvider } from "../provider/ProductProvider";
 import { ProductPurchase } from "../../../model/Product";
+import { errorToProductException } from "../productUtils";
 
 export class ProductServiceImpl implements ProductService {
   private readonly productProvider: ProductProvider;
@@ -41,18 +39,7 @@ export class ProductServiceImpl implements ProductService {
       await Promise.all(promises);
       return true;
     } catch (error) {
-      return Promise.resolve(this.errorToProductException(error));
+      return Promise.resolve(errorToProductException(error));
     }
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private errorToProductException = (error: any): ProductException => {
-    if (error.constructor.name === "ProductException") {
-      return error;
-    }
-    return new ProductException({
-      messageId: MessageIds.UNEXPECTED,
-      message: error,
-    });
   };
 }
