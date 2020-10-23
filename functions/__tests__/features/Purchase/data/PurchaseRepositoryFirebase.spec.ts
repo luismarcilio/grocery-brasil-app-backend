@@ -7,7 +7,7 @@ import {
   MessageIds,
 } from "../../../../src/core/ApplicationException";
 import { purchase, resume } from "../fixtures/purchases";
-import { firestore } from "./__mock__/mocks";
+import { firestore } from "../../__mock__/mocks";
 
 describe("PurchaseRepositoryFirebase", () => {
   const sut: PurchaseRepository = new PurchaseRepositoryFirebase(firestore);
