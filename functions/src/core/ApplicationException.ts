@@ -6,6 +6,7 @@ export enum MessageIds {
   UNEXPECTED,
   UNIMPLEMENTED,
   INVALID_ARGUMENT,
+  NOT_FOUND
 }
 
 export class ScrapNfException implements ApplicationException {
