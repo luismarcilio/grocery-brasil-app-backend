@@ -53,7 +53,6 @@ describe("ScrapNFServiceImpl", () => {
         });
       });
     const actual = await sut.scrapNf({ html: "html", uf: "MG" });
-    console.log(actual);
     expect(actual).toEqual(
       new ScrapNfException({
         messageId: MessageIds.UNEXPECTED,

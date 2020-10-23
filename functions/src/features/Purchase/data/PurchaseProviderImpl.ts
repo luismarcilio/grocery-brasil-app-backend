@@ -16,7 +16,6 @@ export class PurchaseProviderImpl implements PurchaseProvider {
     try {
       return await this.purchaseRepository.savePurchase(purchase);
     } catch (error) {
-      console.log("PurchaseException thrown");
       throw new PurchaseException({
         messageId: MessageIds.UNEXPECTED,
         message: error,
@@ -27,7 +26,6 @@ export class PurchaseProviderImpl implements PurchaseProvider {
     try {
       return await this.purchaseRepository.savePurchaseResume(purchaseResume);
     } catch (error) {
-      console.log("PurchaseException thrown");
       throw new PurchaseException({
         messageId: MessageIds.UNEXPECTED,
         message: error,
