@@ -35,8 +35,8 @@ export const purchase: Purchase = {
     },
     {
       product: {
-        eanCode: "00002",
-        name: "product2",
+        eanCode: "",
+        name: "product/2",
         ncmCode: "00002",
         unity: { name: "UN" },
       },
