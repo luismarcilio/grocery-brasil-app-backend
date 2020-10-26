@@ -49,9 +49,11 @@ describe("ProductProviderImpl", () => {
     it("should save information on a product purchase ", async () => {
       jest.spyOn(productRepository, "saveNf").mockResolvedValue();
       await sut.saveNf(product, productPurchase);
-      expect(saveNf).toHaveBeenCalledWith<
-        [string, Product, string, ProductPurchase]
-      >(productId, product, nfId, productPurchase);
+      expect(saveNf).toHaveBeenCalledWith<[string, string, ProductPurchase]>(
+        productId,
+        nfId,
+        productPurchase
+      );
     });
     it("should throw error on exception", async () => {
       jest.spyOn(productRepository, "saveNf").mockRejectedValue("Error");
