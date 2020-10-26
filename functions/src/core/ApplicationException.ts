@@ -68,3 +68,13 @@ export class SecretException implements ApplicationException {
     this.message = builder.message;
   }
 }
+
+export class HttpAdapterException implements ApplicationException {
+  messageId: MessageIds;
+  message: string;
+
+  constructor(builder: { messageId: MessageIds; message: string }) {
+    this.messageId = builder.messageId;
+    this.message = builder.message;
+  }
+}
