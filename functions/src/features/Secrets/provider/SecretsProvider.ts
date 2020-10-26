@@ -1,3 +1,3 @@
 export interface SecretsProvider {
-  getApiKey: (keyName: string) => Promise<string>;
+  getSecret: (keyName: string) => Promise<string>;
 }

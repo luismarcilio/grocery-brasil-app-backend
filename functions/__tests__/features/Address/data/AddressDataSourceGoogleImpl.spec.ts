@@ -9,11 +9,11 @@ import {
 import { SecretsProvider } from "../../../../src/features/Secrets/provider/SecretsProvider";
 
 describe("AddressDataSourceGoogleImpl", () => {
-  const getApiKey = jest.fn();
+  const getSecret = jest.fn();
   const get = jest.fn();
 
   const apiKeyProvider: SecretsProvider = {
-    getApiKey,
+    getSecret,
   };
 
   const httpAdapter: HttpAdapter = {
@@ -26,7 +26,7 @@ describe("AddressDataSourceGoogleImpl", () => {
   );
 
   it("should get google address and parse google json address to Address", async () => {
-    jest.spyOn(apiKeyProvider, "getApiKey").mockResolvedValue("apiKey");
+    jest.spyOn(apiKeyProvider, "getSecret").mockResolvedValue("apiKey");
     jest
       .spyOn(httpAdapter, "get")
       .mockResolvedValue({ status: 200, body: googleJsonAddress });
@@ -35,14 +35,14 @@ describe("AddressDataSourceGoogleImpl", () => {
       someAddress.rawAddress
     );
     expect(actual).toEqual(someAddress);
-    expect(getApiKey).toBeCalledWith("GEOLOCATION_API_KEY");
+    expect(getSecret).toBeCalledWith("GEOLOCATION_API_KEY");
     expect(get).toBeCalledWith(
       "https://maps.googleapis.com/maps/api/geocode/json?address=Av.%20Epit%C3%A1cio%20Pessoa%2C%202566%20-%20Ipanema%2C%20Rio%20de%20Janeiro%20-%20RJ%2C%2022471-003%2C%20Brasil&key=apiKey&language=pt-BR"
     );
   });
 
   it("should return exception if status != 200", async () => {
-    jest.spyOn(apiKeyProvider, "getApiKey").mockResolvedValue("apiKey");
+    jest.spyOn(apiKeyProvider, "getSecret").mockResolvedValue("apiKey");
     jest
       .spyOn(httpAdapter, "get")
       .mockResolvedValue({ status: 500, body: "server error" });
@@ -59,7 +59,7 @@ describe("AddressDataSourceGoogleImpl", () => {
   it("should check google status code", async () => {
     const googleErrorFixture = { ...googleJsonAddress };
     googleErrorFixture.status = "ZERO_RESULTS";
-    jest.spyOn(apiKeyProvider, "getApiKey").mockResolvedValue("apiKey");
+    jest.spyOn(apiKeyProvider, "getSecret").mockResolvedValue("apiKey");
     jest
       .spyOn(httpAdapter, "get")
       .mockResolvedValue({ status: 200, body: googleErrorFixture });
@@ -74,7 +74,7 @@ describe("AddressDataSourceGoogleImpl", () => {
   });
   it('should throw UNEXPECTED address exception if impossible to parse, with message "impossible to parse"', async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    jest.spyOn(apiKeyProvider, "getApiKey").mockImplementation((_) => {
+    jest.spyOn(apiKeyProvider, "getSecret").mockImplementation((_) => {
       throw "Error";
     });
     await expect(

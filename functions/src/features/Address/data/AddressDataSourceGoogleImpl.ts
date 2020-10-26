@@ -23,7 +23,7 @@ export class AddressDataSourceGoogleImpl implements AddressDataSource {
     rawAddress: string
   ): Promise<Address> => {
     try {
-      const apiKey = await this.apiKeyProvider.getApiKey("GEOLOCATION_API_KEY");
+      const apiKey = await this.apiKeyProvider.getSecret("GEOLOCATION_API_KEY");
       const googleGeocodeBaseUrl =
         "https://maps.googleapis.com/maps/api/geocode/json";
       const queryString = stringify({
