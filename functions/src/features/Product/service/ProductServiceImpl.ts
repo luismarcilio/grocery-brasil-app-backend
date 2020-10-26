@@ -3,7 +3,7 @@ import { ProductException } from "../../../core/ApplicationException";
 import { Purchase } from "../../../model/Purchase";
 import { ProductProvider } from "../provider/ProductProvider";
 import { ProductPurchase } from "../../../model/Product";
-import { errorToProductException } from "../productUtils";
+import { errorToApplicationException } from "../../../core/utils";
 
 export class ProductServiceImpl implements ProductService {
   private readonly productProvider: ProductProvider;
@@ -39,7 +39,9 @@ export class ProductServiceImpl implements ProductService {
       await Promise.all(promises);
       return true;
     } catch (error) {
-      return Promise.resolve(errorToProductException(error));
+      return Promise.resolve(
+        errorToApplicationException(error, ProductException)
+      );
     }
   };
 }

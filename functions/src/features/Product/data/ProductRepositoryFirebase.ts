@@ -4,7 +4,7 @@ import {
   ProductException,
   MessageIds,
 } from "../../../core/ApplicationException";
-import { errorToProductException } from "../productUtils";
+import { errorToApplicationException } from "../../../core/utils";
 
 export class ProductRepositoryFirebase implements ProductRepository {
   private readonly firestore: FirebaseFirestore.Firestore;
@@ -17,7 +17,9 @@ export class ProductRepositoryFirebase implements ProductRepository {
       const dbNfDoc = this.firestore.collection("PRODUTOS").doc(productId);
       await dbNfDoc.set(product);
     } catch (error) {
-      return Promise.reject(errorToProductException(error));
+      return Promise.reject(
+        errorToApplicationException(error, ProductException)
+      );
     }
   };
   saveNf = async (
@@ -33,7 +35,9 @@ export class ProductRepositoryFirebase implements ProductRepository {
         .doc(nfId);
       await dbNfDoc.set(productPurchase);
     } catch (error) {
-      return Promise.reject(errorToProductException(error));
+      return Promise.reject(
+        errorToApplicationException(error, ProductException)
+      );
     }
   };
   getProductById = async (productId: string): Promise<Product> => {
@@ -52,7 +56,9 @@ export class ProductRepositoryFirebase implements ProductRepository {
       }
       return <Product>dbNfDoc.data();
     } catch (error) {
-      return Promise.reject(errorToProductException(error));
+      return Promise.reject(
+        errorToApplicationException(error, ProductException)
+      );
     }
   };
 }
