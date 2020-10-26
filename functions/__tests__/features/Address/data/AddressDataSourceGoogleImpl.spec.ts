@@ -1,4 +1,3 @@
-import { ApiKeyProvider } from "../../../../src/features/ApiKey/provider/ApiKeyProvider";
 import { HttpAdapter } from "../../../../src/features/Http/adapter/HttpAdapter";
 import { AddressDataSource } from "../../../../src/features/Address/data/AddressDataSource";
 import { AddressDataSourceGoogleImpl } from "../../../../src/features/Address/data/AddressDataSourceGoogleImpl";
@@ -7,12 +6,13 @@ import {
   AddressException,
   MessageIds,
 } from "../../../../src/core/ApplicationException";
+import { SecretsProvider } from "../../../../src/features/Secrets/provider/SecretsProvider";
 
 describe("AddressDataSourceGoogleImpl", () => {
   const getApiKey = jest.fn();
   const get = jest.fn();
 
-  const apiKeyProvider: ApiKeyProvider = {
+  const apiKeyProvider: SecretsProvider = {
     getApiKey,
   };
 

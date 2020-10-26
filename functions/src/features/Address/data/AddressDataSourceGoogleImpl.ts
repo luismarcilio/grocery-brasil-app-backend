@@ -1,6 +1,5 @@
 import { AddressDataSource } from "./AddressDataSource";
 import { Address } from "../../../model/Address";
-import { ApiKeyProvider } from "../../ApiKey/provider/ApiKeyProvider";
 import { HttpAdapter } from "../../Http/adapter/HttpAdapter";
 import { stringify } from "querystring";
 import {
@@ -9,12 +8,13 @@ import {
 } from "../../../core/ApplicationException";
 import * as jsonpath from "jsonpath";
 import { errorToApplicationException } from "../../../core/utils";
+import { SecretsProvider } from "../../Secrets/provider/SecretsProvider";
 
 export class AddressDataSourceGoogleImpl implements AddressDataSource {
-  private readonly apiKeyProvider: ApiKeyProvider;
+  private readonly apiKeyProvider: SecretsProvider;
   private readonly httpAdapter: HttpAdapter;
 
-  constructor(apiKeyProvider: ApiKeyProvider, httpAdapter: HttpAdapter) {
+  constructor(apiKeyProvider: SecretsProvider, httpAdapter: HttpAdapter) {
     this.apiKeyProvider = apiKeyProvider;
     this.httpAdapter = httpAdapter;
   }
