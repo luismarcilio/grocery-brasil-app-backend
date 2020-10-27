@@ -30,6 +30,7 @@
     "firebase-functions": "^3.6.1",
     "jsonpath": "^1.0.2",
     "minify": "^6.0.0",
+    "node-cache": "^5.1.2",
     "querystring": "^0.2.0",
     "sharp": "^0.26.2",
     "winston": "^3.3.3"
@@ -45,6 +46,7 @@
     "@types/jest": "^26.0.15",
     "@types/jsonpath": "^0.2.0",
     "@types/node": "^14.14.2",
+    "@types/node-cache": "^4.2.5",
     "@types/sharp": "^0.25.1",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
