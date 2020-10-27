@@ -1,5 +1,5 @@
 import { HttpAdapter } from "./HttpAdapter";
-import { HttpResponse } from "../../../core/HttpProtocol";
+import { HttpResponse } from "../../../protocol/HttpProtocol";
 import { AxiosInstance } from "axios";
 import { HttpAdapterException } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";

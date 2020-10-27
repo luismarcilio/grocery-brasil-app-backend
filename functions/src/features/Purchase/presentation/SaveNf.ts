@@ -1,5 +1,5 @@
-import { Controller } from "../../../core/Controller";
-import { HttpRequest, HttpResponse } from "../../../core/HttpProtocol";
+import { Controller } from "../../../protocol/Controller";
+import { HttpRequest, HttpResponse } from "../../../protocol/HttpProtocol";
 import {
   ScrapNfException,
   PurchaseException,
