@@ -1,5 +1,5 @@
-import { Middleware } from "../protocol/Middleware";
-import { HttpRequest } from "../protocol/HttpProtocol";
+import { Middleware } from "./Middleware";
+import { HttpRequest } from "../../../core/HttpProtocol";
 import * as express from "express";
 
 export const expressMiddlewareAdapter = (middleware: Middleware) => {

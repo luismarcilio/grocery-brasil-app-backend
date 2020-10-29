@@ -1,11 +1,11 @@
 import { HttpAdapter } from "../../../../src/features/Http/adapter/HttpAdapter";
 import { AxiosHttpAdapter } from "../../../../src/features/Http/adapter/AxiosHttpAdapter";
 import { AxiosInstance, AxiosResponse } from "axios";
-import { HttpResponse } from "../../../../src/core/HttpProtocol";
 import {
   HttpAdapterException,
   MessageIds,
 } from "../../../../src/core/ApplicationException";
+import { HttpResponse } from "../../../../src/core/HttpProtocol";
 
 describe("AxiosHttpAdapter", () => {
   const get = jest.fn();

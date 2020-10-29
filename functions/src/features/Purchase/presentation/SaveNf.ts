@@ -1,5 +1,5 @@
-import { Controller } from "../../../protocol/Controller";
-import { HttpRequest, HttpResponse } from "../../../protocol/HttpProtocol";
+import { Controller } from "../../../presentation/express/controllers/Controller";
+import { HttpRequest, HttpResponse } from "../../../core/HttpProtocol";
 import {
   ScrapNfException,
   PurchaseException,
