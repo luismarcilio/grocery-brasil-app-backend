@@ -34,7 +34,7 @@ export class PurchaseRepositoryFirebase implements PurchaseRepository {
         .collection("COMPLETA")
         .doc(purchaseId);
 
-      dbNfDoc.set(purchase);
+      await dbNfDoc.set(purchase);
       return true;
     } catch (error) {
       throw new PurchaseException({

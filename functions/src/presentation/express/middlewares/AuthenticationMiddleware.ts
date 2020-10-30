@@ -13,23 +13,23 @@ export class AuthenticationMiddleware implements Middleware {
   handle = async (request: HttpRequest): Promise<HttpResponse> => {
     const jwt = request.headers?.Authorization?.split("Bearer ")[1];
     if (jwt === undefined) {
-      const response: HttpResponse = {
+      const httpResponse: HttpResponse = {
         body: "Unauthorized",
         status: 401,
       };
 
-      return Promise.resolve(response);
+      return Promise.resolve(httpResponse);
     }
 
     const result = await this.getUserByJWTUseCase.execute(jwt);
 
     if (result.constructor.name === "UserException") {
-      const response: HttpResponse = {
+      const httpResponse: HttpResponse = {
         body: "Unauthorized",
         status: 401,
       };
 
-      return Promise.resolve(response);
+      return Promise.resolve(httpResponse);
     }
     const response: HttpResponse = {
       headers: request.headers,

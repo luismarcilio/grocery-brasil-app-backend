@@ -13,11 +13,11 @@ export class UserRepositoryImpl implements UserRepository {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   createUser = (user: User): Promise<User | UserException> => {
-    throw "Unimplemented";
+    throw new Error("Unimplemented");
   };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateUser = (user: User): Promise<User | UserException> => {
-    throw "Unimplemented";
+    throw new Error("Unimplemented");
   };
   validateJWT = async (jwt: string): Promise<User | UserException> => {
     try {

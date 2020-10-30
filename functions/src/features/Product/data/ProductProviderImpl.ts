@@ -13,7 +13,8 @@ export class ProductProviderImpl implements ProductProvider {
   save = async (product: Product): Promise<void> => {
     try {
       const productId = this.getDocId(product);
-      return await this.productRepository.save(productId, product);
+      await this.productRepository.save(productId, product);
+      return;
     } catch (error) {
       return Promise.reject(
         errorToApplicationException(error, ProductException)
