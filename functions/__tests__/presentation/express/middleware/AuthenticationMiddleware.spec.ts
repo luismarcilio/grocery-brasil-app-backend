@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { User } from "../../src/model/User";
-import { UseCase } from "../../src/core/UseCase";
-import { UserException, MessageIds } from "../../src/core/ApplicationException";
-import { Middleware } from "../../src/presentation/express/middlewares/Middleware";
-import { AuthenticationMiddleware } from "../../src/presentation/express/middlewares/AuthenticationMiddleware";
-import { HttpRequest } from "../../src/core/HttpProtocol";
+import { User } from "../../../../src/model/User";
+import { UseCase } from "../../../../src/core/UseCase";
+import { UserException, MessageIds } from "../../../../src/core/ApplicationException";
+import { Middleware } from "../../../../src/presentation/express/middlewares/Middleware";
+import { AuthenticationMiddleware } from "../../../../src/presentation/express/middlewares/AuthenticationMiddleware";
+import { HttpRequest } from "../../../../src/core/HttpProtocol";
 
 describe("AuthenticationMiddleware", () => {
   const execute = jest.fn();
