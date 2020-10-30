@@ -1,6 +1,5 @@
 import { UseCase } from "../../../../src/core/UseCase";
 import { Purchase } from "../../../../src/model/Purchase";
-import { Controller } from "../../../../src/core/Controller";
 import { HttpRequest, HttpResponse } from "../../../../src/core/HttpProtocol";
 import { purchase } from "../fixtures/purchases";
 import {
@@ -8,6 +7,7 @@ import {
   ScrapNfException,
 } from "../../../../src/core/ApplicationException";
 import { SaveNf } from "../../../../src/features/Purchase/presentation/SaveNf";
+import { Controller } from "../../../../src/presentation/express/controllers/Controller";
 describe("saveNf", () => {
   const scrapNFUseCaseExecute = jest.fn();
   const savePurchaseExecute = jest.fn();
