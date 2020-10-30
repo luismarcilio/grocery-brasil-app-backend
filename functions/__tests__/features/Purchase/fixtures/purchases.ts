@@ -2,6 +2,7 @@ import { Purchase, PurchaseResume } from "../../../../src/model/Purchase";
 
 export const purchase: Purchase = {
   user: {
+    address: { rawAddress: "rawAddress" },
     userId: "userId",
     email: "teste@teste.com",
     preferences: { searchRadius: 10 },
