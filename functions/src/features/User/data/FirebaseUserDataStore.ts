@@ -5,19 +5,18 @@ import * as admin from "firebase-admin";
 import { UserException, MessageIds } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
 
-type verifyIdTokenType = (
-  idToken: string,
-  checkRevoked?: boolean
-) => Promise<admin.auth.DecodedIdToken>;
-
+export class VerifyIdTokenWrapper {
+  verifyIdToken = (jwt: string): Promise<admin.auth.DecodedIdToken> =>
+    admin.auth().verifyIdToken(jwt);
+}
 export class FirebaseUserDataStore implements UserDataStore {
   private readonly cache: NodeCache;
-  private readonly verifyIdToken: verifyIdTokenType;
+  private readonly verifyIdToken: VerifyIdTokenWrapper;
   private readonly firestore: FirebaseFirestore.Firestore;
 
   constructor(
     cache: NodeCache,
-    verifyIdToken: verifyIdTokenType,
+    verifyIdToken: VerifyIdTokenWrapper,
     firestore: FirebaseFirestore.Firestore
   ) {
     this.cache = cache;
@@ -27,7 +26,7 @@ export class FirebaseUserDataStore implements UserDataStore {
 
   getUserIdFromJWT = async (jwt: string): Promise<string> => {
     try {
-      const decodedIdToken = await this.verifyIdToken(jwt);
+      const decodedIdToken = await this.verifyIdToken.verifyIdToken(jwt);
       return decodedIdToken.uid;
     } catch (error) {
       throw errorToApplicationException(error, UserException);

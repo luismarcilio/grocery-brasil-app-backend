@@ -7,10 +7,13 @@ import {
   MessageIds,
 } from "../../../../src/core/ApplicationException";
 import { User } from "../../../../src/model/User";
-// import { CollectionReference, DocumentData } from "@google-cloud/firestore";
+import { VerifyIdTokenWrapper } from "../../../../src/features/User/data/FirebaseUserDataStore";
 
 describe("FirebaseUserDataStore", () => {
   const verifyIdToken = jest.fn();
+  const verifyIdTokenWrapper: VerifyIdTokenWrapper = {
+    verifyIdToken,
+  };
 
   const collection = jest.fn((_) => ({ doc }));
   const firestore = ({
@@ -28,7 +31,7 @@ describe("FirebaseUserDataStore", () => {
 
   const sut: UserDataStore = new FirebaseUserDataStore(
     cache,
-    verifyIdToken,
+    verifyIdTokenWrapper,
     firestore
   );
   const expected: User = {
