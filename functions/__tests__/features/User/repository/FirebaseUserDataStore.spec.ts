@@ -25,6 +25,8 @@ describe("FirebaseUserDataStore", () => {
   );
   const data = jest.fn(() => expected);
 
+  //NodeCache could be an adapter here but very unlikely this dependency will, in the future, break the OCP
+
   const set = jest.fn();
   const get = jest.fn();
   const cache: NodeCache = ({ set, get } as unknown) as NodeCache;
