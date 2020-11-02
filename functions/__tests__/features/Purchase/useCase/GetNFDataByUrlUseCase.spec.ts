@@ -10,13 +10,13 @@ describe("GetNFDataByUrlUseCase", () => {
     getWebViewScrapData,
   };
 
-  const getWebViewScrapDataUseCase: UseCase<WebViewScrapData> = new GetWebViewScrapDataUseCase(
+  const sut: UseCase<WebViewScrapData> = new GetWebViewScrapDataUseCase(
     webViewScrapDataService
   );
   it("should return WebViewScrapData", async () => {
     const url = "url";
     getWebViewScrapData.mockResolvedValue(webViewScrapData);
-    const actual = await getWebViewScrapDataUseCase.execute(url);
+    const actual = await sut.execute(url);
     expect(actual).toEqual(webViewScrapData);
     expect(getWebViewScrapData).toHaveBeenCalledWith(url);
   });
