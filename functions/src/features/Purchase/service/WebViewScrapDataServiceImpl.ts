@@ -56,7 +56,7 @@ export class WebViewScrapDataServiceImpl implements WebViewScrapDataService {
         throw error;
       }
     }
-    const minifiedJavaScript = this.minifierAdapter.minify(javascript);
+    const minifiedJavaScript = await this.minifierAdapter.minify(javascript);
     const javascriptWithAccessKey = minifiedJavaScript.replace(
       "$$ACCESS_KEY$$",
       accessKey

@@ -1,3 +1,3 @@
 export interface MinifierAdapter {
-  minify: (javascript: string) => string;
+  minify: (javascript: string) => Promise<string>;
 }

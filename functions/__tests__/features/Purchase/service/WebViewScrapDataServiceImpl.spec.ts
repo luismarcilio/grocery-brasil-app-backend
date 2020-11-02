@@ -47,7 +47,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     parseURL.mockReturnValue(expectedUrlResult);
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -66,7 +66,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     parseURL.mockReturnValue(expectedUrlResult);
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -85,7 +85,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     parseURL.mockReturnValue(expectedUrlResult);
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -104,7 +104,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     parseURL.mockReturnValue(expectedUrlResult);
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS($$ACCESS_KEY$$)");
+    minify.mockResolvedValue("someMinifiedJS(accessKey)"); 
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -122,7 +122,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     parseURL.mockReturnValue(expectedUrlResult);
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -140,7 +140,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     parseURL.mockReturnValue(expectedUrlResult);
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -162,7 +162,7 @@ describe("WebViewScrapDataServiceImpl", () => {
         message: "Javascript not found",
       })
     );
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -183,7 +183,7 @@ describe("WebViewScrapDataServiceImpl", () => {
       })
     );
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
@@ -201,7 +201,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     });
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockReturnValue("someMinifiedJS");
+    minify.mockResolvedValue("someMinifiedJS");
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
