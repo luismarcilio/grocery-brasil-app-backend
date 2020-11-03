@@ -2,7 +2,7 @@ import { ProductService } from "./ProductService";
 import { ProductException } from "../../../core/ApplicationException";
 import { Purchase } from "../../../model/Purchase";
 import { ProductProvider } from "../provider/ProductProvider";
-import { ProductPurchase } from "../../../model/Product";
+import { ProductPurchase, Product } from "../../../model/Product";
 import { errorToApplicationException } from "../../../core/utils";
 
 export class ProductServiceImpl implements ProductService {
@@ -11,6 +11,28 @@ export class ProductServiceImpl implements ProductService {
   constructor(productProvider: ProductProvider) {
     this.productProvider = productProvider;
   }
+  normalizeProduct = async (product: Product): Promise<Product> => {
+    if (!product.eanCode) {
+      return Promise.resolve(product);
+    }
+
+    try {
+      const normalizedProduct = await this.productProvider.normalizeProduct(
+        product
+      );
+      return normalizedProduct;
+    } catch (error) {
+      throw errorToApplicationException(error, ProductException);
+    }
+  };
+  updateProduct = async (product: Product): Promise<Product> => {
+    try {
+      const updatedProduct = await this.productProvider.updateProduct(product);
+      return updatedProduct;
+    } catch (error) {
+      throw errorToApplicationException(error, ProductException);
+    }
+  };
 
   saveItemsFromPurchase = async (
     purchase: Purchase

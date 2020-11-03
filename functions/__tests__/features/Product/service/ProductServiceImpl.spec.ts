@@ -1,3 +1,5 @@
+import { product } from "../fixtures";
+
 import { ProductService } from "../../../../src/features/Product/service/ProductService";
 import { ProductProvider } from "../../../../src/features/Product/provider/ProductProvider";
 import { purchase } from "../../Purchase/fixtures/purchases";
@@ -13,11 +15,16 @@ describe("ProductService implementation", () => {
   const saveNf = jest.fn();
   const getProductById = jest.fn();
   const getDocId = jest.fn();
+  const updateProduct = jest.fn();
+  const normalizeProduct = jest.fn();
+
   const productProviderStub: ProductProvider = {
     save,
     saveNf,
     getProductById,
     getDocId,
+    updateProduct,
+    normalizeProduct,
   };
   const sut: ProductService = new ProductServiceImpl(productProviderStub);
 
@@ -30,14 +37,12 @@ describe("ProductService implementation", () => {
       .spyOn(productProviderStub, "getDocId")
       .mockReturnValueOnce("00002-product-2");
 
-    jest
-      .spyOn(productProviderStub, "getProductById")
-      .mockRejectedValue(
-        new ProductException({
-          messageId: MessageIds.NOT_FOUND,
-          message: "Product not found",
-        })
-      );
+    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
+      new ProductException({
+        messageId: MessageIds.NOT_FOUND,
+        message: "Product not found",
+      })
+    );
     await sut.saveItemsFromPurchase(purchase);
     expect(save).toHaveBeenNthCalledWith(1, {
       eanCode: "00001",
@@ -57,9 +62,12 @@ describe("ProductService implementation", () => {
     jest.spyOn(productProviderStub, "save").mockResolvedValue();
     jest.spyOn(productProviderStub, "saveNf").mockResolvedValue();
 
-    jest
-      .spyOn(productProviderStub, "getProductById")
-      .mockRejectedValue(new ProductException({messageId: MessageIds.NOT_FOUND, message: 'Product not found'}));
+    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
+      new ProductException({
+        messageId: MessageIds.NOT_FOUND,
+        message: "Product not found",
+      })
+    );
     jest
       .spyOn(productProviderStub, "getProductById")
       .mockResolvedValueOnce(purchase.purchaseItemList[0].product);
@@ -87,14 +95,12 @@ describe("ProductService implementation", () => {
       .spyOn(productProviderStub, "getDocId")
       .mockReturnValueOnce("00002-product-2");
 
-    jest
-      .spyOn(productProviderStub, "getProductById")
-      .mockRejectedValue(
-        new ProductException({
-          messageId: MessageIds.NOT_FOUND,
-          message: "Product not found",
-        })
-      );
+    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
+      new ProductException({
+        messageId: MessageIds.NOT_FOUND,
+        message: "Product not found",
+      })
+    );
     const productPurchase: ProductPurchase[] = [
       {
         accessKey: purchase.fiscalNote.accessKey,
@@ -127,19 +133,63 @@ describe("ProductService implementation", () => {
     jest.spyOn(productProviderStub, "saveNf").mockRejectedValue("Error");
     jest.spyOn(productProviderStub, "getDocId").mockReturnValue("DocId");
 
-    jest
-      .spyOn(productProviderStub, "getProductById")
-      .mockRejectedValue(
-        new ProductException({
-          messageId: MessageIds.NOT_FOUND,
-          message: "Product not found",
-        })
-      );    const actual = await sut.saveItemsFromPurchase(purchase);
+    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
+      new ProductException({
+        messageId: MessageIds.NOT_FOUND,
+        message: "Product not found",
+      })
+    );
+    const actual = await sut.saveItemsFromPurchase(purchase);
     expect(actual).toEqual(
       new ProductException({
         messageId: MessageIds.UNEXPECTED,
         message: "Error",
       })
     );
+  });
+  describe("updateProduct", () => {
+    it("should update the product", async () => {
+      updateProduct.mockResolvedValue(product);
+      const actual = await sut.updateProduct(product);
+      expect(actual).toEqual(product);
+      expect(updateProduct).toHaveBeenCalledWith(product);
+    });
+    it("should throw ProductException on error", async () => {
+      const someException = new Error("error");
+      const expected = new ProductException({
+        messageId: MessageIds.UNEXPECTED,
+        message: (someException as unknown) as string,
+      });
+      updateProduct.mockRejectedValue(someException);
+      await expect(sut.updateProduct(product)).rejects.toEqual(expected);
+    });
+  });
+
+  describe("normalizeProduct", () => {
+    it("should bypass and return same product if product doesn't have ean code", async () => {
+      const otherProduct = { ...product };
+      delete otherProduct.eanCode;
+      const actual = await sut.normalizeProduct(otherProduct);
+      expect(actual).toEqual(otherProduct);
+      expect(normalizeProduct).not.toHaveBeenCalled();
+    });
+    it("should normalize product", async () => {
+      const normalizedProduct = { ...product };
+      normalizedProduct.name = "normalizedName";
+      normalizeProduct.mockResolvedValue(normalizedProduct);
+      const actual = await sut.normalizeProduct(product);
+      expect(actual).toEqual(normalizedProduct);
+      expect(normalizeProduct).toHaveBeenCalledWith(product);
+    });
+    it("should throw ProductException on error", async () => {
+      const someException = new Error("error");
+      const expected = new ProductException({
+        messageId: MessageIds.UNEXPECTED,
+        message: (someException as unknown) as string,
+      });
+      normalizeProduct.mockRejectedValue(someException);
+
+      await expect(sut.normalizeProduct(product)).rejects.toEqual(expected);
+    });
   });
 });
