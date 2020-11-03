@@ -1,4 +1,5 @@
 import { product } from "../fixtures";
+import { ThumbnailFacade } from "../../../../src/features/Product/provider/ThumbnailFacade";
 
 import { ProductService } from "../../../../src/features/Product/service/ProductService";
 import { ProductProvider } from "../../../../src/features/Product/provider/ProductProvider";
@@ -26,7 +27,16 @@ describe("ProductService implementation", () => {
     updateProduct,
     normalizeProduct,
   };
-  const sut: ProductService = new ProductServiceImpl(productProviderStub);
+
+  const uploadThumbnail = jest.fn();
+  const thumbnailFacade: ThumbnailFacade = {
+    uploadThumbnail,
+  };
+
+  const sut: ProductService = new ProductServiceImpl(
+    productProviderStub,
+    thumbnailFacade
+  );
 
   it("should save each product", async () => {
     jest.resetAllMocks();
@@ -190,6 +200,27 @@ describe("ProductService implementation", () => {
       normalizeProduct.mockRejectedValue(someException);
 
       await expect(sut.normalizeProduct(product)).rejects.toEqual(expected);
+    });
+  });
+
+  describe("uploadThumbnail", () => {
+    it("should upload the new thumbnail to the file server", async () => {
+      const updatedProduct = { ...product };
+      updatedProduct.thumbnail = "updatedThumbnail";
+      uploadThumbnail.mockResolvedValue(updatedProduct);
+      const actual = await sut.uploadThumbnail(product);
+      expect(actual).toEqual(updatedProduct);
+      expect(uploadThumbnail).toHaveBeenCalledWith(product);
+    });
+    it("should throw an exception if an error occurs", async () => {
+      const someException = new Error("error");
+      const expected = new ProductException({
+        messageId: MessageIds.UNEXPECTED,
+        message: (someException as unknown) as string,
+      });
+      uploadThumbnail.mockRejectedValue(someException);
+
+      await expect(sut.uploadThumbnail(product)).rejects.toEqual(expected);
     });
   });
 });

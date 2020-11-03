@@ -4,13 +4,29 @@ import { Purchase } from "../../../model/Purchase";
 import { ProductProvider } from "../provider/ProductProvider";
 import { ProductPurchase, Product } from "../../../model/Product";
 import { errorToApplicationException } from "../../../core/utils";
+import { ThumbnailFacade } from "../provider/ThumbnailFacade";
 
 export class ProductServiceImpl implements ProductService {
   private readonly productProvider: ProductProvider;
+  private readonly thumbnailFacade: ThumbnailFacade;
 
-  constructor(productProvider: ProductProvider) {
+  constructor(
+    productProvider: ProductProvider,
+    thumbnailFacade: ThumbnailFacade
+  ) {
     this.productProvider = productProvider;
+    this.thumbnailFacade = thumbnailFacade;
   }
+  uploadThumbnail = async (product: Product): Promise<Product> => {
+    try {
+      const updatedProduct = await this.thumbnailFacade.uploadThumbnail(
+        product
+      );
+      return updatedProduct;
+    } catch (error) {
+      throw errorToApplicationException(error, ProductException);
+    }
+  };
   normalizeProduct = async (product: Product): Promise<Product> => {
     if (!product.eanCode) {
       return Promise.resolve(product);
