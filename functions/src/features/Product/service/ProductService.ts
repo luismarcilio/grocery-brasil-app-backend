@@ -9,4 +9,6 @@ export interface ProductService {
 
   normalizeProduct: (product: Product) => Promise<Product>;
   updateProduct: (product: Product) => Promise<Product>;
+
+  uploadThumbnail: (product: Product) => Promise<Product>;
 }

@@ -11,11 +11,13 @@ describe("Update product data", () => {
   const saveItemsFromPurchase = jest.fn();
   const normalizeProduct = jest.fn();
   const updateProduct = jest.fn();
+  const uploadThumbnail = jest.fn();
 
   const productService: ProductService = {
     saveItemsFromPurchase,
     normalizeProduct,
     updateProduct,
+    uploadThumbnail,
   };
   const sut: UseCase<Product> = new UpdateProductUseCase(productService);
 
