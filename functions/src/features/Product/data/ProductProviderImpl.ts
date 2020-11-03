@@ -3,12 +3,39 @@ import { Product, ProductPurchase } from "../../../model/Product";
 import { ProductRepository } from "./ProductRepository";
 import { errorToApplicationException } from "../../../core/utils";
 import { ProductException } from "../../../core/ApplicationException";
+import { ProductNormalizationRepository } from "./ProductNormalizationRepository";
 
 export class ProductProviderImpl implements ProductProvider {
   private readonly productRepository: ProductRepository;
-  constructor(productRepository: ProductRepository) {
+  private readonly productNormalizationRepository: ProductNormalizationRepository;
+
+  constructor(
+    productRepository: ProductRepository,
+    productNormalizationRepository: ProductNormalizationRepository
+  ) {
     this.productRepository = productRepository;
+    this.productNormalizationRepository = productNormalizationRepository;
   }
+  updateProduct = async (product: Product): Promise<Product> => {
+    try {
+      const updatedProduct = await this.productRepository.updateProduct(
+        product
+      );
+      return updatedProduct;
+    } catch (error) {
+      throw errorToApplicationException(error, ProductException);
+    }
+  };
+  normalizeProduct = async (product: Product): Promise<Product> => {
+    try {
+      const normalizedProduct = await this.productNormalizationRepository.normalizeProduct(
+        product
+      );
+      return normalizedProduct;
+    } catch (error) {
+      throw errorToApplicationException(error, ProductException);
+    }
+  };
 
   save = async (product: Product): Promise<void> => {
     try {

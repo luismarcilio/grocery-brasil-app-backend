@@ -1,5 +1,6 @@
 import { ProductProvider } from "../../../../src/features/Product/provider/ProductProvider";
 import { ProductRepository } from "../../../../src/features/Product/data/ProductRepository";
+import { ProductNormalizationRepository } from "../../../../src/features/Product/data/ProductNormalizationRepository";
 import { product } from "../fixtures";
 import { purchase } from "../../Purchase/fixtures/purchases";
 import { ProductPurchase, Product } from "../../../../src/model/Product";
@@ -13,13 +14,23 @@ describe("ProductProviderImpl", () => {
   const save = jest.fn();
   const saveNf = jest.fn();
   const getProductById = jest.fn();
+  const updateProduct = jest.fn();
+  const normalizeProduct = jest.fn();
   const productRepository: ProductRepository = {
     save,
     saveNf,
     getProductById,
+    updateProduct,
   };
 
-  const sut: ProductProvider = new ProductProviderImpl(productRepository);
+  const productNormalizationRepository: ProductNormalizationRepository = {
+    normalizeProduct,
+  };
+
+  const sut: ProductProvider = new ProductProviderImpl(
+    productRepository,
+    productNormalizationRepository
+  );
   describe("ProductProviderImpl.save", () => {
     it("should save a product", async () => {
       jest.spyOn(productRepository, "save").mockResolvedValue();
@@ -104,6 +115,46 @@ describe("ProductProviderImpl", () => {
       expect(actual).toEqual("00001");
       actual = sut.getDocId(purchase.purchaseItemList[1].product);
       expect(actual).toEqual("00002-product-2");
+    });
+  });
+
+  describe("normalize Product", () => {
+    it("should normalize product", async () => {
+      const normalizedProduct = { ...product };
+      normalizedProduct.name = "normalizedName";
+      normalizeProduct.mockResolvedValue(normalizedProduct);
+      const actual = await sut.normalizeProduct(product);
+      expect(actual).toEqual(normalizedProduct);
+      expect(normalizeProduct).toHaveBeenCalledWith(product);
+    });
+    it("should throw ProductException on error", async () => {
+      const someException = new Error("error");
+      const expected = new ProductException({
+        messageId: MessageIds.UNEXPECTED,
+        message: (someException as unknown) as string,
+      });
+      normalizeProduct.mockRejectedValue(someException);
+
+      await expect(sut.normalizeProduct(product)).rejects.toEqual(expected);
+    });
+  });
+
+  describe("update product", () => {
+    it("should update product", async () => {
+      updateProduct.mockResolvedValue(product);
+      const actual = await sut.updateProduct(product);
+      expect(actual).toEqual(product);
+      expect(updateProduct).toHaveBeenCalledWith(product);
+    });
+
+    it("should throw ProductException on error", async () => {
+      const someException = new Error("error");
+      const expected = new ProductException({
+        messageId: MessageIds.UNEXPECTED,
+        message: (someException as unknown) as string,
+      });
+      updateProduct.mockRejectedValue(someException);
+      await expect(sut.updateProduct(product)).rejects.toEqual(expected);
     });
   });
 });
