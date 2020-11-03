@@ -18,10 +18,9 @@ export class ProductProviderImpl implements ProductProvider {
   }
   updateProduct = async (product: Product): Promise<Product> => {
     try {
-      const updatedProduct = await this.productRepository.updateProduct(
-        product
-      );
-      return updatedProduct;
+      const productId = this.getDocId(product);
+      await this.productRepository.save(productId, product);
+      return product;
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }

@@ -14,13 +14,11 @@ describe("ProductProviderImpl", () => {
   const save = jest.fn();
   const saveNf = jest.fn();
   const getProductById = jest.fn();
-  const updateProduct = jest.fn();
   const normalizeProduct = jest.fn();
   const productRepository: ProductRepository = {
     save,
     saveNf,
     getProductById,
-    updateProduct,
   };
 
   const productNormalizationRepository: ProductNormalizationRepository = {
@@ -141,10 +139,12 @@ describe("ProductProviderImpl", () => {
 
   describe("update product", () => {
     it("should update product", async () => {
-      updateProduct.mockResolvedValue(product);
+      jest.clearAllMocks();
+
+      save.mockResolvedValue(product);
       const actual = await sut.updateProduct(product);
       expect(actual).toEqual(product);
-      expect(updateProduct).toHaveBeenCalledWith(product);
+      expect(save).toHaveBeenCalledWith(product.eanCode, product);
     });
 
     it("should throw ProductException on error", async () => {
@@ -153,7 +153,7 @@ describe("ProductProviderImpl", () => {
         messageId: MessageIds.UNEXPECTED,
         message: (someException as unknown) as string,
       });
-      updateProduct.mockRejectedValue(someException);
+      save.mockRejectedValue(someException);
       await expect(sut.updateProduct(product)).rejects.toEqual(expected);
     });
   });

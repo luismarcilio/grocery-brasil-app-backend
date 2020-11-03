@@ -8,5 +8,4 @@ export interface ProductRepository {
     productPurchase: ProductPurchase
   ) => Promise<void>;
   getProductById: (productId: string) => Promise<Product>;
-  updateProduct: (product: Product) => Promise<Product>;
 }
