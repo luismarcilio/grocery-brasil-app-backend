@@ -35,17 +35,14 @@ describe("Normalize product data", () => {
 
   it("should retrieve normalized product", async () => {
     normalizeProduct.mockResolvedValue(expected);
-    updateProduct.mockResolvedValue(expected)
     const actual = await sut.execute(input);
     expect(actual).toEqual(expected);
     expect(normalizeProduct).toHaveBeenCalledWith(input);
   });
   it("should update the product name retrieved", async () => {
     normalizeProduct.mockResolvedValue(expected);
-    updateProduct.mockResolvedValue(expected);
     const actual = await sut.execute(input);
     expect(actual).toEqual(expected);
-    expect(updateProduct).toHaveBeenCalledWith(expected);
   });
   it("should return ProductException case of error", async () => {
     const someException = new Error("error");
