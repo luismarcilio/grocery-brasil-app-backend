@@ -1,11 +1,11 @@
 import { HttpAdapter } from "../../../../src/features/Http/adapter/HttpAdapter";
 import { AxiosHttpAdapter } from "../../../../src/features/Http/adapter/AxiosHttpAdapter";
-import { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosInstance, AxiosResponse, AxiosRequestConfig } from "axios";
 import {
   HttpAdapterException,
   MessageIds,
 } from "../../../../src/core/ApplicationException";
-import { HttpResponse } from "../../../../src/core/HttpProtocol";
+import { HttpResponse, HttpRequest } from "../../../../src/core/HttpProtocol";
 
 describe("AxiosHttpAdapter", () => {
   const get = jest.fn();
@@ -36,10 +36,19 @@ describe("AxiosHttpAdapter", () => {
 
   describe("get", () => {
     it("should perform get operation", async () => {
+      jest.clearAllMocks();
+      const httpRequest: HttpRequest = {
+        headers: { "x-header": "x-header-test" },
+      };
+      const expectedAxiosRequestConfig: AxiosRequestConfig = {
+        headers: httpRequest.headers,
+      };
+
       const expected: HttpResponse = { status: 200, body: "all OK" };
-      jest.spyOn(axiosInstance, "get").mockResolvedValue(axiosResponse);
-      const actual = await sut.get("someUrl");
+      get.mockResolvedValue(axiosResponse);
+      const actual = await sut.get("someUrl", httpRequest);
       expect(actual).toEqual(expected);
+      expect(get).toHaveBeenCalledWith("someUrl", expectedAxiosRequestConfig);
     });
   });
 });

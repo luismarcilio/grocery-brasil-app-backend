@@ -1,5 +1,5 @@
-import { HttpResponse } from "../../../core/HttpProtocol";
+import { HttpResponse, HttpRequest } from "../../../core/HttpProtocol";
 
 export interface HttpAdapter {
-    get:(url: string)=> Promise<HttpResponse>
+  get: (url: string, httpRequest?: HttpRequest) => Promise<HttpResponse>;
 }
