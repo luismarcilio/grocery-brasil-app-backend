@@ -11,6 +11,7 @@ import { SecretsProvider } from "../../../../src/features/Secrets/provider/Secre
 describe("AddressDataSourceGoogleImpl", () => {
   const getSecret = jest.fn();
   const get = jest.fn();
+  const getBuffer = jest.fn();
 
   const apiKeyProvider: SecretsProvider = {
     getSecret,
@@ -18,6 +19,7 @@ describe("AddressDataSourceGoogleImpl", () => {
 
   const httpAdapter: HttpAdapter = {
     get,
+    getBuffer,
   };
 
   const sut: AddressDataSource = new AddressDataSourceGoogleImpl(

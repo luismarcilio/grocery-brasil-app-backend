@@ -16,8 +16,10 @@ describe("ProductNormalizationBluesoftCosmos", () => {
     getSecret,
   };
   const get = jest.fn();
+  const getBuffer = jest.fn();
   const httpAdapter: HttpAdapter = {
     get,
+    getBuffer,
   };
 
   const sut: ProductNormalizationRepository = new ProductNormalizationBluesoftCosmos(
