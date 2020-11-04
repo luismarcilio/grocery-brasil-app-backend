@@ -3,41 +3,40 @@ import { PurchaseProvider } from "../../../../src/features/Purchase/provider/Pur
 import { PurchaseService } from "../../../../src/features/Purchase/service/PurchaseService";
 import { PurchaseServiceImpl } from "../../../../src/features/Purchase/service/PurchaseServiceImpl";
 import { ProductService } from "../../../../src/features/Product/service/ProductService";
-import {
-  ProductException,
-  MessageIds,
-} from "../../../../src/core/ApplicationException";
+import { MessageIds } from "../../../../src/core/ApplicationException";
 import { PurchaseException } from "../../../../src/core/ApplicationException";
 import { resume, purchase } from "../fixtures/purchases";
 
-class PurchaseProviderStub implements PurchaseProvider {
-  save = (): Promise<boolean> => {
-    return Promise.resolve(true);
-  };
-  saveResume = (): Promise<boolean> => {
-    return Promise.resolve(true);
-  };
-}
-
-class ProductServiceStub implements ProductService {
-  saveItemsFromPurchase = (): Promise<boolean | ProductException> => {
-    return Promise.resolve(true);
-  };
-}
-
 describe("save purchase service", () => {
-  const purchaseProviderStub: PurchaseProvider = new PurchaseProviderStub();
-  const productServiceStub: ProductService = new ProductServiceStub();
+  const save = jest.fn();
+  const saveResume = jest.fn();
+  const saveItemsFromPurchase = jest.fn();
+  const normalizeProduct = jest.fn();
+  const updateProduct = jest.fn();
+  const uploadThumbnail = jest.fn();
+
+  const purchaseProviderStub: PurchaseProvider = {
+    save,
+    saveResume,
+  };
+  const productServiceStub: ProductService = {
+    saveItemsFromPurchase,
+    normalizeProduct,
+    updateProduct,
+    uploadThumbnail,
+  };
+
   const sut: PurchaseService = new PurchaseServiceImpl(
     purchaseProviderStub,
     productServiceStub
   );
   it("should save the whole purchase", async () => {
-    const purchaseProviderStubSpy = jest.spyOn(purchaseProviderStub, "save");
-
+    save.mockResolvedValue(true);
+    saveResume.mockResolvedValue(true);
+    saveItemsFromPurchase.mockResolvedValue(true);
     const actual = await sut.save(purchase);
     expect(actual).toEqual(true);
-    expect(purchaseProviderStubSpy).toHaveBeenCalledWith(purchase);
+    expect(save).toHaveBeenCalledWith(purchase);
   });
   it("should save resumed purchase", async () => {
     const purchaseProviderStubSpy = jest.spyOn(
