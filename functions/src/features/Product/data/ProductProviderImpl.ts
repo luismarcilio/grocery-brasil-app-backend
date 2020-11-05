@@ -4,18 +4,28 @@ import { ProductRepository } from "./ProductRepository";
 import { errorToApplicationException } from "../../../core/utils";
 import { ProductException } from "../../../core/ApplicationException";
 import { ProductNormalizationRepository } from "./ProductNormalizationRepository";
+import { TextSearchEngineRepository } from "./TextSearchEngineRepository";
 
 export class ProductProviderImpl implements ProductProvider {
   private readonly productRepository: ProductRepository;
   private readonly productNormalizationRepository: ProductNormalizationRepository;
-
+  private readonly textSearchEngineRepository: TextSearchEngineRepository;
   constructor(
     productRepository: ProductRepository,
-    productNormalizationRepository: ProductNormalizationRepository
+    productNormalizationRepository: ProductNormalizationRepository,
+    textSearchEngineRepository: TextSearchEngineRepository
   ) {
     this.productRepository = productRepository;
     this.productNormalizationRepository = productNormalizationRepository;
+    this.textSearchEngineRepository = textSearchEngineRepository;
   }
+  uploadToSearchEngine = async (product: Product): Promise<Product> => {
+    try {
+      return await this.textSearchEngineRepository.uploadProduct(product);
+    } catch (error) {
+      throw errorToApplicationException(error, ProductException);
+    }
+  };
   updateProduct = async (product: Product): Promise<Product> => {
     try {
       const productId = this.getDocId(product);

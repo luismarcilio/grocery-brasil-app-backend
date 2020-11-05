@@ -9,25 +9,32 @@ import {
 } from "../../../../src/core/ApplicationException";
 import { ProductProviderImpl } from "../../../../src/features/Product/data/ProductProviderImpl";
 import { product } from "../fixture/product";
+import { TextSearchEngineRepository } from "../../../../src/features/Product/data/TextSearchEngineRepository";
 
 describe("ProductProviderImpl", () => {
   const save = jest.fn();
   const saveNf = jest.fn();
   const getProductById = jest.fn();
-  const normalizeProduct = jest.fn();
   const productRepository: ProductRepository = {
     save,
     saveNf,
     getProductById,
   };
 
+  const normalizeProduct = jest.fn();
   const productNormalizationRepository: ProductNormalizationRepository = {
     normalizeProduct,
   };
 
+  const uploadProduct = jest.fn();
+  const textSearchEngineRepository: TextSearchEngineRepository = {
+    uploadProduct,
+  };
+
   const sut: ProductProvider = new ProductProviderImpl(
     productRepository,
-    productNormalizationRepository
+    productNormalizationRepository,
+    textSearchEngineRepository
   );
   describe("ProductProviderImpl.save", () => {
     it("should save a product", async () => {
@@ -155,6 +162,26 @@ describe("ProductProviderImpl", () => {
       });
       save.mockRejectedValue(someException);
       await expect(sut.updateProduct(product)).rejects.toEqual(expected);
+    });
+  });
+
+  describe("uploadToSearchEngine", () => {
+    it("should upload to search engine", async () => {
+      const expected = { ...product };
+      uploadProduct.mockResolvedValue(expected);
+      const actual = await sut.uploadToSearchEngine(product);
+      expect(actual).toEqual(product);
+      expect(uploadProduct).toHaveBeenCalledWith(product);
+    });
+
+    it("should throw ProductException on error", async () => {
+      const someException = new Error("error");
+      const expected = new ProductException({
+        messageId: MessageIds.UNEXPECTED,
+        message: (someException as unknown) as string,
+      });
+      uploadProduct.mockRejectedValue(someException);
+      await expect(sut.uploadToSearchEngine(product)).rejects.toEqual(expected);
     });
   });
 });
