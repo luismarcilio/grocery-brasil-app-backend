@@ -52,7 +52,7 @@ export class ThumbnailFacadeImpl implements ThumbnailFacade {
       }
       const image: Buffer = response.body;
       const mimeType = await this.mimeTypeAdapter.getMimeType(image);
-      if (!mimeType.includes("image")) {
+      if (!mimeType?.includes("image")) {
         return Promise.reject(
           new ProductException({
             messageId: MessageIds.UNEXPECTED,
@@ -73,7 +73,8 @@ export class ThumbnailFacadeImpl implements ThumbnailFacade {
       const newThumbnailUrl: string = await this.fileServerRepository.save(
         resizedImage,
         "grocery-brasil-app-thumbnails",
-        fileName
+        fileName,
+        mimeType
       );
 
       const updatedProduct = { ...product };
