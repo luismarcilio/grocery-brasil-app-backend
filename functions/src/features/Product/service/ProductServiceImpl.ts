@@ -17,6 +17,9 @@ export class ProductServiceImpl implements ProductService {
     this.productProvider = productProvider;
     this.thumbnailFacade = thumbnailFacade;
   }
+  uploadToSearchEngine = (product: Product) : Promise<Product> => {
+    return Promise.resolve(product)
+  }
   uploadThumbnail = async (product: Product): Promise<Product> => {
     try {
       const updatedProduct = await this.thumbnailFacade.uploadThumbnail(
