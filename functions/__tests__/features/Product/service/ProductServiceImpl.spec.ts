@@ -18,6 +18,7 @@ describe("ProductService implementation", () => {
   const getDocId = jest.fn();
   const updateProduct = jest.fn();
   const normalizeProduct = jest.fn();
+  const uploadToSearchEngine = jest.fn();
 
   const productProviderStub: ProductProvider = {
     save,
@@ -26,6 +27,7 @@ describe("ProductService implementation", () => {
     getDocId,
     updateProduct,
     normalizeProduct,
+    uploadToSearchEngine,
   };
 
   const uploadThumbnail = jest.fn();
@@ -221,6 +223,26 @@ describe("ProductService implementation", () => {
       uploadThumbnail.mockRejectedValue(someException);
 
       await expect(sut.uploadThumbnail(product)).rejects.toEqual(expected);
+    });
+  });
+
+  describe("uploadToSearchEngine", () => {
+    it("should upload text search engine", async () => {
+      const expected = { ...product };
+      uploadToSearchEngine.mockResolvedValue(expected);
+      const actual = await sut.uploadToSearchEngine(product);
+      expect(actual).toEqual(expected);
+      expect(uploadToSearchEngine).toHaveBeenCalledWith(product);
+    });
+    it("should throw an exception if an error occurs", async () => {
+      const someException = new Error("error");
+      const expected = new ProductException({
+        messageId: MessageIds.UNEXPECTED,
+        message: (someException as unknown) as string,
+      });
+      uploadToSearchEngine.mockRejectedValue(someException);
+
+      await expect(sut.uploadToSearchEngine(product)).rejects.toEqual(expected);
     });
   });
 });
