@@ -60,7 +60,8 @@ describe("ThumbnailFacade", () => {
     expect(save).toHaveBeenCalledWith(
       resizedImage,
       "grocery-brasil-app-thumbnails",
-      "7896100501829"
+      "7896100501829",
+      "image/jpg"
     );
   });
 
