@@ -2,13 +2,23 @@ import { ProductException } from "../../../core/ApplicationException";
 import { Purchase } from "../../../model/Purchase";
 import { Product } from "../../../model/Product";
 
-export interface ProductService {
+export interface ProductServiceUpdateProduct {
+  updateProduct: (product: Product) => Promise<Product>;
+}
+
+export interface ProductServiceUploadThumbnail {
+  uploadThumbnail: (product: Product) => Promise<Product>;
+}
+
+export interface ProductServiceNormalizeProduct {
+  normalizeProduct: (product: Product) => Promise<Product>;
+}
+
+export interface ProductService
+  extends ProductServiceUpdateProduct,
+    ProductServiceUploadThumbnail,
+    ProductServiceNormalizeProduct {
   saveItemsFromPurchase: (
     purchase: Purchase
   ) => Promise<boolean | ProductException>;
-
-  normalizeProduct: (product: Product) => Promise<Product>;
-  updateProduct: (product: Product) => Promise<Product>;
-
-  uploadThumbnail: (product: Product) => Promise<Product>;
 }

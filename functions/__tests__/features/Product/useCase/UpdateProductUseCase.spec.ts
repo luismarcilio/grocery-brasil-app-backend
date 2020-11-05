@@ -1,6 +1,6 @@
 import { UseCase } from "../../../../src/core/UseCase";
 import { Product } from "../../../../src/model/Product";
-import { ProductService } from "../../../../src/features/Product/service/ProductService";
+import { ProductServiceUpdateProduct } from "../../../../src/features/Product/service/ProductService";
 import { UpdateProductUseCase } from "../../../../src/features/Product/useCase/UpdateProductUseCase";
 import {
   ProductException,
@@ -8,16 +8,10 @@ import {
 } from "../../../../src/core/ApplicationException";
 
 describe("Update product data", () => {
-  const saveItemsFromPurchase = jest.fn();
-  const normalizeProduct = jest.fn();
   const updateProduct = jest.fn();
-  const uploadThumbnail = jest.fn();
 
-  const productService: ProductService = {
-    saveItemsFromPurchase,
-    normalizeProduct,
+  const productService: ProductServiceUpdateProduct = {
     updateProduct,
-    uploadThumbnail,
   };
   const sut: UseCase<Product> = new UpdateProductUseCase(productService);
 

@@ -1,4 +1,4 @@
-import { ProductService } from "../../../../src/features/Product/service/ProductService";
+import { ProductServiceUploadThumbnail } from "../../../../src/features/Product/service/ProductService";
 import { UploadThumbnailUseCase } from "../../../../src/features/Product/useCase/UploadThumbnailUseCase";
 import { UseCase } from "../../../../src/core/UseCase";
 import { Product } from "../../../../src/model/Product";
@@ -9,15 +9,9 @@ import {
 } from "../../../../src/core/ApplicationException";
 
 describe("upload thumbnail to file server", () => {
-  const saveItemsFromPurchase = jest.fn();
-  const normalizeProduct = jest.fn();
-  const updateProduct = jest.fn();
   const uploadThumbnail = jest.fn();
 
-  const productService: ProductService = {
-    saveItemsFromPurchase,
-    normalizeProduct,
-    updateProduct,
+  const productService: ProductServiceUploadThumbnail = {
     uploadThumbnail,
   };
 

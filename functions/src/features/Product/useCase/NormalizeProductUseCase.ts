@@ -1,12 +1,12 @@
 import { Product } from "../../../model/Product";
 import { UseCase } from "../../../core/UseCase";
 import { ProductException } from "../../../core/ApplicationException";
-import { ProductService } from "../service/ProductService";
+import { ProductServiceNormalizeProduct } from "../service/ProductService";
 import { errorToApplicationException } from "../../../core/utils";
 
 export class NormalizeProductUseCase implements UseCase<Product> {
-  private readonly productService: ProductService;
-  constructor(productService: ProductService) {
+  private readonly productService: ProductServiceNormalizeProduct;
+  constructor(productService: ProductServiceNormalizeProduct) {
     this.productService = productService;
   }
 
