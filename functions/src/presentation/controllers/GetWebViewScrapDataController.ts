@@ -1,10 +1,7 @@
 import { Controller } from "./Controller";
-import { HttpRequest, HttpResponse } from "../../../core/HttpProtocol";
-import { GetWebViewScrapDataUseCase } from "../../../features/Purchase/useCase/GetWebViewScrapDataUseCase";
-import {
-  PurchaseException,
-  MessageIds,
-} from "../../../core/ApplicationException";
+import { GetWebViewScrapDataUseCase } from "../../features/Purchase/useCase/GetWebViewScrapDataUseCase";
+import { HttpRequest, HttpResponse } from "../../core/HttpProtocol";
+import { PurchaseException, MessageIds } from "../../core/ApplicationException";
 export class GetWebViewScrapDataController implements Controller {
   private readonly getWebViewScrapDataUseCase: GetWebViewScrapDataUseCase;
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Controller } from "../../../../src/presentation/express/controllers/Controller";
+import { Controller } from "../../../../src/presentation/controllers/Controller";
 import { HttpRequest, HttpResponse } from "../../../../src/core/HttpProtocol";
 import { purchase } from "../../../features/Purchase/fixtures/purchases";
 import { HtmlFiscalNote } from "../../../../src/model/HtmlFiscalNote";
@@ -8,7 +8,7 @@ import {
   MessageIds,
   PurchaseException,
 } from "../../../../src/core/ApplicationException";
-import { ParseAndSaveNFController } from "../../../../src/presentation/express/controllers/ParseAndSaveNFController";
+import { ParseAndSaveNFController } from "../../../../src/presentation/controllers/ParseAndSaveNFController";
 import { ScrapNFUseCase } from "../../../../src/features/Purchase/useCase/ScrapNFUseCase";
 import { SavePurchaseUseCase } from "../../../../src/features/Purchase/useCase/SavePurchaseUseCase";
 import { ScrapNfException } from "../../../../src/core/ApplicationException";

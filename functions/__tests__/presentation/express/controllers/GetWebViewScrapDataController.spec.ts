@@ -1,5 +1,5 @@
-import { Controller } from "../../../../src/presentation/express/controllers/Controller";
-import { GetWebViewScrapDataController } from "../../../../src/presentation/express/controllers/GetWebViewScrapDataController";
+import { Controller } from "../../../../src/presentation/controllers/Controller";
+import { GetWebViewScrapDataController } from "../../../../src/presentation/controllers/GetWebViewScrapDataController";
 import { GetWebViewScrapDataUseCase } from "../../../../src/features/Purchase/useCase/GetWebViewScrapDataUseCase";
 import { HttpRequest, HttpResponse } from "../../../../src/core/HttpProtocol";
 import { purchase } from "../../../features/Purchase/fixtures/purchases";

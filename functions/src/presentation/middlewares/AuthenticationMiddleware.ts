@@ -1,7 +1,7 @@
 import { Middleware } from "./Middleware";
-import { HttpRequest, HttpResponse } from "../../../core/HttpProtocol";
-import { User } from "../../../model/User";
-import { UseCase } from "../../../core/UseCase";
+import { HttpRequest, HttpResponse } from "../../core/HttpProtocol";
+import { User } from "../../model/User";
+import { UseCase } from "../../core/UseCase";
 
 export class AuthenticationMiddleware implements Middleware {
   private readonly getUserByJWTUseCase: UseCase<User>;

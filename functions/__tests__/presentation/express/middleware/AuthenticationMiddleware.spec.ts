@@ -2,8 +2,8 @@
 import { User } from "../../../../src/model/User";
 import { UseCase } from "../../../../src/core/UseCase";
 import { UserException, MessageIds } from "../../../../src/core/ApplicationException";
-import { Middleware } from "../../../../src/presentation/express/middlewares/Middleware";
-import { AuthenticationMiddleware } from "../../../../src/presentation/express/middlewares/AuthenticationMiddleware";
+import { Middleware } from "../../../../src/presentation/middlewares/Middleware";
+import { AuthenticationMiddleware } from "../../../../src/presentation/middlewares/AuthenticationMiddleware";
 import { HttpRequest } from "../../../../src/core/HttpProtocol";
 
 describe("AuthenticationMiddleware", () => {

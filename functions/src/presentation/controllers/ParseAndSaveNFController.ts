@@ -1,13 +1,10 @@
 import { Controller } from "./Controller";
-import { HttpRequest, HttpResponse } from "../../../core/HttpProtocol";
-import { Purchase } from "../../../model/Purchase";
-import { HtmlFiscalNote } from "../../../model/HtmlFiscalNote";
-import { SavePurchaseUseCase } from "../../../features/Purchase/useCase/SavePurchaseUseCase";
-import { ScrapNFUseCase } from "../../../features/Purchase/useCase/ScrapNFUseCase";
-import {
-  ScrapNfException,
-  PurchaseException,
-} from "../../../core/ApplicationException";
+import { SavePurchaseUseCase } from "../../features/Purchase/useCase/SavePurchaseUseCase";
+import { ScrapNFUseCase } from "../../features/Purchase/useCase/ScrapNFUseCase";
+import { HttpRequest, HttpResponse } from "../../core/HttpProtocol";
+import { HtmlFiscalNote } from "../../model/HtmlFiscalNote";
+import { ScrapNfException, PurchaseException } from "../../core/ApplicationException";
+import { Purchase } from "../../model/Purchase";
 
 export class ParseAndSaveNFController implements Controller {
   private readonly savePurchaseUseCase: SavePurchaseUseCase;

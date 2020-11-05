@@ -1,4 +1,4 @@
-import { Controller } from "../../../presentation/express/controllers/Controller";
+import { Controller } from "../../../presentation/controllers/Controller";
 import { HttpRequest, HttpResponse } from "../../../core/HttpProtocol";
 import {
   ScrapNfException,
