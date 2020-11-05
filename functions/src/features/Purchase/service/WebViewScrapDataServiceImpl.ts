@@ -46,7 +46,7 @@ export class WebViewScrapDataServiceImpl implements WebViewScrapDataService {
     } catch (error) {
       if (
         error instanceof PurchaseException &&
-        error.messageId == MessageIds.NOT_FOUND
+        error.messageId === MessageIds.NOT_FOUND
       ) {
         return new PurchaseException({
           messageId: MessageIds.UNIMPLEMENTED,
