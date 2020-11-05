@@ -126,17 +126,12 @@ const scrapNFUseCase = new ScrapNFUseCase(scrapNFService);
 const getUserByJWTUseCase = new GetUserByJWTUseCase(userRepository);
 
 //Controllers
-export const getWebViewScrapDataController = new GetWebViewScrapDataController(
-  getWebViewScrapDataUseCase
-);
+export const makeGetWebViewScrapDataController = (): GetWebViewScrapDataController =>
+  new GetWebViewScrapDataController(getWebViewScrapDataUseCase);
 
-export const parseAndSaveNFController = new ParseAndSaveNFController(
-  savePurchaseUseCase,
-  scrapNFUseCase
-);
+export const makeParseAndSaveNFController = (): ParseAndSaveNFController =>
+  new ParseAndSaveNFController(savePurchaseUseCase, scrapNFUseCase);
 
 //Middleware
-
-export const authenticationMiddleware = new AuthenticationMiddleware(
-  getUserByJWTUseCase
-);
+export const makeAuthenticationMiddleware = (): AuthenticationMiddleware =>
+  new AuthenticationMiddleware(getUserByJWTUseCase);
