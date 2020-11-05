@@ -2,11 +2,11 @@ import { ProductServiceUploadThumbnail } from "../../../../src/features/Product/
 import { UploadThumbnailUseCase } from "../../../../src/features/Product/useCase/UploadThumbnailUseCase";
 import { UseCase } from "../../../../src/core/UseCase";
 import { Product } from "../../../../src/model/Product";
-import { product } from "../fixtures";
 import {
   ProductException,
   MessageIds,
 } from "../../../../src/core/ApplicationException";
+import { product } from "../fixture/product";
 
 describe("upload thumbnail to file server", () => {
   const uploadThumbnail = jest.fn();

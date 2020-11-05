@@ -3,13 +3,13 @@ import { ImageManipulationAdapter } from "../../../../src/features/Image/adapter
 import { FileServerRepository } from "../../../../src/features/FileServer/repository/FileServerRepository";
 import { MimeTypeAdapter } from "../../../../src/features/MimeType/adapter/MimeTypeAdapter";
 import { ThumbnailFacade } from "../../../../src/features/Product/provider/ThumbnailFacade";
-import { product } from "../fixtures";
 import {
   ProductException,
   MessageIds,
 } from "../../../../src/core/ApplicationException";
 import { ThumbnailFacadeImpl } from "../../../../src/features/Product/provider/ThumbnailFacadeImpl";
 import { HttpResponse } from "../../../../src/core/HttpProtocol";
+import { product } from "../fixture/product";
 
 describe("ThumbnailFacade", () => {
   const get = jest.fn();

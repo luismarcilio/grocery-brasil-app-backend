@@ -1,4 +1,4 @@
-import { Product } from "../../../src/model/Product";
+import { Product } from "../../../../src/model/Product";
 
 export const product: Product = {
   name: "product",

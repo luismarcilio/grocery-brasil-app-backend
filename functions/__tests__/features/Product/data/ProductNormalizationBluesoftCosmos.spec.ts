@@ -2,13 +2,13 @@ import { ProductNormalizationRepository } from "../../../../src/features/Product
 import { ProductNormalizationBluesoftCosmos } from "../../../../src/features/Product/data/ProductNormalizationBluesoftCosmos";
 import { SecretsProvider } from "../../../../src/features/Secrets/provider/SecretsProvider";
 import { HttpAdapter } from "../../../../src/features/Http/adapter/HttpAdapter";
-import { product } from "../fixtures";
 import { HttpResponse, HttpRequest } from "../../../../src/core/HttpProtocol";
 import { bluesoftSampleResponse } from "../fixture/bluesoftSampleResponse";
 import {
   ProductException,
   MessageIds,
 } from "../../../../src/core/ApplicationException";
+import { product } from "../fixture/product";
 
 describe("ProductNormalizationBluesoftCosmos", () => {
   const getSecret = jest.fn();

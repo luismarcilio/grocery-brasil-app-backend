@@ -1,7 +1,6 @@
 import { ProductProvider } from "../../../../src/features/Product/provider/ProductProvider";
 import { ProductRepository } from "../../../../src/features/Product/data/ProductRepository";
 import { ProductNormalizationRepository } from "../../../../src/features/Product/data/ProductNormalizationRepository";
-import { product } from "../fixtures";
 import { purchase } from "../../Purchase/fixtures/purchases";
 import { ProductPurchase, Product } from "../../../../src/model/Product";
 import {
@@ -9,6 +8,7 @@ import {
   MessageIds,
 } from "../../../../src/core/ApplicationException";
 import { ProductProviderImpl } from "../../../../src/features/Product/data/ProductProviderImpl";
+import { product } from "../fixture/product";
 
 describe("ProductProviderImpl", () => {
   const save = jest.fn();

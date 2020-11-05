@@ -1,4 +1,3 @@
-import { product } from "../fixtures";
 import { ThumbnailFacade } from "../../../../src/features/Product/provider/ThumbnailFacade";
 
 import { ProductService } from "../../../../src/features/Product/service/ProductService";
@@ -10,6 +9,7 @@ import {
   ProductException,
   MessageIds,
 } from "../../../../src/core/ApplicationException";
+import { product } from "../fixture/product";
 
 describe("ProductService implementation", () => {
   const save = jest.fn();

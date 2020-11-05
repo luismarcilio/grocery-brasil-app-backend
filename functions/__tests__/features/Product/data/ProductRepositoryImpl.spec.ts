@@ -3,7 +3,6 @@
 import { ProductRepository } from "../../../../src/features/Product/data/ProductRepository";
 import { ProductRepositoryFirebase } from "../../../../src/features/Product/data/ProductRepositoryFirebase";
 import { firestore } from "../../__mock__/mocks";
-import { product } from "../fixtures";
 import {
   PurchaseException,
   MessageIds,
@@ -11,6 +10,7 @@ import {
 import { ProductPurchase } from "../../../../src/model/Product";
 import { purchase } from "../../Purchase/fixtures/purchases";
 import { ProductException } from "../../../../src/core/ApplicationException";
+import { product } from "../fixture/product";
 
 describe("ProductRepositoryImpl", () => {
   const sut: ProductRepository = new ProductRepositoryFirebase(firestore);
