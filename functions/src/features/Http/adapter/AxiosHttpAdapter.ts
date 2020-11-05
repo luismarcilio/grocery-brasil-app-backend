@@ -49,4 +49,28 @@ export class AxiosHttpAdapter implements HttpAdapter {
       throw errorToApplicationException(error, HttpAdapterException);
     }
   };
+
+  post = async (
+    url: string,
+    httpRequest?: HttpRequest
+  ): Promise<HttpResponse> => {
+    try {
+      const config: AxiosRequestConfig = {};
+      if (httpRequest) {
+        config.headers = httpRequest.headers;
+      }
+      const axiosResponse = await this.axiosInstance.post(
+        url,
+        httpRequest?.body,
+        config
+      );
+      const returnData: HttpResponse = {
+        status: axiosResponse.status,
+        body: axiosResponse.data?.body,
+      };
+      return returnData;
+    } catch (error) {
+      throw errorToApplicationException(error, HttpAdapterException);
+    }
+  };
 }
