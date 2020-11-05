@@ -21,7 +21,11 @@ export class ProductProviderImpl implements ProductProvider {
   }
   uploadToSearchEngine = async (product: Product): Promise<Product> => {
     try {
-      return await this.textSearchEngineRepository.uploadProduct(product);
+      const productId = this.getDocId(product);
+      return await this.textSearchEngineRepository.uploadProduct(
+        productId,
+        product
+      );
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }

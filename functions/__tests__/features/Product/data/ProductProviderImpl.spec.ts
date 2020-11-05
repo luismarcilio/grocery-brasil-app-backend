@@ -171,7 +171,7 @@ describe("ProductProviderImpl", () => {
       uploadProduct.mockResolvedValue(expected);
       const actual = await sut.uploadToSearchEngine(product);
       expect(actual).toEqual(product);
-      expect(uploadProduct).toHaveBeenCalledWith(product);
+      expect(uploadProduct).toHaveBeenCalledWith(product.eanCode, product);
     });
 
     it("should throw ProductException on error", async () => {
