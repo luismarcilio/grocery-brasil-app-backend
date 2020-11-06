@@ -32,7 +32,7 @@ export class NormalizeProductAndUploadThumbnailTrigger
       if (!result.thumbnail) {
         return Promise.resolve(null);
       }
-      const normalizedProduct = <Product>result;
+      const normalizedProduct = result;
       const thumbnailUploaded = await this.uploadThumbnailUseCase.execute(
         normalizedProduct
       );
