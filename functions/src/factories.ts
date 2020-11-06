@@ -36,10 +36,16 @@ import { ImageManipulationAdapterSharp } from "./features/Image/adapter/ImageMan
 import { AuthenticationMiddleware } from "./presentation/middlewares/AuthenticationMiddleware";
 import { GetUserByJWTUseCase } from "./features/User/useCase/GetUserByJWTUseCase";
 import { UserRepositoryImpl } from "./features/User/data/UserRepositoryImpl";
-import { FirebaseUserDataStore, VerifyIdTokenWrapper } from "./features/User/data/FirebaseUserDataStore";
+import {
+  FirebaseUserDataStore,
+  VerifyIdTokenWrapper,
+} from "./features/User/data/FirebaseUserDataStore";
 import { SecretServiceImpl } from "./features/Secrets/service/SecretServiceImpl";
 import { GetSecretUseCase } from "./features/Secrets/useCase/GetSecretUseCase";
 import { GetSecretController } from "./presentation/controllers/GetSecretController";
+import { NormalizeProductAndUploadThumbnailTrigger } from "./presentation/functions/NormalizeProductAndUploadThumbnailTrigger";
+import { NormalizeProductUseCase } from "./features/Product/useCase/NormalizeProductUseCase";
+import { UploadThumbnailUseCase } from "./features/Product/useCase/UploadThumbnailUseCase";
 
 //3rd party
 const firestore = new FirebaseFirestore.Firestore();
@@ -125,7 +131,9 @@ const getWebViewScrapDataUseCase = new GetWebViewScrapDataUseCase(
 const savePurchaseUseCase = new SavePurchaseUseCase(purchaseService);
 const scrapNFUseCase = new ScrapNFUseCase(scrapNFService);
 const getUserByJWTUseCase = new GetUserByJWTUseCase(userRepository);
-const getSecretUseCase = new GetSecretUseCase(secretService)
+const getSecretUseCase = new GetSecretUseCase(secretService);
+const normalizeProductUseCase = new NormalizeProductUseCase(productService);
+const uploadThumbnailUseCase = new UploadThumbnailUseCase(productService);
 
 //Controllers
 export const makeGetWebViewScrapDataController = (): GetWebViewScrapDataController =>
@@ -134,9 +142,16 @@ export const makeGetWebViewScrapDataController = (): GetWebViewScrapDataControll
 export const makeParseAndSaveNFController = (): ParseAndSaveNFController =>
   new ParseAndSaveNFController(savePurchaseUseCase, scrapNFUseCase);
 
-export const makeGetSecrectController = () : GetSecretController =>
-new GetSecretController(getSecretUseCase)  
+export const makeGetSecrectController = (): GetSecretController =>
+  new GetSecretController(getSecretUseCase);
 
 //Middleware
 export const makeAuthenticationMiddleware = (): AuthenticationMiddleware =>
   new AuthenticationMiddleware(getUserByJWTUseCase);
+
+//Database functions
+export const makeNormalizeProductAndUploadThumbnailTrigger = (): NormalizeProductAndUploadThumbnailTrigger =>
+  new NormalizeProductAndUploadThumbnailTrigger(
+    normalizeProductUseCase,
+    uploadThumbnailUseCase
+  );
