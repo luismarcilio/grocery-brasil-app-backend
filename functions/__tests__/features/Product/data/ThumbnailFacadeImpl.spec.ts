@@ -14,9 +14,11 @@ import { product } from "../fixture/product";
 describe("ThumbnailFacade", () => {
   const get = jest.fn();
   const getBuffer = jest.fn();
+  const post = jest.fn()
   const httpAdapter: HttpAdapter = {
     get,
     getBuffer,
+    post,
   };
   const resize = jest.fn();
   const imageManipulationAdapter: ImageManipulationAdapter = {
