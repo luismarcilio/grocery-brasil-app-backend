@@ -46,6 +46,8 @@ import { GetSecretController } from "./presentation/controllers/GetSecretControl
 import { NormalizeProductAndUploadThumbnailTrigger } from "./presentation/functions/NormalizeProductAndUploadThumbnailTrigger";
 import { NormalizeProductUseCase } from "./features/Product/useCase/NormalizeProductUseCase";
 import { UploadThumbnailUseCase } from "./features/Product/useCase/UploadThumbnailUseCase";
+import { UploadToTextSearchEngineTrigger } from "./presentation/functions/UploadToTextSearchEngineTrigger";
+import { UploadToTextSearchEngineUseCase } from "./features/Product/useCase/UploadToTextSearchEngineUseCase";
 
 //3rd party
 const firestore = new FirebaseFirestore.Firestore();
@@ -134,6 +136,9 @@ const getUserByJWTUseCase = new GetUserByJWTUseCase(userRepository);
 const getSecretUseCase = new GetSecretUseCase(secretService);
 const normalizeProductUseCase = new NormalizeProductUseCase(productService);
 const uploadThumbnailUseCase = new UploadThumbnailUseCase(productService);
+const uploadToTextSearchEngineUseCase = new UploadToTextSearchEngineUseCase(
+  productService
+);
 
 //Controllers
 export const makeGetWebViewScrapDataController = (): GetWebViewScrapDataController =>
@@ -155,3 +160,5 @@ export const makeNormalizeProductAndUploadThumbnailTrigger = (): NormalizeProduc
     normalizeProductUseCase,
     uploadThumbnailUseCase
   );
+export const makeUploadToTextSearchEngineTrigger = (): UploadToTextSearchEngineTrigger =>
+  new UploadToTextSearchEngineTrigger(uploadToTextSearchEngineUseCase);
