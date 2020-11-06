@@ -36,10 +36,10 @@ import { ImageManipulationAdapterSharp } from "./features/Image/adapter/ImageMan
 import { AuthenticationMiddleware } from "./presentation/middlewares/AuthenticationMiddleware";
 import { GetUserByJWTUseCase } from "./features/User/useCase/GetUserByJWTUseCase";
 import { UserRepositoryImpl } from "./features/User/data/UserRepositoryImpl";
-import {
-  FirebaseUserDataStore,
-  VerifyIdTokenWrapper,
-} from "./features/User/data/FirebaseUserDataStore";
+import { FirebaseUserDataStore, VerifyIdTokenWrapper } from "./features/User/data/FirebaseUserDataStore";
+import { SecretServiceImpl } from "./features/Secrets/service/SecretServiceImpl";
+import { GetSecretUseCase } from "./features/Secrets/useCase/GetSecretUseCase";
+import { GetSecretController } from "./presentation/controllers/GetSecretController";
 
 //3rd party
 const firestore = new FirebaseFirestore.Firestore();
@@ -116,6 +116,7 @@ const purchaseService = new PurchaseServiceImpl(
   productService
 );
 const scrapNFService = new ScrapNFServiceImpl(scrapNfProviderFactory);
+const secretService = new SecretServiceImpl(secretsProvider);
 
 //Use Cases
 const getWebViewScrapDataUseCase = new GetWebViewScrapDataUseCase(
@@ -124,6 +125,7 @@ const getWebViewScrapDataUseCase = new GetWebViewScrapDataUseCase(
 const savePurchaseUseCase = new SavePurchaseUseCase(purchaseService);
 const scrapNFUseCase = new ScrapNFUseCase(scrapNFService);
 const getUserByJWTUseCase = new GetUserByJWTUseCase(userRepository);
+const getSecretUseCase = new GetSecretUseCase(secretService)
 
 //Controllers
 export const makeGetWebViewScrapDataController = (): GetWebViewScrapDataController =>
@@ -131,6 +133,9 @@ export const makeGetWebViewScrapDataController = (): GetWebViewScrapDataControll
 
 export const makeParseAndSaveNFController = (): ParseAndSaveNFController =>
   new ParseAndSaveNFController(savePurchaseUseCase, scrapNFUseCase);
+
+export const makeGetSecrectController = () : GetSecretController =>
+new GetSecretController(getSecretUseCase)  
 
 //Middleware
 export const makeAuthenticationMiddleware = (): AuthenticationMiddleware =>
