@@ -18,7 +18,7 @@ export class AuthenticationMiddlewareTest implements Middleware {
       status: 200,
     };
     response.body.user = {
-      userId: "Od8cEO1Rc8fZKtqWyUPyZhYiwv33",
+      userId: "testUserId",
       email: "luismarcilio@yahoo.com.br",
       address: {
         rawAddress:
