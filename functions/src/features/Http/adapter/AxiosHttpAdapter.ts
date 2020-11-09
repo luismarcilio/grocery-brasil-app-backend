@@ -42,7 +42,7 @@ export class AxiosHttpAdapter implements HttpAdapter {
       const axiosResponse = await this.axiosInstance.get(url, config);
       const returnData: HttpResponse = {
         status: axiosResponse.status,
-        body: axiosResponse.data?.body,
+        body: axiosResponse.data,
       };
       return returnData;
     } catch (error) {
@@ -66,7 +66,7 @@ export class AxiosHttpAdapter implements HttpAdapter {
       );
       const returnData: HttpResponse = {
         status: axiosResponse.status,
-        body: axiosResponse.data?.body,
+        body: axiosResponse.data,
       };
       return returnData;
     } catch (error) {

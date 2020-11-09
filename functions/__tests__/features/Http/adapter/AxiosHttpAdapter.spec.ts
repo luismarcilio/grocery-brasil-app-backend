@@ -12,12 +12,12 @@ describe("AxiosHttpAdapter", () => {
   const post = jest.fn();
   const axiosInstance: AxiosInstance = ({
     get,
-    post
+    post,
   } as unknown) as AxiosInstance;
   const sut: HttpAdapter = new AxiosHttpAdapter(axiosInstance);
 
   const axiosResponse: AxiosResponse = {
-    data: { body: "all OK" },
+    data: "all OK",
     status: 200,
     statusText: "OK",
     headers: {},
@@ -59,7 +59,7 @@ describe("AxiosHttpAdapter", () => {
       jest.clearAllMocks();
       const httpRequest: HttpRequest = {
         headers: { "x-header": "x-header-test" },
-        body: "some data to post"
+        body: "some data to post",
       };
       const expectedAxiosRequestConfig: AxiosRequestConfig = {
         headers: httpRequest.headers,
@@ -69,9 +69,11 @@ describe("AxiosHttpAdapter", () => {
       post.mockResolvedValue(axiosResponse);
       const actual = await sut.post("someUrl", httpRequest);
       expect(actual).toEqual(expected);
-      expect(post).toHaveBeenCalledWith("someUrl", "some data to post",expectedAxiosRequestConfig);
+      expect(post).toHaveBeenCalledWith(
+        "someUrl",
+        "some data to post",
+        expectedAxiosRequestConfig
+      );
     });
   });
-
-
 });
