@@ -3,6 +3,42 @@ import { HttpRequest, HttpResponse } from "../../core/HttpProtocol";
 import { User } from "../../model/User";
 import { UseCase } from "../../core/UseCase";
 
+export class AuthenticationMiddlewareTest implements Middleware {
+  private readonly getUserByJWTUseCase: UseCase<User>;
+
+  constructor(getUserByJWTUseCase: UseCase<User>) {
+    this.getUserByJWTUseCase = getUserByJWTUseCase;
+  }
+
+  handle = (request: HttpRequest): Promise<HttpResponse> => {
+    this.getUserByJWTUseCase;
+    const response: HttpResponse = {
+      headers: request.headers,
+      body: request.body,
+      status: 200,
+    };
+    response.body.user = {
+      userId: "Od8cEO1Rc8fZKtqWyUPyZhYiwv33",
+      email: "luismarcilio@yahoo.com.br",
+      address: {
+        rawAddress:
+          "Av. Epitácio Pessoa, 2566 - Ipanema, Rio de Janeiro - RJ, 22471-003, Brasil",
+        street: "Avenida Epitácio Pessoa",
+        number: "2566",
+        poCode: "22471-003",
+        county: "Ipanema",
+        city: { name: "Rio de Janeiro" },
+        state: { name: "Rio de Janeiro", acronnym: "RJ" },
+        country: { name: "Brasil" },
+        lat: -22.9749636,
+        lon: -43.1984787,
+      },
+      preferences: { searchRadius: 30000 },
+    };
+    return Promise.resolve(response);
+  };
+}
+
 export class AuthenticationMiddleware implements Middleware {
   private readonly getUserByJWTUseCase: UseCase<User>;
 
