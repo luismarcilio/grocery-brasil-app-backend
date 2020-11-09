@@ -10,8 +10,7 @@ import {
 import { expressRouteAdapter } from "./expressRouteAdapter";
 
 const app = express();
-const router = express.Router();
-app.use("/", router);
+
 app.use(express.json());
 app.use(cors({ origin: true }));
 app.use(expressMiddlewareAdapter(makeAuthenticationMiddleware()));
