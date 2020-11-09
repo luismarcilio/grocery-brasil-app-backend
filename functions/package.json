@@ -33,6 +33,7 @@
     "node-cache": "^5.1.2",
     "querystring": "^0.2.0",
     "sharp": "^0.26.2",
+    "uglify-es": "^3.3.9",
     "winston": "^3.3.3"
   },
   "devDependencies": {
@@ -51,6 +52,7 @@
     "@types/node-cache": "^4.2.5",
     "@types/sharp": "^0.25.1",
     "@types/supertest": "^2.0.10",
+    "@types/uglify-es": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",
