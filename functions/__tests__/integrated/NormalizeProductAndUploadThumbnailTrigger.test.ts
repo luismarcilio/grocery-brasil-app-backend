@@ -17,6 +17,5 @@ describe("NormalizeProductAndUploadThumbnailTrigger", () => {
 
     const actual = await sut.call(product);
     expect(actual).toEqual(expected);
-    console.log(actual);
   });
 });
