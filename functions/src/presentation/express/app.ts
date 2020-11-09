@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors({ origin: true }));
 app.use(expressMiddlewareAdapter(makeAuthenticationMiddleware()));
 
-app.get("/secret", expressRouteAdapter(makeGetSecrectController()));
+app.get("/secret/:secret", expressRouteAdapter(makeGetSecrectController()));
 app.post(
   "/parseAndSaveNf/:state",
   expressRouteAdapter(makeParseAndSaveNFController())
