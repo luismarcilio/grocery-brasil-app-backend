@@ -1,16 +1,17 @@
 import * as admin from "firebase-admin";
-import * as minify from "minify";
 import NodeCache = require("node-cache");
 import * as filetype from "file-type";
 import axios from "axios";
 import * as sharp from "sharp";
+import * as UglifyJS from "uglify-es";
+
 import { Storage } from "@google-cloud/storage";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 import { GetWebViewScrapDataController } from "./presentation/controllers/GetWebViewScrapDataController";
 import { GetWebViewScrapDataUseCase } from "./features/Purchase/useCase/GetWebViewScrapDataUseCase";
 import { WebViewScrapDataServiceImpl } from "./features/Purchase/service/WebViewScrapDataServiceImpl";
 import { WebViewScrapDataProviderImpl } from "./features/Purchase/data/WebViewScrapDataProviderImpl";
-import { MinifierAdapterMinify } from "./features/Purchase/adapter/MinifierAdapterMinify";
+import { MinifierAdapterUglifyJs } from "./features/Purchase/adapter/MinifierAdapterUglifyJs";
 import { UrlParserProviderImpl } from "./features/Purchase/provider/UrlParserProviderImpl";
 import { WebViewScrapDataRepositoryFirebase } from "./features/Purchase/data/WebViewScrapDataRepositoryFirebase";
 import { ParseAndSaveNFController } from "./presentation/controllers/ParseAndSaveNFController";
@@ -61,7 +62,7 @@ const storage = new Storage();
 const secretManagerServiceClient = new SecretManagerServiceClient();
 
 //Adapters
-const minifierAdapter = new MinifierAdapterMinify(minify);
+const minifierAdapter = new MinifierAdapterUglifyJs(UglifyJS.minify);
 const mimeTypeAdapter = new MimeTypeAdapterFileType(filetype);
 const httpAdapter = new AxiosHttpAdapter(axios);
 const imageManipulationAdapter = new ImageManipulationAdapterSharp(sharp);
