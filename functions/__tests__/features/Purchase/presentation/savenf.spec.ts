@@ -7,7 +7,7 @@ import {
   ScrapNfException,
 } from "../../../../src/core/ApplicationException";
 import { SaveNf } from "../../../../src/features/Purchase/presentation/SaveNf";
-import { Controller } from "../../../../src/presentation/express/controllers/Controller";
+import { Controller } from "../../../../src/presentation/controllers/Controller";
 describe("saveNf", () => {
   const scrapNFUseCaseExecute = jest.fn();
   const savePurchaseExecute = jest.fn();
