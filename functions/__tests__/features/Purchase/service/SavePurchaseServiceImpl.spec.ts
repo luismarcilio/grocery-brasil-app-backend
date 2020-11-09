@@ -14,6 +14,7 @@ describe("save purchase service", () => {
   const normalizeProduct = jest.fn();
   const updateProduct = jest.fn();
   const uploadThumbnail = jest.fn();
+  const uploadToSearchEngine = jest.fn();
 
   const purchaseProviderStub: PurchaseProvider = {
     save,
@@ -24,6 +25,7 @@ describe("save purchase service", () => {
     normalizeProduct,
     updateProduct,
     uploadThumbnail,
+    uploadToSearchEngine,
   };
 
   const sut: PurchaseService = new PurchaseServiceImpl(
