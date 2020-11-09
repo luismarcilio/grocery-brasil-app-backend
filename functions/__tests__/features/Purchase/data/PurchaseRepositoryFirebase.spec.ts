@@ -7,16 +7,17 @@ import {
   MessageIds,
 } from "../../../../src/core/ApplicationException";
 import { purchase, resume } from "../fixtures/purchases";
-import { firestore } from "../../__mock__/mocks";
 
 describe("PurchaseRepositoryFirebase", () => {
+  const set = jest.fn();
+  const collection = jest.fn(() => ({ doc: jest.fn() }));
+  const doc = jest.fn(() => ({ set, collection }));
+  const firestore: FirebaseFirestore.Firestore = ({
+    collection,
+  } as unknown) as FirebaseFirestore.Firestore;
   const sut: PurchaseRepository = new PurchaseRepositoryFirebase(firestore);
 
   it("should save purchase", async () => {
-    const set = jest.fn();
-    const collection = jest.fn(() => ({ doc: jest.fn() }));
-    const doc = jest.fn(() => ({ set, collection }));
-
     const collectionFromFirestoreSpy = jest
       .spyOn(firestore, "collection")
       .mockReturnValue(({ doc } as unknown) as any);

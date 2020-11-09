@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProductRepository } from "../../../../src/features/Product/data/ProductRepository";
 import { ProductRepositoryFirebase } from "../../../../src/features/Product/data/ProductRepositoryFirebase";
-import { firestore } from "../../__mock__/mocks";
 import {
   PurchaseException,
   MessageIds,
@@ -13,8 +12,6 @@ import { ProductException } from "../../../../src/core/ApplicationException";
 import { product } from "../fixture/product";
 
 describe("ProductRepositoryImpl", () => {
-  const sut: ProductRepository = new ProductRepositoryFirebase(firestore);
-
   const exists = true;
   const data = jest.fn();
   const docSnapshot = {
@@ -28,6 +25,12 @@ describe("ProductRepositoryImpl", () => {
   const collection = jest.fn(() => ({ doc: jest.fn() }));
   const set = jest.fn();
   const doc = jest.fn(() => ({ get, set, collection }));
+  const firestore: FirebaseFirestore.Firestore = ({
+    collection,
+  } as unknown) as FirebaseFirestore.Firestore;
+
+  const sut: ProductRepository = new ProductRepositoryFirebase(firestore);
+
   const unexpected = new PurchaseException({
     messageId: MessageIds.UNEXPECTED,
     message: "Error",
@@ -65,12 +68,9 @@ describe("ProductRepositoryImpl", () => {
       const collectionFromFirestoreSpy = jest
         .spyOn(firestore, "collection")
         .mockReturnValue(({ doc } as unknown) as any);
-      const collectionFromDocSpy = jest
-        .spyOn(doc(), "collection")
-        .mockReturnValue(({ doc } as unknown) as any);
       await sut.saveNf("productId", "nfId", productPurchase);
       expect(collectionFromFirestoreSpy).toHaveBeenNthCalledWith(1, "PRODUTOS");
-      expect(collectionFromDocSpy).toHaveBeenNthCalledWith(1, "COMPRAS");
+      expect(collectionFromFirestoreSpy).toHaveBeenNthCalledWith(2, "COMPRAS");
       expect(doc).toBeCalledWith("nfId");
       expect(set).toBeCalledWith(productPurchase);
     });
