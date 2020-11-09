@@ -17,6 +17,7 @@ export const expressMiddlewareAdapter = (middleware: Middleware) => {
     if (httpResponse.status === 200) {
       req.body = httpResponse.body;
       next();
+      return;
     }
 
     res.status(httpResponse.status).send(httpResponse.body);
