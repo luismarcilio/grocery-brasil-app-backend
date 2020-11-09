@@ -1,3 +1,4 @@
+import * as admin from "firebase-admin";
 import * as minify from "minify";
 import NodeCache = require("node-cache");
 import * as filetype from "file-type";
@@ -33,7 +34,10 @@ import { SecretsProviderFirebaseImpl } from "./features/Secrets/provider/Secrets
 import { ElasticSearchRepositoryImpl } from "./features/Product/data/ElasticSearchRepositoryImpl";
 import { PurchaseRepositoryFirebase } from "./features/Purchase/data/PurchaseRepositoryFirebase";
 import { ImageManipulationAdapterSharp } from "./features/Image/adapter/ImageManipulationAdapterSharp";
-import { AuthenticationMiddleware } from "./presentation/middlewares/AuthenticationMiddleware";
+import {
+  AuthenticationMiddleware,
+  AuthenticationMiddlewareTest,
+} from "./presentation/middlewares/AuthenticationMiddleware";
 import { GetUserByJWTUseCase } from "./features/User/useCase/GetUserByJWTUseCase";
 import { UserRepositoryImpl } from "./features/User/data/UserRepositoryImpl";
 import {
@@ -50,7 +54,8 @@ import { UploadToTextSearchEngineTrigger } from "./presentation/functions/Upload
 import { UploadToTextSearchEngineUseCase } from "./features/Product/useCase/UploadToTextSearchEngineUseCase";
 
 //3rd party
-const firestore = new FirebaseFirestore.Firestore();
+admin.initializeApp();
+const firestore = admin.firestore();
 const cache = new NodeCache();
 const storage = new Storage();
 const secretManagerServiceClient = new SecretManagerServiceClient();
@@ -150,10 +155,16 @@ export const makeParseAndSaveNFController = (): ParseAndSaveNFController =>
 export const makeGetSecrectController = (): GetSecretController =>
   new GetSecretController(getSecretUseCase);
 
+let auth;
 //Middleware
-export const makeAuthenticationMiddleware = (): AuthenticationMiddleware =>
-  new AuthenticationMiddleware(getUserByJWTUseCase);
-
+if (process.env.NODE_ENV !== "test") {
+  auth = (): AuthenticationMiddleware =>
+    new AuthenticationMiddleware(getUserByJWTUseCase);
+} else {
+  auth = (): AuthenticationMiddlewareTest =>
+    new AuthenticationMiddlewareTest(getUserByJWTUseCase);
+}
+export const makeAuthenticationMiddleware = auth;
 //Database functions
 export const makeNormalizeProductAndUploadThumbnailTrigger = (): NormalizeProductAndUploadThumbnailTrigger =>
   new NormalizeProductAndUploadThumbnailTrigger(
