@@ -12,6 +12,7 @@ describe("AddressDataSourceGoogleImpl", () => {
   const getSecret = jest.fn();
   const get = jest.fn();
   const getBuffer = jest.fn();
+  const post = jest.fn();
 
   const apiKeyProvider: SecretsProvider = {
     getSecret,
@@ -20,6 +21,7 @@ describe("AddressDataSourceGoogleImpl", () => {
   const httpAdapter: HttpAdapter = {
     get,
     getBuffer,
+    post,
   };
 
   const sut: AddressDataSource = new AddressDataSourceGoogleImpl(
