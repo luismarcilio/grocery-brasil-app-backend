@@ -9,12 +9,12 @@ export class SecretServiceImpl implements SecretService {
     this.secretsProvider = secretsProvider;
   }
 
-  get = async (id: string): Promise<string> => {
+  async get(id: string): Promise<string> {
     try {
       const secret = await this.secretsProvider.getSecret(id);
       return secret;
     } catch (error) {
       throw errorToApplicationException(error, SecretException);
     }
-  };
+  }
 }

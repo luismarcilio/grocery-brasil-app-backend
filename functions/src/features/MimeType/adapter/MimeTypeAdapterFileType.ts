@@ -10,8 +10,8 @@ export class MimeTypeAdapterFileType implements MimeTypeAdapter {
     this.fileType = fileType;
   }
 
-  getMimeType = async (file: Buffer): Promise<string | undefined> => {
+  async getMimeType(file: Buffer): Promise<string | undefined> {
     const fileTypeResult = await this.fileType.fromBuffer(file);
     return fileTypeResult?.mime;
-  };
+  }
 }

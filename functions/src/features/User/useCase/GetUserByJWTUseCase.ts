@@ -12,11 +12,11 @@ export class GetUserByJWTUseCase implements UseCase<User> {
     this.repository = repository;
   }
 
-  execute = async (jwt: string): Promise<User | UserException> => {
+  async execute(jwt: string): Promise<User | UserException> {
     try {
       return this.repository.validateJWT(jwt);
     } catch (error) {
       return errorToApplicationException(error, UserException);
     }
-  };
+  }
 }

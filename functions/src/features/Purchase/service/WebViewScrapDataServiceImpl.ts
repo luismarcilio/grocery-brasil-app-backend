@@ -22,9 +22,9 @@ export class WebViewScrapDataServiceImpl implements WebViewScrapDataService {
     this.minifierAdapter = minifierAdapter;
     this.urlParserProvider = urlParserProvider;
   }
-  getWebViewScrapData = async (
+  async getWebViewScrapData(
     url: string
-  ): Promise<WebViewScrapData | PurchaseException> => {
+  ): Promise<WebViewScrapData | PurchaseException> {
     let parseUrlResult: { uf: string; accessKey: string };
     try {
       parseUrlResult = this.urlParserProvider.parseURL(url);
@@ -70,5 +70,5 @@ export class WebViewScrapDataServiceImpl implements WebViewScrapDataService {
       javascriptFunctions,
     };
     return webViewScrapData;
-  };
+  }
 }

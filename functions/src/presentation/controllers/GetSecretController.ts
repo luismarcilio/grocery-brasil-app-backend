@@ -9,7 +9,7 @@ export class GetSecretController implements Controller {
     this.getSecretUseCase = getSecretUseCase;
   }
 
-  handle = async (request: HttpRequest): Promise<HttpResponse> => {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
     const secretName = request.params.secret;
     const result = await this.getSecretUseCase.execute(secretName);
     if (result instanceof SecretException) {
@@ -30,5 +30,5 @@ export class GetSecretController implements Controller {
       body: { secretValue: result },
     };
     return response;
-  };
+  }
 }

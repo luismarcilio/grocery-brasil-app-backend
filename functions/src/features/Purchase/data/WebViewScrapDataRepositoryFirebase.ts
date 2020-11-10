@@ -16,7 +16,7 @@ export class WebViewScrapDataRepositoryFirebase
     this.cache = cache;
   }
 
-  getUrlByUF = async (uf: string): Promise<string> => {
+  async getUrlByUF(uf: string): Promise<string> {
     try {
       const docFromCache = this.cache.get(`urlByUF(${uf})`);
       if (docFromCache) {
@@ -27,8 +27,8 @@ export class WebViewScrapDataRepositoryFirebase
     } catch (error) {
       throw errorToApplicationException(error, PurchaseException);
     }
-  };
-  getWebViewJavascriptByUF = async (uf: string): Promise<string> => {
+  }
+  async getWebViewJavascriptByUF(uf: string): Promise<string> {
     try {
       const docFromCache = this.cache.get(`webViewJavascriptByUF(${uf})`);
       if (docFromCache) {
@@ -39,7 +39,7 @@ export class WebViewScrapDataRepositoryFirebase
     } catch (error) {
       throw errorToApplicationException(error, PurchaseException);
     }
-  };
+  }
 
   private async getFromFirestore(
     uf: string

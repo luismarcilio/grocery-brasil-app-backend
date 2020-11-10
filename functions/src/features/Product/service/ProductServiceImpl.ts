@@ -17,14 +17,14 @@ export class ProductServiceImpl implements ProductService {
     this.productProvider = productProvider;
     this.thumbnailFacade = thumbnailFacade;
   }
-  uploadToSearchEngine = async (product: Product): Promise<Product> => {
+  async uploadToSearchEngine(product: Product): Promise<Product> {
     try {
       return await this.productProvider.uploadToSearchEngine(product);
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
-  uploadThumbnail = async (product: Product): Promise<Product> => {
+  }
+  async uploadThumbnail(product: Product): Promise<Product> {
     try {
       const updatedProduct = await this.thumbnailFacade.uploadThumbnail(
         product
@@ -33,8 +33,8 @@ export class ProductServiceImpl implements ProductService {
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
-  normalizeProduct = async (product: Product): Promise<Product> => {
+  }
+  async normalizeProduct(product: Product): Promise<Product> {
     if (!product.eanCode) {
       return Promise.resolve(product);
     }
@@ -47,19 +47,19 @@ export class ProductServiceImpl implements ProductService {
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
-  updateProduct = async (product: Product): Promise<Product> => {
+  }
+  async updateProduct(product: Product): Promise<Product> {
     try {
       const updatedProduct = await this.productProvider.updateProduct(product);
       return updatedProduct;
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
+  }
 
-  saveItemsFromPurchase = async (
+  async saveItemsFromPurchase(
     purchase: Purchase
-  ): Promise<boolean | ProductException> => {
+  ): Promise<boolean | ProductException> {
     try {
       const promises = purchase.purchaseItemList.map(async (purchaseItem) => {
         const docId: string = this.productProvider.getDocId(
@@ -88,5 +88,5 @@ export class ProductServiceImpl implements ProductService {
         errorToApplicationException(error, ProductException)
       );
     }
-  };
+  }
 }

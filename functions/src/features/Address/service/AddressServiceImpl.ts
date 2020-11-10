@@ -10,13 +10,13 @@ export class AddressServiceImpl implements AddressService {
     this.addressProvider = addressProvider;
   }
 
-  getFullAddress = async (
+  async getFullAddress(
     rawAddress: string
-  ): Promise<Address | AddressException> => {
+  ): Promise<Address | AddressException> {
     try {
       return await this.addressProvider.getAddressFromRawAddress(rawAddress);
     } catch (error) {
       return errorToApplicationException(error, AddressException);
     }
-  };
+  }
 }

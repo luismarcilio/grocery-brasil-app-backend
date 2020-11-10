@@ -12,7 +12,7 @@ export class PurchaseProviderImpl implements PurchaseProvider {
     this.purchaseRepository = purchaseRepository;
   }
 
-  save = async (purchase: Purchase): Promise<boolean> => {
+  async save(purchase: Purchase): Promise<boolean> {
     try {
       return await this.purchaseRepository.savePurchase(purchase);
     } catch (error) {
@@ -21,8 +21,8 @@ export class PurchaseProviderImpl implements PurchaseProvider {
         message: error,
       });
     }
-  };
-  saveResume = async (purchaseResume: PurchaseResume): Promise<boolean> => {
+  }
+  async saveResume(purchaseResume: PurchaseResume): Promise<boolean> {
     try {
       return await this.purchaseRepository.savePurchaseResume(purchaseResume);
     } catch (error) {
@@ -31,5 +31,5 @@ export class PurchaseProviderImpl implements PurchaseProvider {
         message: error,
       });
     }
-  };
+  }
 }

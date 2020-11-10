@@ -12,7 +12,7 @@ export class UploadToTextSearchEngineTrigger
     this.uploadToTextSearchEngineUseCase = uploadToTextSearchEngineUseCase;
   }
 
-  call = async (input: Product): Promise<Product | null> => {
+  async call(input: Product): Promise<Product | null> {
     try {
       if (!input) {
         return Promise.resolve(null);
@@ -26,5 +26,5 @@ export class UploadToTextSearchEngineTrigger
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

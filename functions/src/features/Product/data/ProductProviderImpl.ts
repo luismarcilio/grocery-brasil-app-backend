@@ -19,7 +19,7 @@ export class ProductProviderImpl implements ProductProvider {
     this.productNormalizationRepository = productNormalizationRepository;
     this.textSearchEngineRepository = textSearchEngineRepository;
   }
-  uploadToSearchEngine = async (product: Product): Promise<Product> => {
+  async uploadToSearchEngine(product: Product): Promise<Product> {
     try {
       const productId = this.getDocId(product);
       return await this.textSearchEngineRepository.uploadProduct(
@@ -29,8 +29,8 @@ export class ProductProviderImpl implements ProductProvider {
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
-  updateProduct = async (product: Product): Promise<Product> => {
+  }
+  async updateProduct(product: Product): Promise<Product> {
     try {
       const productId = this.getDocId(product);
       await this.productRepository.save(productId, product);
@@ -38,8 +38,8 @@ export class ProductProviderImpl implements ProductProvider {
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
-  normalizeProduct = async (product: Product): Promise<Product> => {
+  }
+  async normalizeProduct(product: Product): Promise<Product> {
     try {
       const normalizedProduct = await this.productNormalizationRepository.normalizeProduct(
         product
@@ -48,9 +48,9 @@ export class ProductProviderImpl implements ProductProvider {
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
+  }
 
-  save = async (product: Product): Promise<void> => {
+  async save(product: Product): Promise<void> {
     try {
       const productId = this.getDocId(product);
       await this.productRepository.save(productId, product);
@@ -60,11 +60,11 @@ export class ProductProviderImpl implements ProductProvider {
         errorToApplicationException(error, ProductException)
       );
     }
-  };
-  saveNf = async (
+  }
+  async saveNf(
     product: Product,
     productPurchase: ProductPurchase
-  ): Promise<void> => {
+  ): Promise<void> {
     try {
       const productId = this.getDocId(product);
       const purchaseId = productPurchase.accessKey;
@@ -78,8 +78,8 @@ export class ProductProviderImpl implements ProductProvider {
         errorToApplicationException(error, ProductException)
       );
     }
-  };
-  getProductById = async (docId: string): Promise<Product> => {
+  }
+  async getProductById(docId: string): Promise<Product> {
     try {
       return await this.productRepository.getProductById(docId);
     } catch (error) {
@@ -87,12 +87,12 @@ export class ProductProviderImpl implements ProductProvider {
         errorToApplicationException(error, ProductException)
       );
     }
-  };
-  getDocId = (product: Product): string => {
+  }
+  getDocId(product: Product): string {
     const normalizedItemName = product.name.replace(/[^a-zA-Z0-9]+/g, "-");
     const productDocId = !product.eanCode
       ? product.ncmCode + "-" + normalizedItemName
       : product.eanCode;
     return productDocId;
-  };
+  }
 }

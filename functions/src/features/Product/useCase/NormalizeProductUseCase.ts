@@ -10,12 +10,12 @@ export class NormalizeProductUseCase implements UseCase<Product> {
     this.productService = productService;
   }
 
-  execute = async (p: Product): Promise<Product | ProductException> => {
+  async execute(p: Product): Promise<Product | ProductException> {
     try {
       const normProduct = await this.productService.normalizeProduct(p);
       return normProduct;
     } catch (error) {
       return errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

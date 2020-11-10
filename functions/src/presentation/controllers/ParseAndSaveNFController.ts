@@ -3,7 +3,10 @@ import { SavePurchaseUseCase } from "../../features/Purchase/useCase/SavePurchas
 import { ScrapNFUseCase } from "../../features/Purchase/useCase/ScrapNFUseCase";
 import { HttpRequest, HttpResponse } from "../../core/HttpProtocol";
 import { HtmlFiscalNote } from "../../model/HtmlFiscalNote";
-import { ScrapNfException, PurchaseException } from "../../core/ApplicationException";
+import {
+  ScrapNfException,
+  PurchaseException,
+} from "../../core/ApplicationException";
 import { Purchase } from "../../model/Purchase";
 
 export class ParseAndSaveNFController implements Controller {
@@ -18,7 +21,7 @@ export class ParseAndSaveNFController implements Controller {
     this.scrapNFUseCase = scrapNFUseCase;
   }
 
-  handle = async (request: HttpRequest): Promise<HttpResponse> => {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
       const htmlFiscalNote: HtmlFiscalNote = {
         html: request.body?.html,
@@ -72,5 +75,5 @@ export class ParseAndSaveNFController implements Controller {
       };
       return Promise.resolve(response);
     }
-  };
+  }
 }

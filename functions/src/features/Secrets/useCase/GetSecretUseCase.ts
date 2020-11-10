@@ -8,12 +8,12 @@ export class GetSecretUseCase implements UseCase<string> {
   constructor(secretService: SecretService) {
     this.secretService = secretService;
   }
-  execute = async (p: string): Promise<string | SecretException> => {
+  async execute(p: string): Promise<string | SecretException> {
     try {
       const secret = await this.secretService.get(p);
       return secret;
     } catch (error) {
       return errorToApplicationException(error, SecretException);
     }
-  };
+  }
 }

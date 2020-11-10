@@ -19,7 +19,7 @@ export class SaveNf implements Controller {
     this.scrapNFUseCase = scrapNFUseCase;
   }
 
-  handle = async (request: HttpRequest): Promise<HttpResponse> => {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
       const body = request.body;
       if (!body?.html?.length || !body?.uf?.length) {
@@ -47,5 +47,5 @@ export class SaveNf implements Controller {
     } catch (error) {
       return Promise.resolve({ status: 500, body: { status: error } });
     }
-  };
+  }
 }

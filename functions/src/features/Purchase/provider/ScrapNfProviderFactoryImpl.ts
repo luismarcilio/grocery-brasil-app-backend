@@ -15,7 +15,7 @@ export class ScrapNfProviderFactoryImpl implements ScrapNfProviderFactory {
   ) {
     this.providerConfiguration = providerConfiguration;
   }
-  get = (uf: string): ScrapNFProvider => {
+  get(uf: string): ScrapNFProvider {
     const scrapNFProvider = this.providerConfiguration.find(
       (provider) => provider.uf === uf
     )?.scrapNfProvider;
@@ -26,5 +26,5 @@ export class ScrapNfProviderFactoryImpl implements ScrapNfProviderFactory {
       });
     }
     return scrapNFProvider;
-  };
+  }
 }

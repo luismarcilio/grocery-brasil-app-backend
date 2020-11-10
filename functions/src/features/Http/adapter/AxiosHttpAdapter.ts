@@ -10,10 +10,10 @@ export class AxiosHttpAdapter implements HttpAdapter {
   constructor(axiosInstance: AxiosInstance) {
     this.axiosInstance = axiosInstance;
   }
-  getBuffer = async (
+  async getBuffer(
     url: string,
     httpRequest?: HttpRequest
-  ): Promise<HttpResponse> => {
+  ): Promise<HttpResponse> {
     try {
       const config: AxiosRequestConfig = { responseType: "arraybuffer" };
       if (httpRequest) {
@@ -28,12 +28,9 @@ export class AxiosHttpAdapter implements HttpAdapter {
     } catch (error) {
       throw errorToApplicationException(error, HttpAdapterException);
     }
-  };
+  }
 
-  get = async (
-    url: string,
-    httpRequest?: HttpRequest
-  ): Promise<HttpResponse> => {
+  async get(url: string, httpRequest?: HttpRequest): Promise<HttpResponse> {
     try {
       const config: AxiosRequestConfig = {};
       if (httpRequest) {
@@ -48,12 +45,9 @@ export class AxiosHttpAdapter implements HttpAdapter {
     } catch (error) {
       throw errorToApplicationException(error, HttpAdapterException);
     }
-  };
+  }
 
-  post = async (
-    url: string,
-    httpRequest?: HttpRequest
-  ): Promise<HttpResponse> => {
+  async post(url: string, httpRequest?: HttpRequest): Promise<HttpResponse> {
     try {
       const config: AxiosRequestConfig = {};
       if (httpRequest) {
@@ -72,5 +66,5 @@ export class AxiosHttpAdapter implements HttpAdapter {
     } catch (error) {
       throw errorToApplicationException(error, HttpAdapterException);
     }
-  };
+  }
 }

@@ -19,10 +19,7 @@ export class ElasticSearchRepositoryImpl implements TextSearchEngineRepository {
     this.httpAdapter = httpAdapter;
   }
 
-  uploadProduct = async (
-    documentId: string,
-    product: Product
-  ): Promise<Product> => {
+  async uploadProduct(documentId: string, product: Product): Promise<Product> {
     try {
       const secretString = await this.secretsProvider.getSecret(
         "ELASTICSEARCH"
@@ -50,5 +47,5 @@ export class ElasticSearchRepositoryImpl implements TextSearchEngineRepository {
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

@@ -8,12 +8,12 @@ export class FileServerRepositoryGCP implements FileServerRepository {
     this.storage = storage;
   }
 
-  save = async (
+  async save(
     file: Buffer,
     bucket: string,
     fileName: string,
     contentType: string
-  ): Promise<string> => {
+  ): Promise<string> {
     const p = new Promise<string>((resolve, reject) => {
       const writeStream = this.storage
         .bucket(bucket)
@@ -33,5 +33,5 @@ export class FileServerRepositoryGCP implements FileServerRepository {
     return Promise.resolve(
       `https://storage.googleapis.com/${bucket}/${fileName}`
     );
-  };
+  }
 }

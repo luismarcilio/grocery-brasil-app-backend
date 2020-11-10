@@ -12,7 +12,7 @@ export class ProductRepositoryFirebase implements ProductRepository {
     this.firestore = firestore;
   }
 
-  save = async (productId: string, product: Product): Promise<void> => {
+  async save(productId: string, product: Product): Promise<void> {
     try {
       const dbNfDoc = this.firestore.collection("PRODUTOS").doc(productId);
       await dbNfDoc.set(product);
@@ -21,12 +21,12 @@ export class ProductRepositoryFirebase implements ProductRepository {
         errorToApplicationException(error, ProductException)
       );
     }
-  };
-  saveNf = async (
+  }
+  async saveNf(
     productId: string,
     nfId: string,
     productPurchase: ProductPurchase
-  ): Promise<void> => {
+  ): Promise<void> {
     try {
       const dbNfDoc = this.firestore
         .collection("PRODUTOS")
@@ -39,8 +39,8 @@ export class ProductRepositoryFirebase implements ProductRepository {
         errorToApplicationException(error, ProductException)
       );
     }
-  };
-  getProductById = async (productId: string): Promise<Product> => {
+  }
+  async getProductById(productId: string): Promise<Product> {
     try {
       const dbNfDoc = await this.firestore
         .collection("PRODUTOS")
@@ -60,5 +60,5 @@ export class ProductRepositoryFirebase implements ProductRepository {
         errorToApplicationException(error, ProductException)
       );
     }
-  };
+  }
 }

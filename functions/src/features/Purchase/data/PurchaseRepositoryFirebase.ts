@@ -10,7 +10,7 @@ export class PurchaseRepositoryFirebase implements PurchaseRepository {
   constructor(firestore: FirebaseFirestore.Firestore) {
     this.firestore = firestore;
   }
-  savePurchase = async (purchase: Purchase): Promise<boolean> => {
+  async savePurchase(purchase: Purchase): Promise<boolean> {
     const userId = purchase.user?.userId;
     if (!userId) {
       throw new PurchaseException({
@@ -42,10 +42,8 @@ export class PurchaseRepositoryFirebase implements PurchaseRepository {
         message: error,
       });
     }
-  };
-  savePurchaseResume = async (
-    purchaseResume: PurchaseResume
-  ): Promise<boolean> => {
+  }
+  async savePurchaseResume(purchaseResume: PurchaseResume): Promise<boolean> {
     const userId = purchaseResume.user?.userId;
     if (!userId) {
       throw new PurchaseException({
@@ -68,5 +66,5 @@ export class PurchaseRepositoryFirebase implements PurchaseRepository {
         message: error,
       });
     }
-  };
+  }
 }

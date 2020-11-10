@@ -12,14 +12,14 @@ export class UserRepositoryImpl implements UserRepository {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  createUser = (user: User): Promise<User | UserException> => {
+  createUser(user: User): Promise<User | UserException> {
     throw new Error("Unimplemented");
-  };
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateUser = (user: User): Promise<User | UserException> => {
+  updateUser(user: User): Promise<User | UserException> {
     throw new Error("Unimplemented");
-  };
-  validateJWT = async (jwt: string): Promise<User | UserException> => {
+  }
+  async validateJWT(jwt: string): Promise<User | UserException> {
     try {
       const userId = await this.userDataStore.getUserIdFromJWT(jwt);
       const user = await this.userDataStore.getUserFromUserId(userId);
@@ -27,5 +27,5 @@ export class UserRepositoryImpl implements UserRepository {
     } catch (error) {
       return errorToApplicationException(error, UserException);
     }
-  };
+  }
 }

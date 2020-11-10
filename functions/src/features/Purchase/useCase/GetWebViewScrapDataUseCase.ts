@@ -10,7 +10,7 @@ export class GetWebViewScrapDataUseCase implements UseCase<WebViewScrapData> {
     this.webViewScrapDataService = webViewScrapDataService;
   }
 
-  execute = (url: string): Promise<WebViewScrapData | PurchaseException> => {
+  async execute (url: string): Promise<WebViewScrapData | PurchaseException>  {
     return this.webViewScrapDataService.getWebViewScrapData(url);
-  };
+  }
 }

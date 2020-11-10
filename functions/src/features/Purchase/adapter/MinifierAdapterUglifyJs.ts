@@ -19,14 +19,16 @@ export class MinifierAdapterUglifyJs implements MinifierAdapter {
     this.minifyFunction = minifyFunction;
   }
 
-  minify = (javascript: string): Promise<string> => {
+  minify(javascript: string): Promise<string> {
     const result = this.minifyFunction(javascript);
     if (result.error) {
-      return Promise.reject(new PurchaseException({
-        messageId: MessageIds.UNEXPECTED,
-        message: (result.error as unknown) as string,
-      }));
+      return Promise.reject(
+        new PurchaseException({
+          messageId: MessageIds.UNEXPECTED,
+          message: (result.error as unknown) as string,
+        })
+      );
     }
     return Promise.resolve(result.code);
-  };
+  }
 }

@@ -5,7 +5,7 @@ import {
 } from "../../../core/ApplicationException";
 
 export class UrlParserProviderImpl implements UrlParserProvider {
-  parseURL = (url: string): { uf: string; accessKey: string } => {
+  parseURL(url: string): { uf: string; accessKey: string } {
     const uri: URL = new URL(url);
 
     if (!uri.hostname.match(/..\.gov\.br/)) {
@@ -26,5 +26,5 @@ export class UrlParserProviderImpl implements UrlParserProvider {
     const uf = splitUf[splitUf.length - 3].toUpperCase();
     const accessKey = searchParams.split("|")[0];
     return { uf, accessKey };
-  };
+  }
 }

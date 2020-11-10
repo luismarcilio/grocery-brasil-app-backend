@@ -17,7 +17,7 @@ export class NormalizeProductAndUploadThumbnailTrigger
     this.uploadThumbnailUseCase = uploadThumbnailUseCase;
   }
 
-  call = async (input: Product): Promise<Product | null> => {
+  async call(input: Product): Promise<Product | null> {
     try {
       if (!input) {
         return Promise.resolve(null);
@@ -45,5 +45,5 @@ export class NormalizeProductAndUploadThumbnailTrigger
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

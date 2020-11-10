@@ -9,7 +9,7 @@ export class SavePurchaseUseCase implements UseCase<boolean> {
     this.purchaseService = purchaseService;
   }
 
-  execute = (purchase: Purchase): Promise<boolean | PurchaseException> => {
+  async execute (purchase: Purchase): Promise<boolean | PurchaseException> {
     return this.purchaseService.save(purchase);
-  };
+  }
 }

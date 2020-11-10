@@ -9,7 +9,7 @@ export class GetWebViewScrapDataController implements Controller {
     this.getWebViewScrapDataUseCase = getWebViewScrapDataUseCase;
   }
 
-  handle = async (request: HttpRequest): Promise<HttpResponse> => {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
       const url: string = request.params.url;
       const result = await this.getWebViewScrapDataUseCase.execute(url);
@@ -34,5 +34,5 @@ export class GetWebViewScrapDataController implements Controller {
     } catch (error) {
       return Promise.resolve({ status: 500, body: error });
     }
-  };
+  }
 }

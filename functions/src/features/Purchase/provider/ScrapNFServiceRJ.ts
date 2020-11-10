@@ -11,13 +11,13 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
   private constructor() {
     null;
   }
-  static instance = (): ScrapNFProvider => {
+  static instance(): ScrapNFProvider {
     if (!ScrapNFServiceRJ.instanceOfScrapNFProvider) {
       ScrapNFServiceRJ.instanceOfScrapNFProvider = new ScrapNFServiceRJ();
     }
     return ScrapNFServiceRJ.instanceOfScrapNFProvider;
-  };
-  scrap = (html: string): Purchase => {
+  }
+  scrap(html: string): Purchase {
     const $ = cheerio.load(html);
     const stringDate = $(
       "#NFe > fieldset:nth-child(1) > table > tbody > tr > td:nth-child(4) > span"
@@ -145,5 +145,5 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
     });
 
     return purchase;
-  };
+  }
 }

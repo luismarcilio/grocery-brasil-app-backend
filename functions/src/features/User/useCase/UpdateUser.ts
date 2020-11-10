@@ -11,7 +11,7 @@ export class UpdateUser implements UseCase<User> {
     this.repository = repository;
   }
 
-  execute = async (user: User): Promise<User | UserException> => {
+  async execute(user: User): Promise<User | UserException> {
     return this.repository.updateUser(user);
-  };
+  }
 }

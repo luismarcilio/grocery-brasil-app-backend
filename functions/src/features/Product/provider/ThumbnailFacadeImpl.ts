@@ -28,7 +28,7 @@ export class ThumbnailFacadeImpl implements ThumbnailFacade {
     this.mimeTypeAdapter = mimeTypeAdapter;
   }
 
-  uploadThumbnail = async (product: Product): Promise<Product> => {
+  async uploadThumbnail(product: Product): Promise<Product> {
     if (!product.thumbnail) {
       return Promise.reject(
         new ProductException({
@@ -83,5 +83,5 @@ export class ThumbnailFacadeImpl implements ThumbnailFacade {
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

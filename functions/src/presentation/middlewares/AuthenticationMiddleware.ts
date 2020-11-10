@@ -10,7 +10,7 @@ export class AuthenticationMiddlewareTest implements Middleware {
     this.getUserByJWTUseCase = getUserByJWTUseCase;
   }
 
-  handle = (request: HttpRequest): Promise<HttpResponse> => {
+  handle(request: HttpRequest): Promise<HttpResponse> {
     this.getUserByJWTUseCase;
     const response: HttpResponse = {
       headers: request.headers,
@@ -36,7 +36,7 @@ export class AuthenticationMiddlewareTest implements Middleware {
       preferences: { searchRadius: 30000 },
     };
     return Promise.resolve(response);
-  };
+  }
 }
 
 export class AuthenticationMiddleware implements Middleware {
@@ -46,7 +46,7 @@ export class AuthenticationMiddleware implements Middleware {
     this.getUserByJWTUseCase = getUserByJWTUseCase;
   }
 
-  handle = async (request: HttpRequest): Promise<HttpResponse> => {
+  async handle(request: HttpRequest): Promise<HttpResponse> {
     const jwt = request.headers?.Authorization?.split("Bearer ")[1];
     if (jwt === undefined) {
       const httpResponse: HttpResponse = {
@@ -74,5 +74,5 @@ export class AuthenticationMiddleware implements Middleware {
     };
     response.body.user = <User>result;
     return response;
-  };
+  }
 }

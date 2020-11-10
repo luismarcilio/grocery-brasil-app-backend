@@ -11,11 +11,11 @@ export class UploadToTextSearchEngineUseCase implements UseCase<Product> {
     this.productService = productService;
   }
 
-  execute = async (p: Product): Promise<Product | ProductException> => {
+  async execute(p: Product): Promise<Product | ProductException> {
     try {
       return await this.productService.uploadToSearchEngine(p);
     } catch (error) {
       return errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

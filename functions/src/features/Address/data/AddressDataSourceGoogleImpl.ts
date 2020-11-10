@@ -19,9 +19,7 @@ export class AddressDataSourceGoogleImpl implements AddressDataSource {
     this.httpAdapter = httpAdapter;
   }
 
-  getFullAddressFromRawAddress = async (
-    rawAddress: string
-  ): Promise<Address> => {
+  async getFullAddressFromRawAddress(rawAddress: string): Promise<Address> {
     try {
       const apiKey = await this.apiKeyProvider.getSecret("GEOLOCATION_API_KEY");
       const googleGeocodeBaseUrl =
@@ -53,7 +51,7 @@ export class AddressDataSourceGoogleImpl implements AddressDataSource {
     } catch (error) {
       throw errorToApplicationException(error, AddressException);
     }
-  };
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private googleAddressToAddress(googleAddress: any): Address {

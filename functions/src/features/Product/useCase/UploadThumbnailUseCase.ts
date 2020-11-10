@@ -10,12 +10,12 @@ export class UploadThumbnailUseCase implements UseCase<Product> {
     this.productService = productService;
   }
 
-  execute = async (p: Product): Promise<Product | ProductException> => {
+  async execute(p: Product): Promise<Product | ProductException> {
     try {
       const updatedProduct = await this.productService.uploadThumbnail(p);
       return updatedProduct;
     } catch (error) {
       return errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

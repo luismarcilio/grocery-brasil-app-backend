@@ -14,9 +14,9 @@ export class ScrapNFServiceImpl implements ScrapNFService {
     this.scrapNfProviderFactory = scrapNfProviderFactory;
   }
 
-  scrapNf = (
+  scrapNf(
     htmlFiscalNote: HtmlFiscalNote
-  ): Promise<Purchase | ScrapNfException> => {
+  ): Promise<Purchase | ScrapNfException> {
     try {
       const scrapNfProvider = this.scrapNfProviderFactory.get(
         htmlFiscalNote.uf
@@ -33,5 +33,5 @@ export class ScrapNFServiceImpl implements ScrapNFService {
       });
       return Promise.resolve(exception);
     }
-  };
+  }
 }

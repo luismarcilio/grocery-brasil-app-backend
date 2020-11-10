@@ -10,18 +10,18 @@ export class WebViewScrapDataProviderImpl implements WebViewScrapDataProvider {
     this.webViewScrapDataRepository = webViewScrapDataRepository;
   }
 
-  getUrlByUF = async (uf: string): Promise<string> => {
+  async getUrlByUF(uf: string): Promise<string> {
     try {
       return await this.webViewScrapDataRepository.getUrlByUF(uf);
     } catch (error) {
       throw errorToApplicationException(error, PurchaseException);
     }
-  };
-  getWebViewJavascriptByUF = async (uf: string): Promise<string> => {
+  }
+  async getWebViewJavascriptByUF(uf: string): Promise<string> {
     try {
       return await this.webViewScrapDataRepository.getWebViewJavascriptByUF(uf);
     } catch (error) {
       throw errorToApplicationException(error, PurchaseException);
     }
-  };
+  }
 }

@@ -13,7 +13,7 @@ export class ImageManipulationAdapterSharp implements ImageManipulationAdapter {
     this.sharp = sharp;
   }
 
-  resize = (heigth: number, width: number, image: Buffer): Promise<Buffer> => {
+  resize(heigth: number, width: number, image: Buffer): Promise<Buffer> {
     return this.sharp(image).resize(width, heigth).toBuffer();
-  };
+  }
 }

@@ -19,7 +19,7 @@ export class PurchaseServiceImpl implements PurchaseService {
     this.purchaseProvider = purchaseProvider;
   }
 
-  save = async (purchase: Purchase): Promise<boolean | PurchaseException> => {
+  async save(purchase: Purchase): Promise<boolean | PurchaseException> {
     try {
       if (
         (await this.saveFull(purchase)) &&
@@ -38,14 +38,14 @@ export class PurchaseServiceImpl implements PurchaseService {
         message: error,
       });
     }
-  };
+  }
 
-  private saveFull = async (purchase: Purchase): Promise<boolean> => {
+  private async saveFull(purchase: Purchase): Promise<boolean> {
     const result = await this.purchaseProvider.save(purchase);
     return result;
-  };
+  }
 
-  private saveResume = async (purchase: Purchase): Promise<boolean> => {
+  private async saveResume(purchase: Purchase): Promise<boolean> {
     const purchaseResume: PurchaseResume = {
       user: purchase.user,
       accessKey: purchase.fiscalNote.accessKey,
@@ -55,9 +55,9 @@ export class PurchaseServiceImpl implements PurchaseService {
     };
     const result = await this.purchaseProvider.saveResume(purchaseResume);
     return result;
-  };
+  }
 
-  private saveItems = async (purchase: Purchase): Promise<boolean> => {
+  private async saveItems(purchase: Purchase): Promise<boolean> {
     const result = await this.productService.saveItemsFromPurchase(purchase);
     if (typeof result !== "boolean") {
       throw new PurchaseException({
@@ -66,5 +66,5 @@ export class PurchaseServiceImpl implements PurchaseService {
       });
     }
     return result;
-  };
+  }
 }

@@ -19,7 +19,7 @@ export class ProductNormalizationBluesoftCosmos
     this.httpAdapter = httpAdapter;
   }
 
-  normalizeProduct = async (product: Product): Promise<Product> => {
+  async normalizeProduct(product: Product): Promise<Product> {
     if (!product.eanCode) {
       return Promise.reject(
         new ProductException({
@@ -54,5 +54,5 @@ export class ProductNormalizationBluesoftCosmos
     } catch (error) {
       throw errorToApplicationException(error, ProductException);
     }
-  };
+  }
 }

@@ -11,7 +11,7 @@ export class AddressProviderImpl implements AddressProvider {
     this.addressDataSource = addressDataSource;
   }
 
-  getAddressFromRawAddress = async (rawAddress: string): Promise<Address> => {
+  async getAddressFromRawAddress(rawAddress: string): Promise<Address> {
     try {
       return await this.addressDataSource.getFullAddressFromRawAddress(
         rawAddress
@@ -21,5 +21,5 @@ export class AddressProviderImpl implements AddressProvider {
         errorToApplicationException(error, AddressException)
       );
     }
-  };
+  }
 }

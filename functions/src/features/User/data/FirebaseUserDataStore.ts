@@ -24,15 +24,15 @@ export class FirebaseUserDataStore implements UserDataStore {
     this.firestore = firestore;
   }
 
-  getUserIdFromJWT = async (jwt: string): Promise<string> => {
+  async getUserIdFromJWT(jwt: string): Promise<string> {
     try {
       const decodedIdToken = await this.verifyIdToken.verifyIdToken(jwt);
       return decodedIdToken.uid;
     } catch (error) {
       throw errorToApplicationException(error, UserException);
     }
-  };
-  getUserFromUserId = async (userId: string): Promise<User> => {
+  }
+  async getUserFromUserId(userId: string): Promise<User> {
     const user = <User>this.cache.get(userId);
     if (user) {
       return user;
@@ -49,5 +49,5 @@ export class FirebaseUserDataStore implements UserDataStore {
     }
     this.cache.set(userId, <User>docReference.data());
     return <User>docReference.data();
-  };
+  }
 }

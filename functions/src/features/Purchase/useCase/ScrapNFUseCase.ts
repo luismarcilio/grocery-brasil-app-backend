@@ -10,9 +10,9 @@ export class ScrapNFUseCase implements UseCase<Purchase> {
     this.scrapNFService = scrapNFService;
   }
 
-  execute = (
+  execute(
     htmlFiscalNote: HtmlFiscalNote
-  ): Promise<Purchase | ScrapNfException> => {
+  ): Promise<Purchase | ScrapNfException> {
     return this.scrapNFService.scrapNf(htmlFiscalNote);
-  };
+  }
 }

@@ -9,7 +9,7 @@ export class GetFullAddressFromRawAddressUseCase implements UseCase<Address> {
     this.addressService = addressService;
   }
 
-  execute = (rawAddress: string): Promise<Address | AddressException> => {
+  execute(rawAddress: string): Promise<Address | AddressException> {
     return this.addressService.getFullAddress(rawAddress);
-  };
+  }
 }

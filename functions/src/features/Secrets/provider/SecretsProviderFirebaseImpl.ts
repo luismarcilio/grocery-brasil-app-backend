@@ -13,7 +13,7 @@ export class SecretsProviderFirebaseImpl implements SecretsProvider {
     this.secretManagerServiceClient = secretManagerServiceClient;
   }
 
-  getSecret = async (keyName: string): Promise<string> => {
+  async getSecret(keyName: string): Promise<string> {
     try {
       const secretName = `projects/${project_id}/secrets/${keyName}/versions/latest`;
       const [
@@ -33,5 +33,5 @@ export class SecretsProviderFirebaseImpl implements SecretsProvider {
     } catch (error) {
       throw errorToApplicationException(error, SecretException);
     }
-  };
+  }
 }
