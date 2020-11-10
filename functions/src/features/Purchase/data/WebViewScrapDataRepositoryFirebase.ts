@@ -5,6 +5,7 @@ import {
   MessageIds,
 } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class WebViewScrapDataRepositoryFirebase
   implements WebViewScrapDataRepository {
@@ -16,6 +17,7 @@ export class WebViewScrapDataRepositoryFirebase
     this.cache = cache;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async getUrlByUF(uf: string): Promise<string> {
     try {
       const docFromCache = this.cache.get(`urlByUF(${uf})`);
@@ -28,6 +30,7 @@ export class WebViewScrapDataRepositoryFirebase
       throw errorToApplicationException(error, PurchaseException);
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async getWebViewJavascriptByUF(uf: string): Promise<string> {
     try {
       const docFromCache = this.cache.get(`webViewJavascriptByUF(${uf})`);
@@ -41,6 +44,7 @@ export class WebViewScrapDataRepositoryFirebase
     }
   }
 
+  @withLog(loggerLevel.DEBUG)
   private async getFromFirestore(
     uf: string
   ): Promise<{ initialURL: string; javascript: string }> {

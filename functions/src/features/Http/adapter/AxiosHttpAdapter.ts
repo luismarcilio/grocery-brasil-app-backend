@@ -3,6 +3,7 @@ import { HttpResponse, HttpRequest } from "../../../core/HttpProtocol";
 import { AxiosInstance, AxiosRequestConfig } from "axios";
 import { HttpAdapterException } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class AxiosHttpAdapter implements HttpAdapter {
   private readonly axiosInstance: AxiosInstance;
@@ -10,6 +11,7 @@ export class AxiosHttpAdapter implements HttpAdapter {
   constructor(axiosInstance: AxiosInstance) {
     this.axiosInstance = axiosInstance;
   }
+  @withLog(loggerLevel.DEBUG)
   async getBuffer(
     url: string,
     httpRequest?: HttpRequest
@@ -30,6 +32,7 @@ export class AxiosHttpAdapter implements HttpAdapter {
     }
   }
 
+  @withLog(loggerLevel.DEBUG)
   async get(url: string, httpRequest?: HttpRequest): Promise<HttpResponse> {
     try {
       const config: AxiosRequestConfig = {};
@@ -47,6 +50,7 @@ export class AxiosHttpAdapter implements HttpAdapter {
     }
   }
 
+  @withLog(loggerLevel.DEBUG)
   async post(url: string, httpRequest?: HttpRequest): Promise<HttpResponse> {
     try {
       const config: AxiosRequestConfig = {};

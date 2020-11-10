@@ -5,6 +5,7 @@ import {
   MessageIds,
 } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ProductRepositoryFirebase implements ProductRepository {
   private readonly firestore: FirebaseFirestore.Firestore;
@@ -12,6 +13,7 @@ export class ProductRepositoryFirebase implements ProductRepository {
     this.firestore = firestore;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async save(productId: string, product: Product): Promise<void> {
     try {
       const dbNfDoc = this.firestore.collection("PRODUTOS").doc(productId);
@@ -40,6 +42,7 @@ export class ProductRepositoryFirebase implements ProductRepository {
       );
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async getProductById(productId: string): Promise<Product> {
     try {
       const dbNfDoc = await this.firestore

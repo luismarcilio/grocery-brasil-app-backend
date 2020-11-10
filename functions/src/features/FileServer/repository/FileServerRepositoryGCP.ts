@@ -1,5 +1,6 @@
 import { FileServerRepository } from "./FileServerRepository";
 import { Storage } from "@google-cloud/storage";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class FileServerRepositoryGCP implements FileServerRepository {
   private readonly storage: Storage;
@@ -8,6 +9,7 @@ export class FileServerRepositoryGCP implements FileServerRepository {
     this.storage = storage;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async save(
     file: Buffer,
     bucket: string,

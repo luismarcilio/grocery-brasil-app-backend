@@ -3,6 +3,7 @@ import { Product } from "../../model/Product";
 import { UploadToTextSearchEngineUseCase } from "../../features/Product/useCase/UploadToTextSearchEngineUseCase";
 import { ProductException } from "../../core/ApplicationException";
 import { errorToApplicationException } from "../../core/utils";
+import { withLog, loggerLevel } from "../../core/Logging";
 export class UploadToTextSearchEngineTrigger
   implements DatabaseTrigger<Product> {
   private readonly uploadToTextSearchEngineUseCase: UploadToTextSearchEngineUseCase;
@@ -12,6 +13,7 @@ export class UploadToTextSearchEngineTrigger
     this.uploadToTextSearchEngineUseCase = uploadToTextSearchEngineUseCase;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async call(input: Product): Promise<Product | null> {
     try {
       if (!input) {

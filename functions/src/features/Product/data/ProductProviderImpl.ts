@@ -5,6 +5,7 @@ import { errorToApplicationException } from "../../../core/utils";
 import { ProductException } from "../../../core/ApplicationException";
 import { ProductNormalizationRepository } from "./ProductNormalizationRepository";
 import { TextSearchEngineRepository } from "./TextSearchEngineRepository";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ProductProviderImpl implements ProductProvider {
   private readonly productRepository: ProductRepository;
@@ -19,6 +20,7 @@ export class ProductProviderImpl implements ProductProvider {
     this.productNormalizationRepository = productNormalizationRepository;
     this.textSearchEngineRepository = textSearchEngineRepository;
   }
+  @withLog(loggerLevel.DEBUG)
   async uploadToSearchEngine(product: Product): Promise<Product> {
     try {
       const productId = this.getDocId(product);
@@ -30,6 +32,7 @@ export class ProductProviderImpl implements ProductProvider {
       throw errorToApplicationException(error, ProductException);
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async updateProduct(product: Product): Promise<Product> {
     try {
       const productId = this.getDocId(product);
@@ -39,6 +42,7 @@ export class ProductProviderImpl implements ProductProvider {
       throw errorToApplicationException(error, ProductException);
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async normalizeProduct(product: Product): Promise<Product> {
     try {
       const normalizedProduct = await this.productNormalizationRepository.normalizeProduct(

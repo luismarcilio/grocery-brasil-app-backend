@@ -6,6 +6,7 @@ import {
   MessageIds,
 } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class SecretsProviderFirebaseImpl implements SecretsProvider {
   private readonly secretManagerServiceClient: SecretManagerServiceClient;
@@ -13,6 +14,7 @@ export class SecretsProviderFirebaseImpl implements SecretsProvider {
     this.secretManagerServiceClient = secretManagerServiceClient;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async getSecret(keyName: string): Promise<string> {
     try {
       const secretName = `projects/${project_id}/secrets/${keyName}/versions/latest`;

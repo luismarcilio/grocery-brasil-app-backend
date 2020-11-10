@@ -3,8 +3,10 @@ import {
   PurchaseException,
   MessageIds,
 } from "../../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class UrlParserProviderImpl implements UrlParserProvider {
+  @withLog(loggerLevel.DEBUG)
   parseURL(url: string): { uf: string; accessKey: string } {
     const uri: URL = new URL(url);
 

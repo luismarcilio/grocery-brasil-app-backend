@@ -5,6 +5,7 @@ import {
   PurchaseException,
   MessageIds,
 } from "../../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class PurchaseProviderImpl implements PurchaseProvider {
   private readonly purchaseRepository: PurchaseRepository;
@@ -12,6 +13,7 @@ export class PurchaseProviderImpl implements PurchaseProvider {
     this.purchaseRepository = purchaseRepository;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async save(purchase: Purchase): Promise<boolean> {
     try {
       return await this.purchaseRepository.savePurchase(purchase);
@@ -22,6 +24,7 @@ export class PurchaseProviderImpl implements PurchaseProvider {
       });
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async saveResume(purchaseResume: PurchaseResume): Promise<boolean> {
     try {
       return await this.purchaseRepository.savePurchaseResume(purchaseResume);

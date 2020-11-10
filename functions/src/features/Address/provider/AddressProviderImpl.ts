@@ -3,6 +3,7 @@ import { Address } from "../../../model/Address";
 import { AddressDataSource } from "../data/AddressDataSource";
 import { AddressException } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class AddressProviderImpl implements AddressProvider {
   private readonly addressDataSource: AddressDataSource;
@@ -11,6 +12,7 @@ export class AddressProviderImpl implements AddressProvider {
     this.addressDataSource = addressDataSource;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async getAddressFromRawAddress(rawAddress: string): Promise<Address> {
     try {
       return await this.addressDataSource.getFullAddressFromRawAddress(

@@ -6,6 +6,7 @@ import { Purchase, PurchaseResume } from "../../../model/Purchase";
 import { PurchaseService } from "./PurchaseService";
 import { ProductService } from "../../Product/service/ProductService";
 import { PurchaseProvider } from "../provider/PurchaseProvider";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class PurchaseServiceImpl implements PurchaseService {
   purchaseProvider: PurchaseProvider;
@@ -19,6 +20,7 @@ export class PurchaseServiceImpl implements PurchaseService {
     this.purchaseProvider = purchaseProvider;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async save(purchase: Purchase): Promise<boolean | PurchaseException> {
     try {
       if (
@@ -40,6 +42,7 @@ export class PurchaseServiceImpl implements PurchaseService {
     }
   }
 
+  @withLog(loggerLevel.DEBUG)
   private async saveFull(purchase: Purchase): Promise<boolean> {
     const result = await this.purchaseProvider.save(purchase);
     return result;
@@ -57,6 +60,7 @@ export class PurchaseServiceImpl implements PurchaseService {
     return result;
   }
 
+  @withLog(loggerLevel.DEBUG)
   private async saveItems(purchase: Purchase): Promise<boolean> {
     const result = await this.productService.saveItemsFromPurchase(purchase);
     if (typeof result !== "boolean") {

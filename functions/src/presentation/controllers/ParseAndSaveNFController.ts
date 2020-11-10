@@ -8,6 +8,7 @@ import {
   PurchaseException,
 } from "../../core/ApplicationException";
 import { Purchase } from "../../model/Purchase";
+import { withLog, loggerLevel } from "../../core/Logging";
 
 export class ParseAndSaveNFController implements Controller {
   private readonly savePurchaseUseCase: SavePurchaseUseCase;
@@ -21,6 +22,7 @@ export class ParseAndSaveNFController implements Controller {
     this.scrapNFUseCase = scrapNFUseCase;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
       const htmlFiscalNote: HtmlFiscalNote = {

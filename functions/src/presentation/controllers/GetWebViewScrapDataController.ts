@@ -2,6 +2,7 @@ import { Controller } from "./Controller";
 import { GetWebViewScrapDataUseCase } from "../../features/Purchase/useCase/GetWebViewScrapDataUseCase";
 import { HttpRequest, HttpResponse } from "../../core/HttpProtocol";
 import { PurchaseException, MessageIds } from "../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../core/Logging";
 export class GetWebViewScrapDataController implements Controller {
   private readonly getWebViewScrapDataUseCase: GetWebViewScrapDataUseCase;
 
@@ -9,6 +10,7 @@ export class GetWebViewScrapDataController implements Controller {
     this.getWebViewScrapDataUseCase = getWebViewScrapDataUseCase;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
       const url: string = request.params.url;

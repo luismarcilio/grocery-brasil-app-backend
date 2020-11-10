@@ -8,6 +8,7 @@ import {
 } from "../../../core/ApplicationException";
 import { HttpRequest } from "../../../core/HttpProtocol";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ProductNormalizationBluesoftCosmos
   implements ProductNormalizationRepository {
@@ -19,6 +20,7 @@ export class ProductNormalizationBluesoftCosmos
     this.httpAdapter = httpAdapter;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async normalizeProduct(product: Product): Promise<Product> {
     if (!product.eanCode) {
       return Promise.reject(

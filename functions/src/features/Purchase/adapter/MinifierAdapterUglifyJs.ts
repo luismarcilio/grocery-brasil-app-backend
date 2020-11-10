@@ -4,6 +4,7 @@ import {
   PurchaseException,
   MessageIds,
 } from "../../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class MinifierAdapterUglifyJs implements MinifierAdapter {
   private readonly minifyFunction: (
@@ -19,6 +20,7 @@ export class MinifierAdapterUglifyJs implements MinifierAdapter {
     this.minifyFunction = minifyFunction;
   }
 
+  @withLog(loggerLevel.DEBUG)
   minify(javascript: string): Promise<string> {
     const result = this.minifyFunction(javascript);
     if (result.error) {

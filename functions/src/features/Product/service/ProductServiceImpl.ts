@@ -5,6 +5,7 @@ import { ProductProvider } from "../provider/ProductProvider";
 import { ProductPurchase, Product } from "../../../model/Product";
 import { errorToApplicationException } from "../../../core/utils";
 import { ThumbnailFacade } from "../provider/ThumbnailFacade";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ProductServiceImpl implements ProductService {
   private readonly productProvider: ProductProvider;
@@ -17,6 +18,7 @@ export class ProductServiceImpl implements ProductService {
     this.productProvider = productProvider;
     this.thumbnailFacade = thumbnailFacade;
   }
+  @withLog(loggerLevel.DEBUG)
   async uploadToSearchEngine(product: Product): Promise<Product> {
     try {
       return await this.productProvider.uploadToSearchEngine(product);
@@ -24,6 +26,7 @@ export class ProductServiceImpl implements ProductService {
       throw errorToApplicationException(error, ProductException);
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async uploadThumbnail(product: Product): Promise<Product> {
     try {
       const updatedProduct = await this.thumbnailFacade.uploadThumbnail(
@@ -34,6 +37,7 @@ export class ProductServiceImpl implements ProductService {
       throw errorToApplicationException(error, ProductException);
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async normalizeProduct(product: Product): Promise<Product> {
     if (!product.eanCode) {
       return Promise.resolve(product);
@@ -48,6 +52,7 @@ export class ProductServiceImpl implements ProductService {
       throw errorToApplicationException(error, ProductException);
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async updateProduct(product: Product): Promise<Product> {
     try {
       const updatedProduct = await this.productProvider.updateProduct(product);
@@ -57,6 +62,7 @@ export class ProductServiceImpl implements ProductService {
     }
   }
 
+  @withLog(loggerLevel.DEBUG)
   async saveItemsFromPurchase(
     purchase: Purchase
   ): Promise<boolean | ProductException> {

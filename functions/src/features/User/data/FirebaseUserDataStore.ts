@@ -4,6 +4,7 @@ import * as NodeCache from "node-cache";
 import * as admin from "firebase-admin";
 import { UserException, MessageIds } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class VerifyIdTokenWrapper {
   verifyIdToken = (jwt: string): Promise<admin.auth.DecodedIdToken> =>
@@ -24,6 +25,7 @@ export class FirebaseUserDataStore implements UserDataStore {
     this.firestore = firestore;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async getUserIdFromJWT(jwt: string): Promise<string> {
     try {
       const decodedIdToken = await this.verifyIdToken.verifyIdToken(jwt);
@@ -32,6 +34,7 @@ export class FirebaseUserDataStore implements UserDataStore {
       throw errorToApplicationException(error, UserException);
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async getUserFromUserId(userId: string): Promise<User> {
     const user = <User>this.cache.get(userId);
     if (user) {

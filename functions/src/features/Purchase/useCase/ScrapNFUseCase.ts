@@ -3,6 +3,7 @@ import { Purchase } from "../../../model/Purchase";
 import { HtmlFiscalNote } from "../../../model/HtmlFiscalNote";
 import { ScrapNFService } from "../service/ScrapNFService";
 import { ScrapNfException } from "../../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ScrapNFUseCase implements UseCase<Purchase> {
   private readonly scrapNFService: ScrapNFService;
@@ -10,6 +11,7 @@ export class ScrapNFUseCase implements UseCase<Purchase> {
     this.scrapNFService = scrapNFService;
   }
 
+  @withLog(loggerLevel.DEBUG)
   execute(
     htmlFiscalNote: HtmlFiscalNote
   ): Promise<Purchase | ScrapNfException> {

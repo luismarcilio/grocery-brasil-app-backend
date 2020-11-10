@@ -4,6 +4,7 @@ import { PurchaseItem } from "../../../model/PurchaseItem";
 import { FiscalNote } from "../../../model/FiscalNote";
 import cheerio = require("cheerio");
 import { parseDate } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ScrapNFServiceMG implements ScrapNFProvider {
   private static instanceOfScrapNFProvider: ScrapNFProvider | undefined;
@@ -17,6 +18,7 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
     }
     return ScrapNFServiceMG.instanceOfScrapNFProvider;
   }
+  @withLog(loggerLevel.DEBUG)
   scrap(html: string): Purchase {
     const $ = cheerio.load(html);
     const stringDate = $(

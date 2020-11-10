@@ -7,6 +7,7 @@ import {
 import { WebViewScrapDataProvider } from "../provider/WebViewScrapDataProvider";
 import { MinifierAdapter } from "../adapter/MinifierAdapter";
 import { UrlParserProvider } from "../provider/UrlParserProvider";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class WebViewScrapDataServiceImpl implements WebViewScrapDataService {
   private readonly webViewScrapDataProvider: WebViewScrapDataProvider;
@@ -22,6 +23,8 @@ export class WebViewScrapDataServiceImpl implements WebViewScrapDataService {
     this.minifierAdapter = minifierAdapter;
     this.urlParserProvider = urlParserProvider;
   }
+
+  @withLog(loggerLevel.DEBUG)
   async getWebViewScrapData(
     url: string
   ): Promise<WebViewScrapData | PurchaseException> {

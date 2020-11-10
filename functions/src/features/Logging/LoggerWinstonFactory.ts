@@ -25,7 +25,6 @@ export class LoggerWinstonFactory implements LoggerFactory {
         winston.format.timestamp(),
         winston.format.json()
       ),
-      defaultMeta: { service: "user-service" },
       transports: [
         process.env.NODE_ENV === "test"
           ? new winston.transports.Console()

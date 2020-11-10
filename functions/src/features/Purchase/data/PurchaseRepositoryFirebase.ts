@@ -4,12 +4,14 @@ import {
   PurchaseException,
   MessageIds,
 } from "../../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class PurchaseRepositoryFirebase implements PurchaseRepository {
   private readonly firestore: FirebaseFirestore.Firestore;
   constructor(firestore: FirebaseFirestore.Firestore) {
     this.firestore = firestore;
   }
+  @withLog(loggerLevel.DEBUG)
   async savePurchase(purchase: Purchase): Promise<boolean> {
     const userId = purchase.user?.userId;
     if (!userId) {
@@ -43,6 +45,7 @@ export class PurchaseRepositoryFirebase implements PurchaseRepository {
       });
     }
   }
+  @withLog(loggerLevel.DEBUG)
   async savePurchaseResume(purchaseResume: PurchaseResume): Promise<boolean> {
     const userId = purchaseResume.user?.userId;
     if (!userId) {

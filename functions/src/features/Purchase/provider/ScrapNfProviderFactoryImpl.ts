@@ -4,6 +4,7 @@ import {
   MessageIds,
   ScrapNfException,
 } from "../../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ScrapNfProviderFactoryImpl implements ScrapNfProviderFactory {
   private readonly providerConfiguration: {
@@ -15,6 +16,7 @@ export class ScrapNfProviderFactoryImpl implements ScrapNfProviderFactory {
   ) {
     this.providerConfiguration = providerConfiguration;
   }
+  @withLog(loggerLevel.DEBUG)
   get(uf: string): ScrapNFProvider {
     const scrapNFProvider = this.providerConfiguration.find(
       (provider) => provider.uf === uf

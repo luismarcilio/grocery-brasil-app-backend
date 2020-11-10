@@ -6,6 +6,7 @@ import {
   MessageIds,
 } from "../../../core/ApplicationException";
 import { ScrapNfProviderFactory } from "../provider/ScrapNfProviderFactory";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ScrapNFServiceImpl implements ScrapNFService {
   private readonly scrapNfProviderFactory: ScrapNfProviderFactory;
@@ -14,6 +15,7 @@ export class ScrapNFServiceImpl implements ScrapNFService {
     this.scrapNfProviderFactory = scrapNfProviderFactory;
   }
 
+  @withLog(loggerLevel.DEBUG)
   scrapNf(
     htmlFiscalNote: HtmlFiscalNote
   ): Promise<Purchase | ScrapNfException> {

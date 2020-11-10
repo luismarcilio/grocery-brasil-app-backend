@@ -2,6 +2,7 @@ import { Middleware } from "./Middleware";
 import { HttpRequest, HttpResponse } from "../../core/HttpProtocol";
 import { User } from "../../model/User";
 import { UseCase } from "../../core/UseCase";
+import { withLog, loggerLevel } from "../../core/Logging";
 
 export class AuthenticationMiddlewareTest implements Middleware {
   private readonly getUserByJWTUseCase: UseCase<User>;
@@ -10,6 +11,7 @@ export class AuthenticationMiddlewareTest implements Middleware {
     this.getUserByJWTUseCase = getUserByJWTUseCase;
   }
 
+  @withLog(loggerLevel.DEBUG)
   handle(request: HttpRequest): Promise<HttpResponse> {
     this.getUserByJWTUseCase;
     const response: HttpResponse = {

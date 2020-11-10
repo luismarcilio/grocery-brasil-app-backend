@@ -4,6 +4,7 @@ import { NormalizeProductUseCase } from "../../features/Product/useCase/Normaliz
 import { UploadThumbnailUseCase } from "../../features/Product/useCase/UploadThumbnailUseCase";
 import { ProductException } from "../../core/ApplicationException";
 import { errorToApplicationException } from "../../core/utils";
+import { withLog, loggerLevel } from "../../core/Logging";
 export class NormalizeProductAndUploadThumbnailTrigger
   implements DatabaseTrigger<Product> {
   private readonly normalizeProductUseCase: NormalizeProductUseCase;
@@ -17,6 +18,7 @@ export class NormalizeProductAndUploadThumbnailTrigger
     this.uploadThumbnailUseCase = uploadThumbnailUseCase;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async call(input: Product): Promise<Product | null> {
     try {
       if (!input) {

@@ -9,6 +9,7 @@ import {
 import * as jsonpath from "jsonpath";
 import { errorToApplicationException } from "../../../core/utils";
 import { SecretsProvider } from "../../Secrets/provider/SecretsProvider";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class AddressDataSourceGoogleImpl implements AddressDataSource {
   private readonly apiKeyProvider: SecretsProvider;
@@ -19,6 +20,7 @@ export class AddressDataSourceGoogleImpl implements AddressDataSource {
     this.httpAdapter = httpAdapter;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async getFullAddressFromRawAddress(rawAddress: string): Promise<Address> {
     try {
       const apiKey = await this.apiKeyProvider.getSecret("GEOLOCATION_API_KEY");

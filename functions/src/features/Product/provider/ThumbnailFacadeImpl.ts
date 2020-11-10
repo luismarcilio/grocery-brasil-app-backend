@@ -10,6 +10,7 @@ import {
   MessageIds,
 } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 export class ThumbnailFacadeImpl implements ThumbnailFacade {
   private readonly imageManipulationAdapter: ImageManipulationAdapter;
   private readonly fileServerRepository: FileServerRepository;
@@ -28,6 +29,7 @@ export class ThumbnailFacadeImpl implements ThumbnailFacade {
     this.mimeTypeAdapter = mimeTypeAdapter;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async uploadThumbnail(product: Product): Promise<Product> {
     if (!product.thumbnail) {
       return Promise.reject(

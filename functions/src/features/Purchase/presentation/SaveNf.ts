@@ -6,6 +6,7 @@ import {
 } from "../../../core/ApplicationException";
 import { UseCase } from "../../../core/UseCase";
 import { Purchase } from "../../../model/Purchase";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class SaveNf implements Controller {
   private readonly scrapNFUseCase: UseCase<Purchase>;
@@ -19,6 +20,7 @@ export class SaveNf implements Controller {
     this.scrapNFUseCase = scrapNFUseCase;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async handle(request: HttpRequest): Promise<HttpResponse> {
     try {
       const body = request.body;

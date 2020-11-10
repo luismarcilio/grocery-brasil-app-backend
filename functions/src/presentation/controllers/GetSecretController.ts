@@ -2,6 +2,7 @@ import { Controller } from "./Controller";
 import { HttpResponse, HttpRequest } from "../../core/HttpProtocol";
 import { GetSecretUseCase } from "../../features/Secrets/useCase/GetSecretUseCase";
 import { SecretException, MessageIds } from "../../core/ApplicationException";
+import { withLog, loggerLevel } from "../../core/Logging";
 export class GetSecretController implements Controller {
   private readonly getSecretUseCase: GetSecretUseCase;
 
@@ -9,6 +10,7 @@ export class GetSecretController implements Controller {
     this.getSecretUseCase = getSecretUseCase;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async handle(request: HttpRequest): Promise<HttpResponse> {
     const secretName = request.params.secret;
     const result = await this.getSecretUseCase.execute(secretName);

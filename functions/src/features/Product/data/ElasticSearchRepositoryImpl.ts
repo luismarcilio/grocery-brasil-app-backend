@@ -8,6 +8,7 @@ import {
   MessageIds,
 } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
+import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ElasticSearchRepositoryImpl implements TextSearchEngineRepository {
   private readonly secretsProvider: SecretsProvider;
@@ -19,6 +20,7 @@ export class ElasticSearchRepositoryImpl implements TextSearchEngineRepository {
     this.httpAdapter = httpAdapter;
   }
 
+  @withLog(loggerLevel.DEBUG)
   async uploadProduct(documentId: string, product: Product): Promise<Product> {
     try {
       const secretString = await this.secretsProvider.getSecret(
