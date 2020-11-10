@@ -1,5 +1,5 @@
 import { MinifierAdapter } from "./MinifierAdapter";
-import { MinifyOptions, MinifyOutput } from "uglify-js";
+import { MinifyOptions, MinifyOutput } from "uglify-es";
 import {
   PurchaseException,
   MessageIds,

@@ -1,13 +1,12 @@
 import { DatabaseTrigger } from "./DatabaseTrigger";
 
 import * as functions from "firebase-functions";
-import { CloudFunction, Change } from "firebase-functions";
 import { DocumentSnapshot } from "firebase-functions/lib/providers/firestore";
 
 export const firebaseTriggerAdapter = <T>(
   path: string,
   trigger: DatabaseTrigger<T>
-): CloudFunction<Change<DocumentSnapshot>> => {
+): functions.CloudFunction<functions.Change<DocumentSnapshot>> => {
   return functions.firestore.document(path).onWrite(
     async (
       change: functions.Change<functions.firestore.DocumentSnapshot>,
