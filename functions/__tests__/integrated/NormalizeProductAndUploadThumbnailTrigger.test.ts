@@ -3,6 +3,7 @@ import { Product } from "../../src/model/Product";
 
 describe("NormalizeProductAndUploadThumbnailTrigger", () => {
   it("should upload to test search engine", async () => {
+    jest.setTimeout(30000);
     const sut = makeNormalizeProductAndUploadThumbnailTrigger();
     const product: Product = {
       eanCode: "7891962051338",
