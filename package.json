@@ -1,0 +1,21 @@
+{
+  "name": "grocery-brasil-app-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luismarcilio/grocery-brasil-app-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luismarcilio/grocery-brasil-app-backend/issues"
+  },
+  "homepage": "https://github.com/luismarcilio/grocery-brasil-app-backend#readme"
+}
