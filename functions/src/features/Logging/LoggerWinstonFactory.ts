@@ -21,9 +21,16 @@ export class LoggerWinstonFactory implements LoggerFactory {
   getLogger(): Logging {
     const options: winston.LoggerOptions = {
       level: !process.env.LOGGING_LEVEL ? "debug" : process.env.LOGGING_LEVEL,
-      format: winston.format.json(),
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.json()
+      ),
       defaultMeta: { service: "user-service" },
-      transports: [this.gcpTransport],
+      transports: [
+        process.env.NODE_ENV === "test"
+          ? new winston.transports.Console()
+          : this.gcpTransport,
+      ],
     };
     const winstonLogger = this.createLogger(options);
     return new LoggingWinstonAdapter(winstonLogger);

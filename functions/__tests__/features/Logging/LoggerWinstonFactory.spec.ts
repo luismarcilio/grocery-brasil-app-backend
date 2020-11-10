@@ -15,26 +15,18 @@ describe("LoggerWinstonFactory", () => {
 
   it("should set logging level based on LOGGING_LEVEL environment variable", () => {
     process.env.LOGGING_LEVEL = "expectedLoggingLevel";
-    const expectedOptions: winston.LoggerOptions = {
-      level: process.env.LOGGING_LEVEL,
-      format: winston.format.json(),
-      defaultMeta: { service: "user-service" },
-      transports: [gcpTransport],
-    };
     sut.getLogger();
-    expect(createLogger).toHaveBeenCalledWith(expectedOptions);
+    expect(createLogger).toHaveBeenCalledWith(
+      expect.objectContaining({ level: "expectedLoggingLevel" })
+    );
   });
 
   it("should default logging level to DEBUG", () => {
     delete process.env.LOGGING_LEVEL;
-    const expectedOptions: winston.LoggerOptions = {
-      level: "debug",
-      format: winston.format.json(),
-      defaultMeta: { service: "user-service" },
-      transports: [gcpTransport],
-    };
 
     sut.getLogger();
-    expect(createLogger).toHaveBeenCalledWith(expectedOptions);
+    expect(createLogger).toHaveBeenCalledWith(
+      expect.objectContaining({ level: "debug" })
+    );
   });
 });
