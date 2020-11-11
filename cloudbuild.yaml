@@ -1,10 +1,17 @@
 steps:
-  # Install
+  - name: "gcr.io/$PROJECT_ID/firebase"
+    args: ["use", "$_PROJECT_NAME"]
+    secretEnv: ["FIREBASE_TOKEN"]
+
   - name: "gcr.io/cloud-builders/npm"
+    dir: "functions"
     args: ["install"]
-  # Build
-  - name: "gcr.io/cloud-builders/npm"
-    args: ["run", "build"]
-  # Deploy
-  - name: gcr.io/$PROJECT_ID/firebase
-    args: ["deploy", "--project=$PROJECT_ID", "--only=hosting"]
+
+  - name: "gcr.io/$PROJECT_ID/firebase"
+    args: ["deploy"]
+    secretEnv: ["FIREBASE_TOKEN"]
+
+secrets:
+  - kmsKeyName: "projects/grocery-brasil-app/locations/global/keyRings/ci-key/cryptoKeys/deployment"
+    secretEnv:
+      FIREBASE_TOKEN: CiQAc1XTTUks8MZnfHUvyoIqfRWdo3cJQGs3pqrXiYGb+ALy5QUSkQEATYR/HAthj3/wEvWnQReUU+mr4COM7szN3uRdatvpHfYINGlo+zArWvRmXbKuxw8Ur0iO2vUyEZ8GH1irA44RUAhDCVHootV3F/hUKB5rHQzXPcVCwMhWVMa68u5bqBeq+8iVBeSx9qeDw8+pt9eGgMoTo5EjNe4eiMzWMKqBZNR1rrgi0JhVRZyyphU/1xOl
