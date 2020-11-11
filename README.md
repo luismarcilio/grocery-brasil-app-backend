@@ -1,4 +1,5 @@
 # grocery-brasil-app backend
+## [Project description (in portuguese)](https://luismarcilio.github.io/grocery-brasil-app-backend/)
 ## Architecture:
 We have done the development using TDD and clean architecture. We refactored to S.O.L.I.D. principles where it calls most attention. We used design patterns where they fit.
 ## Technologies used:
