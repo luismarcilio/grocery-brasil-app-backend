@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from "../../../../src/model/User";
 import { UseCase } from "../../../../src/core/UseCase";
-import { UserException, MessageIds } from "../../../../src/core/ApplicationException";
+import {
+  UserException,
+  MessageIds,
+} from "../../../../src/core/ApplicationException";
 import { Middleware } from "../../../../src/presentation/middlewares/Middleware";
 import { AuthenticationMiddleware } from "../../../../src/presentation/middlewares/AuthenticationMiddleware";
 import { HttpRequest } from "../../../../src/core/HttpProtocol";
@@ -20,7 +23,7 @@ describe("AuthenticationMiddleware", () => {
   it("should insert user in the body and call next if all is ok", async () => {
     const request: HttpRequest = {
       body: {},
-      headers: { Authorization: "Bearer jwt" },
+      headers: { authorization: "Bearer jwt" },
     };
     execute.mockResolvedValue(someUser);
     const response = await sut.handle(request);
@@ -39,7 +42,7 @@ describe("AuthenticationMiddleware", () => {
   });
   it("should return 401 if authorization isn't bearer", async () => {
     const request: HttpRequest = {
-      headers: { Authorization: "XXXXX jwt" },
+      headers: { authorization: "XXXXX jwt" },
       body: {},
     };
     execute.mockResolvedValue(someUser);
@@ -50,7 +53,7 @@ describe("AuthenticationMiddleware", () => {
   it("should return 401 if jwt token is invalid", async () => {
     const request: HttpRequest = {
       body: {},
-      headers: { Authorization: "Bearer jwt" },
+      headers: { authorization: "Bearer jwt" },
     };
     execute.mockImplementation((_) =>
       Promise.resolve(
@@ -63,7 +66,7 @@ describe("AuthenticationMiddleware", () => {
   it("should return 401 if user doesn't exist", async () => {
     const request: HttpRequest = {
       body: {},
-      headers: { Authorization: "Bearer jwt" },
+      headers: { authorization: "Bearer jwt" },
     };
     execute.mockResolvedValue(
       new UserException({

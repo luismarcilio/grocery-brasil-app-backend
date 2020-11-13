@@ -50,7 +50,8 @@ export class AuthenticationMiddleware implements Middleware {
 
   @withLog(loggerLevel.DEBUG)
   async handle(request: HttpRequest): Promise<HttpResponse> {
-    const jwt = request.headers?.Authorization?.split("Bearer ")[1];
+    console.log(request.headers);
+    const jwt = request.headers?.authorization?.split("Bearer ")[1];
     if (jwt === undefined) {
       const httpResponse: HttpResponse = {
         body: "Unauthorized",
