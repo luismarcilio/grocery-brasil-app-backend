@@ -25,11 +25,10 @@ export class LoggerWinstonFactory implements LoggerFactory {
         winston.format.timestamp(),
         winston.format.json()
       ),
-      transports: [
+      transports:
         process.env.NODE_ENV === "test"
-          ? new winston.transports.Console()
-          : this.gcpTransport,
-      ],
+          ? [new winston.transports.Console()]
+          : [new winston.transports.Console(), this.gcpTransport],
     };
     const winstonLogger = this.createLogger(options);
     return new LoggingWinstonAdapter(winstonLogger);
