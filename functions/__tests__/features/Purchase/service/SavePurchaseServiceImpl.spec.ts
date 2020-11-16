@@ -5,7 +5,10 @@ import { PurchaseServiceImpl } from "../../../../src/features/Purchase/service/P
 import { ProductService } from "../../../../src/features/Product/service/ProductService";
 import { MessageIds } from "../../../../src/core/ApplicationException";
 import { PurchaseException } from "../../../../src/core/ApplicationException";
-import { resume, purchase } from "../fixtures/purchases";
+import { purchase } from "../fixtures/purchases";
+import { someAddress } from "../../Address/fixtures/fixtures";
+import { PurchaseResume } from "../../../../src/model/Purchase";
+import { AddressProvider } from "../../../../src/features/Address/provider/AddressProvider";
 
 describe("save purchase service", () => {
   const save = jest.fn();
@@ -15,6 +18,7 @@ describe("save purchase service", () => {
   const updateProduct = jest.fn();
   const uploadThumbnail = jest.fn();
   const uploadToSearchEngine = jest.fn();
+  const getAddressFromRawAddress = jest.fn();
 
   const purchaseProviderStub: PurchaseProvider = {
     save,
@@ -28,19 +32,41 @@ describe("save purchase service", () => {
     uploadToSearchEngine,
   };
 
+  const addressProvider: AddressProvider = {
+    getAddressFromRawAddress,
+  };
+
   const sut: PurchaseService = new PurchaseServiceImpl(
     purchaseProviderStub,
-    productServiceStub
+    productServiceStub,
+    addressProvider
   );
   it("should save the whole purchase", async () => {
+    const purchaseWithAddress = { ...purchase };
+    purchaseWithAddress.fiscalNote.company.address = someAddress;
     save.mockResolvedValue(true);
     saveResume.mockResolvedValue(true);
     saveItemsFromPurchase.mockResolvedValue(true);
+    getAddressFromRawAddress.mockResolvedValue(someAddress);
     const actual = await sut.save(purchase);
     expect(actual).toEqual(true);
-    expect(save).toHaveBeenCalledWith(purchase);
+    expect(getAddressFromRawAddress).toHaveBeenCalledWith(
+      purchaseWithAddress.fiscalNote.company.address.rawAddress
+    );
+    expect(save).toHaveBeenCalledWith(purchaseWithAddress);
   });
   it("should save resumed purchase", async () => {
+    const purchaseWithAddress = { ...purchase };
+    purchaseWithAddress.fiscalNote.company.address = someAddress;
+    const resume: PurchaseResume = {
+      user: purchaseWithAddress.user,
+      accessKey: purchaseWithAddress.fiscalNote.accessKey,
+      company: purchaseWithAddress.fiscalNote.company,
+      date: purchaseWithAddress.fiscalNote.date,
+      totalAmount: purchaseWithAddress.totalAmount,
+    };
+    getAddressFromRawAddress.mockResolvedValue(someAddress);
+
     const purchaseProviderStubSpy = jest.spyOn(
       purchaseProviderStub,
       "saveResume"
@@ -48,10 +74,17 @@ describe("save purchase service", () => {
 
     const actual = await sut.save(purchase);
     expect(actual).toEqual(true);
+    expect(getAddressFromRawAddress).toHaveBeenCalledWith(
+      purchaseWithAddress.fiscalNote.company.address.rawAddress
+    );
     expect(purchaseProviderStubSpy).toHaveBeenCalledWith(resume);
   });
 
   it("should save individual products", async () => {
+    const purchaseWithAddress = { ...purchase };
+    purchaseWithAddress.fiscalNote.company.address = someAddress;
+    getAddressFromRawAddress.mockResolvedValue(someAddress);
+
     const productServiceStubSpy = jest.spyOn(
       productServiceStub,
       "saveItemsFromPurchase"
@@ -59,7 +92,11 @@ describe("save purchase service", () => {
 
     const actual = await sut.save(purchase);
     expect(actual).toEqual(true);
-    expect(productServiceStubSpy).toHaveBeenCalledWith(purchase);
+    expect(getAddressFromRawAddress).toHaveBeenCalledWith(
+      purchaseWithAddress.fiscalNote.company.address.rawAddress
+    );
+
+    expect(productServiceStubSpy).toHaveBeenCalledWith(purchaseWithAddress);
   });
 
   it("should return PurchaseException if an exception is thrown", async () => {

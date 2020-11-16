@@ -53,6 +53,8 @@ import { NormalizeProductUseCase } from "./features/Product/useCase/NormalizePro
 import { UploadThumbnailUseCase } from "./features/Product/useCase/UploadThumbnailUseCase";
 import { UploadToTextSearchEngineTrigger } from "./presentation/functions/UploadToTextSearchEngineTrigger";
 import { UploadToTextSearchEngineUseCase } from "./features/Product/useCase/UploadToTextSearchEngineUseCase";
+import { AddressProviderImpl } from "./features/Address/provider/AddressProviderImpl";
+import { AddressDataSourceGoogleImpl } from "./features/Address/data/AddressDataSourceGoogleImpl";
 
 //3rd party
 admin.initializeApp();
@@ -101,6 +103,11 @@ const thumbnailFacade = new ThumbnailFacadeImpl(
   httpAdapter
 );
 
+const addressDataSource = new AddressDataSourceGoogleImpl(
+  secretsProvider,
+  httpAdapter
+);
+
 //Providers
 const webViewScrapDataProvider = new WebViewScrapDataProviderImpl(
   webViewScrapDataRepository
@@ -112,7 +119,7 @@ const productProvider = new ProductProviderImpl(
   productNormalizationRepository,
   textSearchEngineRepository
 );
-
+const addressProvider = new AddressProviderImpl(addressDataSource);
 const scrapNfProviderFactory = new ScrapNfProviderFactoryImpl([
   { uf: "MG", scrapNfProvider: ScrapNFServiceMG.instance() },
   { uf: "RJ", scrapNfProvider: ScrapNFServiceRJ.instance() },
@@ -127,7 +134,8 @@ const webViewScrapDataService = new WebViewScrapDataServiceImpl(
 const productService = new ProductServiceImpl(productProvider, thumbnailFacade);
 const purchaseService = new PurchaseServiceImpl(
   purchaseProvider,
-  productService
+  productService,
+  addressProvider
 );
 const scrapNFService = new ScrapNFServiceImpl(scrapNfProviderFactory);
 const secretService = new SecretServiceImpl(secretsProvider);
