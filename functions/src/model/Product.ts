@@ -15,4 +15,5 @@ export interface ProductPurchase {
   company: Company;
   date: Date;
   unityValue: number;
+  geohash: string;
 }

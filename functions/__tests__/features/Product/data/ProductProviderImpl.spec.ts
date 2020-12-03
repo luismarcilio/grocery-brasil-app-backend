@@ -59,6 +59,7 @@ describe("ProductProviderImpl", () => {
       company: purchase.fiscalNote.company,
       date: purchase.fiscalNote.date,
       unityValue: purchase.purchaseItemList[1].unityValue,
+      geohash: "yweirquwei",
     };
     const productId = "00002-product-2";
     const nfId = productPurchase.accessKey;

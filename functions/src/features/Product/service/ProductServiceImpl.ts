@@ -1,11 +1,15 @@
 import { ProductService } from "./ProductService";
-import { ProductException } from "../../../core/ApplicationException";
+import {
+  ProductException,
+  MessageIds,
+} from "../../../core/ApplicationException";
 import { Purchase } from "../../../model/Purchase";
 import { ProductProvider } from "../provider/ProductProvider";
 import { ProductPurchase, Product } from "../../../model/Product";
 import { errorToApplicationException } from "../../../core/utils";
 import { ThumbnailFacade } from "../provider/ThumbnailFacade";
 import { withLog, loggerLevel } from "../../../core/Logging";
+import * as ngeohash from "ngeohash";
 
 export class ProductServiceImpl implements ProductService {
   private readonly productProvider: ProductProvider;
@@ -76,11 +80,19 @@ export class ProductServiceImpl implements ProductService {
         } catch (error) {
           await this.productProvider.save(purchaseItem.product);
         }
+        const purchaseLocation = purchase.fiscalNote.company.address.location;
+        if (!purchaseLocation) {
+          throw new ProductException({
+            messageId: MessageIds.INVALID_ARGUMENT,
+            message: "location is falsee",
+          });
+        }
         const productPurchase: ProductPurchase = {
           accessKey: purchase.fiscalNote.accessKey,
           company: purchase.fiscalNote.company,
           unityValue: purchaseItem.unityValue,
           date: purchase.fiscalNote.date,
+          geohash: ngeohash.encode(purchaseLocation.lat, purchaseLocation.lon),
         };
         await this.productProvider.saveNf(
           purchaseItem.product,
