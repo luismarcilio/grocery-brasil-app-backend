@@ -1,5 +1,132 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g1",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g2",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g3",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g4",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g5",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g6",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g7",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g8",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "COMPRAS",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "company.address.location.geohash.g9",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "unityValue",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
   "fieldOverrides": [
     {
       "collectionGroup": "COMPLETA",
