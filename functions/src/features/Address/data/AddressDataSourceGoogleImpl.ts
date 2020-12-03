@@ -100,14 +100,16 @@ export class AddressDataSourceGoogleImpl implements AddressDataSource {
           "$.results[0].address_components[?(@.types.indexOf('country') != -1)].long_name"
         )[0],
       },
-      lat: jsonpath.query(
-        googleAddress,
-        "$.results[0].geometry.location.lat"
-      )[0],
-      lon: jsonpath.query(
-        googleAddress,
-        "$.results[0].geometry.location.lng"
-      )[0],
+      location: {
+        lat: jsonpath.query(
+          googleAddress,
+          "$.results[0].geometry.location.lat"
+        )[0],
+        lon: jsonpath.query(
+          googleAddress,
+          "$.results[0].geometry.location.lng"
+        )[0],
+      },
     };
     return address;
   }

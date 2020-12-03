@@ -17,6 +17,7 @@ export const purchase: Purchase = {
       taxIdentification: "9879",
       address: {
         rawAddress: "kjhkj",
+        location: { lat: -22.9745891, lon: -43.199457 },
       },
     },
   },

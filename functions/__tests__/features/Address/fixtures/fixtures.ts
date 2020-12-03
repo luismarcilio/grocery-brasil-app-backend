@@ -14,8 +14,7 @@ export const someAddress: Address = {
   city: { name: "Rio de Janeiro" },
   state: { name: "Rio de Janeiro", acronnym: "RJ" },
   country: { name: "Brasil" },
-  lat: -22.9749636,
-  lon: -43.1984787,
+  location: { lat: -22.9749636, lon: -43.1984787 },
 };
 
 export const someAddressException: AddressException = new AddressException({
