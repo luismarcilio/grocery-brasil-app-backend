@@ -17,7 +17,21 @@ export const purchase: Purchase = {
       taxIdentification: "9879",
       address: {
         rawAddress: "kjhkj",
-        location: { lat: -22.9745891, lon: -43.199457 },
+        location: {
+          lat: -22.9745891,
+          lon: -43.199457,
+          geohash: {
+            g1: "7",
+            g2: "75",
+            g3: "75c",
+            g4: "75cm",
+            g5: "75cm2",
+            g6: "75cm2c",
+            g7: "75cm2cx",
+            g8: "75cm2cxc",
+            g9: "75cm2cxc4",
+          },
+        },
       },
     },
   },
