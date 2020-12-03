@@ -62,7 +62,6 @@ describe("ProductRepositoryImpl", () => {
       company: purchase.fiscalNote.company,
       date: purchase.fiscalNote.date,
       unityValue: purchase.purchaseItemList[0].unityValue,
-      geohash: "lkjhsldkfj",
     };
     it("should save the product purchase information", async () => {
       jest.clearAllMocks();
