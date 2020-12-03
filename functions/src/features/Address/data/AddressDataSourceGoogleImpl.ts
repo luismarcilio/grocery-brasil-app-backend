@@ -7,7 +7,10 @@ import {
   MessageIds,
 } from "../../../core/ApplicationException";
 import * as jsonpath from "jsonpath";
-import { errorToApplicationException } from "../../../core/utils";
+import {
+  errorToApplicationException,
+  calculateGeohash,
+} from "../../../core/utils";
 import { SecretsProvider } from "../../Secrets/provider/SecretsProvider";
 import { withLog, loggerLevel } from "../../../core/Logging";
 
@@ -109,6 +112,13 @@ export class AddressDataSourceGoogleImpl implements AddressDataSource {
           googleAddress,
           "$.results[0].geometry.location.lng"
         )[0],
+        geohash: calculateGeohash(
+          jsonpath.query(
+            googleAddress,
+            "$.results[0].geometry.location.lat"
+          )[0],
+          jsonpath.query(googleAddress, "$.results[0].geometry.location.lng")[0]
+        ),
       },
     };
     return address;

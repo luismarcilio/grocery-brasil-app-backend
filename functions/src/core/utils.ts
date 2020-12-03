@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
 import { ApplicationException, MessageIds } from "./ApplicationException";
+import { Geohash } from "../model/Geohash";
+import * as ngeohash from "ngeohash";
 
 export function parseDate(dateString: string): Date {
   const year = +dateString.split("/")[2];
@@ -19,4 +21,20 @@ export const errorToApplicationException = <T extends ApplicationException>(
     return error;
   }
   return new constructor({ messageId: MessageIds.UNEXPECTED, message: error });
+};
+
+export const calculateGeohash = (lat: number, lon: number): Geohash => {
+  const geohashArray = Array.from(ngeohash.encode(lat, lon, 9));
+  const geohash: Geohash = {
+    g1: geohashArray[0],
+    g2: geohashArray.slice(0, 2).join(""),
+    g3: geohashArray.slice(0, 3).join(""),
+    g4: geohashArray.slice(0, 4).join(""),
+    g5: geohashArray.slice(0, 5).join(""),
+    g6: geohashArray.slice(0, 6).join(""),
+    g7: geohashArray.slice(0, 7).join(""),
+    g8: geohashArray.slice(0, 8).join(""),
+    g9: geohashArray.slice(0, 9).join(""),
+  };
+  return geohash;
 };

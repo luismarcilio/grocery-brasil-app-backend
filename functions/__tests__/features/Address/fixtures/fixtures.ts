@@ -14,7 +14,21 @@ export const someAddress: Address = {
   city: { name: "Rio de Janeiro" },
   state: { name: "Rio de Janeiro", acronnym: "RJ" },
   country: { name: "Brasil" },
-  location: { lat: -22.9749636, lon: -43.1984787 },
+  location: {
+    lat: -22.9749636,
+    lon: -43.1984787,
+    geohash: {
+      g1: "7",
+      g2: "75",
+      g3: "75c",
+      g4: "75cm",
+      g5: "75cm2",
+      g6: "75cm2c",
+      g7: "75cm2cx",
+      g8: "75cm2cxc",
+      g9: "75cm2cxc4",
+    },
+  },
 };
 
 export const someAddressException: AddressException = new AddressException({
