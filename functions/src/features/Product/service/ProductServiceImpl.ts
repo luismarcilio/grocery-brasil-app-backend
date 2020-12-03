@@ -9,7 +9,6 @@ import { ProductPurchase, Product } from "../../../model/Product";
 import { errorToApplicationException } from "../../../core/utils";
 import { ThumbnailFacade } from "../provider/ThumbnailFacade";
 import { withLog, loggerLevel } from "../../../core/Logging";
-import * as ngeohash from "ngeohash";
 
 export class ProductServiceImpl implements ProductService {
   private readonly productProvider: ProductProvider;
@@ -92,7 +91,6 @@ export class ProductServiceImpl implements ProductService {
           company: purchase.fiscalNote.company,
           unityValue: purchaseItem.unityValue,
           date: purchase.fiscalNote.date,
-          geohash: ngeohash.encode(purchaseLocation.lat, purchaseLocation.lon),
         };
         await this.productProvider.saveNf(
           purchaseItem.product,

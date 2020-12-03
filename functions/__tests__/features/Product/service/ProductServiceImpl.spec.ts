@@ -119,14 +119,12 @@ describe("ProductService implementation", () => {
         company: purchase.fiscalNote.company,
         date: purchase.fiscalNote.date,
         unityValue: purchase.purchaseItemList[0].unityValue,
-        geohash: "75cm2cx57",
       },
       {
         accessKey: purchase.fiscalNote.accessKey,
         company: purchase.fiscalNote.company,
         date: purchase.fiscalNote.date,
         unityValue: purchase.purchaseItemList[1].unityValue,
-        geohash: "75cm2cx57",
       },
     ];
     await sut.saveItemsFromPurchase(purchase);
