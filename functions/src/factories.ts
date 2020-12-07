@@ -41,10 +41,7 @@ import {
 } from "./presentation/middlewares/AuthenticationMiddleware";
 import { GetUserByJWTUseCase } from "./features/User/useCase/GetUserByJWTUseCase";
 import { UserRepositoryImpl } from "./features/User/data/UserRepositoryImpl";
-import {
-  FirebaseUserDataStore,
-  VerifyIdTokenWrapper,
-} from "./features/User/data/FirebaseUserDataStore";
+import { FirebaseUserDataStore } from "./features/User/data/FirebaseUserDataStore";
 import { SecretServiceImpl } from "./features/Secrets/service/SecretServiceImpl";
 import { GetSecretUseCase } from "./features/Secrets/useCase/GetSecretUseCase";
 import { GetSecretController } from "./presentation/controllers/GetSecretController";
@@ -71,11 +68,7 @@ const imageManipulationAdapter = new ImageManipulationAdapterSharp(sharp);
 const secretsProvider = new SecretsProviderFirebaseImpl(
   secretManagerServiceClient
 );
-const userDataStore = new FirebaseUserDataStore(
-  cache,
-  new VerifyIdTokenWrapper(),
-  firestore
-);
+const userDataStore = new FirebaseUserDataStore(cache, firestore, admin.auth());
 
 //Repositories
 const webViewScrapDataRepository = new WebViewScrapDataRepositoryFirebase(

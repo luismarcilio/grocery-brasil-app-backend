@@ -7,13 +7,15 @@ import {
   MessageIds,
 } from "../../../../src/core/ApplicationException";
 import { User } from "../../../../src/model/User";
-import { VerifyIdTokenWrapper } from "../../../../src/features/User/data/FirebaseUserDataStore";
+import { admin } from "firebase-admin/lib/auth";
 
 describe("FirebaseUserDataStore", () => {
   const verifyIdToken = jest.fn();
-  const verifyIdTokenWrapper: VerifyIdTokenWrapper = {
+  const getUser = jest.fn();
+  const firebaseAuth: admin.auth.Auth = ({
     verifyIdToken,
-  };
+    getUser,
+  } as unknown) as admin.auth.Auth;
 
   const collection = jest.fn((_) => ({ doc }));
   const firestore = ({
@@ -33,8 +35,8 @@ describe("FirebaseUserDataStore", () => {
 
   const sut: UserDataStore = new FirebaseUserDataStore(
     cache,
-    verifyIdTokenWrapper,
-    firestore
+    firestore,
+    firebaseAuth
   );
   const expected: User = {
     userId: "userId",
@@ -42,6 +44,12 @@ describe("FirebaseUserDataStore", () => {
     address: { rawAddress: "rawAddress" },
     preferences: { searchRadius: 10 },
   };
+  const expectedUserFromAuth: admin.auth.UserRecord = ({
+    uid: "userId",
+    emailVerified: true,
+    disabled: false,
+    email: "test@test.com",
+  } as unknown) as admin.auth.UserRecord;
   describe("getUserIdFromJWT", () => {
     it("should validate jwt and return userId", async () => {
       verifyIdToken.mockImplementation((_) =>
@@ -68,6 +76,20 @@ describe("FirebaseUserDataStore", () => {
       const actual = await sut.getUserFromUserId("userId");
       expect(actual).toEqual(expected);
     });
+
+    it("should get user data from auth if not exists in database", async () => {
+      get.mockImplementation((_) => undefined);
+      getFromFirebase.mockImplementationOnce(() =>
+        Promise.resolve({ exists: false, data })
+      );
+      getUser.mockResolvedValue(expectedUserFromAuth);
+      const actual = await sut.getUserFromUserId("userId");
+      expect(get).toBeCalledWith("userId");
+      expect(collection).toBeCalledWith("USUARIOS");
+      expect(doc).toBeCalledWith("userId");
+      expect(actual).toEqual({ userId: "userId", email: "test@test.com" });
+    });
+
     it("should get user data from database if not exists in cache", async () => {
       get.mockImplementation((_) => undefined);
       data.mockReturnValue(expected);
@@ -81,6 +103,8 @@ describe("FirebaseUserDataStore", () => {
     it("should return error UserException NOT FOUND if not found", async () => {
       get.mockImplementation((_) => undefined);
       getFromFirebase.mockResolvedValue({ exists: false, data });
+      getUser.mockResolvedValue({ disabled: true });
+
       data.mockReturnValue(expected);
       await expect(sut.getUserFromUserId("userId")).rejects.toEqual(
         new UserException({

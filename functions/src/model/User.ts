@@ -6,6 +6,6 @@ export interface User {
   name?: string;
   email: string;
   taxId?: string;
-  address: Address;
-  preferences: UserPreferences;
+  address?: Address;
+  preferences?: UserPreferences;
 }

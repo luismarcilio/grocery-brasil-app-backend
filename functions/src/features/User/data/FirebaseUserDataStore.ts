@@ -6,29 +6,25 @@ import { UserException, MessageIds } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
 import { withLog, loggerLevel } from "../../../core/Logging";
 
-export class VerifyIdTokenWrapper {
-  verifyIdToken = (jwt: string): Promise<admin.auth.DecodedIdToken> =>
-    admin.auth().verifyIdToken(jwt);
-}
 export class FirebaseUserDataStore implements UserDataStore {
   private readonly cache: NodeCache;
-  private readonly verifyIdToken: VerifyIdTokenWrapper;
   private readonly firestore: FirebaseFirestore.Firestore;
+  private readonly firebaseAuth: admin.auth.Auth;
 
   constructor(
     cache: NodeCache,
-    verifyIdToken: VerifyIdTokenWrapper,
-    firestore: FirebaseFirestore.Firestore
+    firestore: FirebaseFirestore.Firestore,
+    firebaseAuth: admin.auth.Auth
   ) {
     this.cache = cache;
-    this.verifyIdToken = verifyIdToken;
     this.firestore = firestore;
+    this.firebaseAuth = firebaseAuth;
   }
 
   @withLog(loggerLevel.DEBUG)
   async getUserIdFromJWT(jwt: string): Promise<string> {
     try {
-      const decodedIdToken = await this.verifyIdToken.verifyIdToken(jwt);
+      const decodedIdToken = await this.firebaseAuth.verifyIdToken(jwt);
       return decodedIdToken.uid;
     } catch (error) {
       throw errorToApplicationException(error, UserException);
@@ -45,10 +41,18 @@ export class FirebaseUserDataStore implements UserDataStore {
       .doc(userId)
       .get();
     if (!docReference.exists) {
-      throw new UserException({
-        messageId: MessageIds.NOT_FOUND,
-        message: `user not found: ${userId}`,
-      });
+      const userRecord = await this.firebaseAuth.getUser(userId);
+      if (!userRecord || userRecord.disabled) {
+        throw new UserException({
+          messageId: MessageIds.NOT_FOUND,
+          message: `user not found: ${userId}`,
+        });
+      }
+      const userFromFirebaseAuth: User = {
+        userId,
+        email: userRecord.email || "",
+      };
+      return userFromFirebaseAuth;
     }
     this.cache.set(userId, <User>docReference.data());
     return <User>docReference.data();
