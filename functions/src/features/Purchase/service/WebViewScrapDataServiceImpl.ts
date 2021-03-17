@@ -64,7 +64,7 @@ export class WebViewScrapDataServiceImpl implements WebViewScrapDataService {
       "$$ACCESS_KEY$$",
       accessKey
     );
-    const javascriptFunctions = `javascript:${javascriptWithAccessKey}`;
+    const javascriptFunctions = `${javascriptWithAccessKey}`;
 
     const webViewScrapData: WebViewScrapData = {
       initialUrl,

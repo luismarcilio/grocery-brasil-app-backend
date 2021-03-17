@@ -41,7 +41,7 @@ describe("WebViewScrapDataServiceImpl", () => {
       initialUrl: "urlForMG",
       uf: "MG",
       accessKey: "accessKey",
-      javascriptFunctions: "javascript:someMinifiedJS",
+      javascriptFunctions: "someMinifiedJS",
     };
 
     parseURL.mockReturnValue(expectedUrlResult);
@@ -60,7 +60,7 @@ describe("WebViewScrapDataServiceImpl", () => {
       initialUrl: "urlForMG",
       uf: "MG",
       accessKey: "accessKey",
-      javascriptFunctions: "javascript:someMinifiedJS",
+      javascriptFunctions: "someMinifiedJS",
     };
 
     parseURL.mockReturnValue(expectedUrlResult);
@@ -79,7 +79,7 @@ describe("WebViewScrapDataServiceImpl", () => {
       initialUrl: "urlForMG",
       uf: "MG",
       accessKey: "accessKey",
-      javascriptFunctions: "javascript:someMinifiedJS",
+      javascriptFunctions: "someMinifiedJS",
     };
 
     parseURL.mockReturnValue(expectedUrlResult);
@@ -98,7 +98,7 @@ describe("WebViewScrapDataServiceImpl", () => {
       initialUrl: "urlForMG",
       uf: "MG",
       accessKey: "accessKey",
-      javascriptFunctions: "javascript:someMinifiedJS(accessKey)",
+      javascriptFunctions: "someMinifiedJS(accessKey)",
     };
 
     parseURL.mockReturnValue(expectedUrlResult);
@@ -109,24 +109,24 @@ describe("WebViewScrapDataServiceImpl", () => {
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
   });
-  it('should concat the string "javascript:" before the javascript', async () => {
-    const sampleInitialURL = "URL";
-    const expectedUrlResult = { uf: "MG", accessKey: "accessKey" };
-    const expected: WebViewScrapData = {
-      initialUrl: "urlForMG",
-      uf: "MG",
-      accessKey: "accessKey",
-      javascriptFunctions: "javascript:someMinifiedJS",
-    };
+  // it('should concat the string "javascript:" before the javascript', async () => {
+  //   const sampleInitialURL = "URL";
+  //   const expectedUrlResult = { uf: "MG", accessKey: "accessKey" };
+  //   const expected: WebViewScrapData = {
+  //     initialUrl: "urlForMG",
+  //     uf: "MG",
+  //     accessKey: "accessKey",
+  //     javascriptFunctions: "javascript:someMinifiedJS",
+  //   };
 
-    parseURL.mockReturnValue(expectedUrlResult);
-    getUrlByUF.mockResolvedValue("urlForMG");
-    getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockResolvedValue("someMinifiedJS");
+  //   parseURL.mockReturnValue(expectedUrlResult);
+  //   getUrlByUF.mockResolvedValue("urlForMG");
+  //   getWebViewJavascriptByUF.mockResolvedValue("someJS");
+  //   minify.mockResolvedValue("someMinifiedJS");
 
-    const actual = await sut.getWebViewScrapData(sampleInitialURL);
-    expect(actual).toEqual(expected);
-  });
+  //   const actual = await sut.getWebViewScrapData(sampleInitialURL);
+  //   expect(actual).toEqual(expected);
+  // });
   it("should minify the javascript", async () => {
     const sampleInitialURL = "URL";
     const expectedUrlResult = { uf: "MG", accessKey: "accessKey" };
@@ -134,7 +134,7 @@ describe("WebViewScrapDataServiceImpl", () => {
       initialUrl: "urlForMG",
       uf: "MG",
       accessKey: "accessKey",
-      javascriptFunctions: "javascript:someMinifiedJS",
+      javascriptFunctions: "someMinifiedJS",
     };
 
     parseURL.mockReturnValue(expectedUrlResult);
