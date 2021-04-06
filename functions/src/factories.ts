@@ -1,57 +1,57 @@
-import * as admin from "firebase-admin";
-import NodeCache = require("node-cache");
-import * as filetype from "file-type";
+import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
+import { Storage } from "@google-cloud/storage";
 import axios from "axios";
+import * as filetype from "file-type";
+import * as admin from "firebase-admin";
 import * as sharp from "sharp";
 import * as UglifyJS from "uglify-es";
-
-import { Storage } from "@google-cloud/storage";
-import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
-import { GetWebViewScrapDataController } from "./presentation/controllers/GetWebViewScrapDataController";
-import { GetWebViewScrapDataUseCase } from "./features/Purchase/useCase/GetWebViewScrapDataUseCase";
-import { WebViewScrapDataServiceImpl } from "./features/Purchase/service/WebViewScrapDataServiceImpl";
-import { WebViewScrapDataProviderImpl } from "./features/Purchase/data/WebViewScrapDataProviderImpl";
-import { MinifierAdapterUglifyJs } from "./features/Purchase/adapter/MinifierAdapterUglifyJs";
-import { UrlParserProviderImpl } from "./features/Purchase/provider/UrlParserProviderImpl";
-import { WebViewScrapDataRepositoryFirebase } from "./features/Purchase/data/WebViewScrapDataRepositoryFirebase";
-import { ParseAndSaveNFController } from "./presentation/controllers/ParseAndSaveNFController";
-import { SavePurchaseUseCase } from "./features/Purchase/useCase/SavePurchaseUseCase";
-import { ScrapNFUseCase } from "./features/Purchase/useCase/ScrapNFUseCase";
-import { PurchaseServiceImpl } from "./features/Purchase/service/PurchaseServiceImpl";
-import { PurchaseProviderImpl } from "./features/Purchase/data/PurchaseProviderImpl";
-import { ProductServiceImpl } from "./features/Product/service/ProductServiceImpl";
-import { ProductProviderImpl } from "./features/Product/data/ProductProviderImpl";
-import { ThumbnailFacadeImpl } from "./features/Product/provider/ThumbnailFacadeImpl";
+import { AddressDataSourceGoogleImpl } from "./features/Address/data/AddressDataSourceGoogleImpl";
+import { AddressProviderImpl } from "./features/Address/provider/AddressProviderImpl";
 import { FileServerRepositoryGCP } from "./features/FileServer/repository/FileServerRepositoryGCP";
-import { MimeTypeAdapterFileType } from "./features/MimeType/adapter/MimeTypeAdapterFileType";
 import { AxiosHttpAdapter } from "./features/Http/adapter/AxiosHttpAdapter";
-import { ScrapNFServiceImpl } from "./features/Purchase/service/ScrapNFServiceImpl";
+import { ImageManipulationAdapterSharp } from "./features/Image/adapter/ImageManipulationAdapterSharp";
+import { MimeTypeAdapterFileType } from "./features/MimeType/adapter/MimeTypeAdapterFileType";
+import { ProductNormalizationBluesoftCosmos } from "./features/Product/data/ProductNormalizationBluesoftCosmos";
+import { ProductProviderImpl } from "./features/Product/data/ProductProviderImpl";
+import { ProductRepositoryFirebase } from "./features/Product/data/ProductRepositoryFirebase";
+import { TextSearchRepositoryImpl } from "./features/Product/data/TextSearchRepositoryImpl";
+import { ThumbnailFacadeImpl } from "./features/Product/provider/ThumbnailFacadeImpl";
+import { ProductServiceImpl } from "./features/Product/service/ProductServiceImpl";
+import { NormalizeProductUseCase } from "./features/Product/useCase/NormalizeProductUseCase";
+import { UploadThumbnailUseCase } from "./features/Product/useCase/UploadThumbnailUseCase";
+import { UploadToTextSearchEngineUseCase } from "./features/Product/useCase/UploadToTextSearchEngineUseCase";
+import { MinifierAdapterUglifyJs } from "./features/Purchase/adapter/MinifierAdapterUglifyJs";
+import { PurchaseProviderImpl } from "./features/Purchase/data/PurchaseProviderImpl";
+import { PurchaseRepositoryFirebase } from "./features/Purchase/data/PurchaseRepositoryFirebase";
+import { WebViewScrapDataProviderImpl } from "./features/Purchase/data/WebViewScrapDataProviderImpl";
+import { WebViewScrapDataRepositoryFirebase } from "./features/Purchase/data/WebViewScrapDataRepositoryFirebase";
 import { ScrapNfProviderFactoryImpl } from "./features/Purchase/provider/ScrapNfProviderFactoryImpl";
 import { ScrapNFServiceMG } from "./features/Purchase/provider/ScrapNFServiceMG";
 import { ScrapNFServiceRJ } from "./features/Purchase/provider/ScrapNFServiceRJ";
-import { ProductRepositoryFirebase } from "./features/Product/data/ProductRepositoryFirebase";
-import { ProductNormalizationBluesoftCosmos } from "./features/Product/data/ProductNormalizationBluesoftCosmos";
+import { UrlParserProviderImpl } from "./features/Purchase/provider/UrlParserProviderImpl";
+import { PurchaseServiceImpl } from "./features/Purchase/service/PurchaseServiceImpl";
+import { ScrapNFServiceImpl } from "./features/Purchase/service/ScrapNFServiceImpl";
+import { WebViewScrapDataServiceImpl } from "./features/Purchase/service/WebViewScrapDataServiceImpl";
+import { GetWebViewScrapDataUseCase } from "./features/Purchase/useCase/GetWebViewScrapDataUseCase";
+import { SavePurchaseUseCase } from "./features/Purchase/useCase/SavePurchaseUseCase";
+import { ScrapNFUseCase } from "./features/Purchase/useCase/ScrapNFUseCase";
 import { SecretsProviderFirebaseImpl } from "./features/Secrets/provider/SecretsProviderFirebaseImpl";
-import { ElasticSearchRepositoryImpl } from "./features/Product/data/ElasticSearchRepositoryImpl";
-import { PurchaseRepositoryFirebase } from "./features/Purchase/data/PurchaseRepositoryFirebase";
-import { ImageManipulationAdapterSharp } from "./features/Image/adapter/ImageManipulationAdapterSharp";
-import {
-  AuthenticationMiddleware,
-  AuthenticationMiddlewareTest,
-} from "./presentation/middlewares/AuthenticationMiddleware";
-import { GetUserByJWTUseCase } from "./features/User/useCase/GetUserByJWTUseCase";
-import { UserRepositoryImpl } from "./features/User/data/UserRepositoryImpl";
-import { FirebaseUserDataStore } from "./features/User/data/FirebaseUserDataStore";
 import { SecretServiceImpl } from "./features/Secrets/service/SecretServiceImpl";
 import { GetSecretUseCase } from "./features/Secrets/useCase/GetSecretUseCase";
+import { FirebaseUserDataStore } from "./features/User/data/FirebaseUserDataStore";
+import { UserRepositoryImpl } from "./features/User/data/UserRepositoryImpl";
+import { GetUserByJWTUseCase } from "./features/User/useCase/GetUserByJWTUseCase";
 import { GetSecretController } from "./presentation/controllers/GetSecretController";
+import { GetWebViewScrapDataController } from "./presentation/controllers/GetWebViewScrapDataController";
+import { ParseAndSaveNFController } from "./presentation/controllers/ParseAndSaveNFController";
 import { NormalizeProductAndUploadThumbnailTrigger } from "./presentation/functions/NormalizeProductAndUploadThumbnailTrigger";
-import { NormalizeProductUseCase } from "./features/Product/useCase/NormalizeProductUseCase";
-import { UploadThumbnailUseCase } from "./features/Product/useCase/UploadThumbnailUseCase";
 import { UploadToTextSearchEngineTrigger } from "./presentation/functions/UploadToTextSearchEngineTrigger";
-import { UploadToTextSearchEngineUseCase } from "./features/Product/useCase/UploadToTextSearchEngineUseCase";
-import { AddressProviderImpl } from "./features/Address/provider/AddressProviderImpl";
-import { AddressDataSourceGoogleImpl } from "./features/Address/data/AddressDataSourceGoogleImpl";
+import {
+  AuthenticationMiddleware,
+  AuthenticationMiddlewareTest
+} from "./presentation/middlewares/AuthenticationMiddleware";
+import NodeCache = require("node-cache");
+
 
 //3rd party
 admin.initializeApp();
@@ -80,7 +80,7 @@ const productNormalizationRepository = new ProductNormalizationBluesoftCosmos(
   secretsProvider,
   httpAdapter
 );
-const textSearchEngineRepository = new ElasticSearchRepositoryImpl(
+const textSearchEngineRepository = new TextSearchRepositoryImpl(
   secretsProvider,
   httpAdapter
 );
