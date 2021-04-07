@@ -38,14 +38,16 @@ describe("TextSearchRepositoryImpl", () => {
     const httpResponse: HttpResponse = { status: 201 };
     getSecret.mockResolvedValue(secret);
     post.mockResolvedValue(httpResponse);
+    const other:any = {...product};
+    other['id'] = product.eanCode;
     const expectedRequest: HttpRequest = {
-      body: product,
+      body: other,
       headers: {
         "Content-Type": "application/json",
-        "X-API-ID": "someApiId"
+        "x-api-key": "someApiId"
       },
     };
-    const expectedUrl = `${secretObject.endpoint}/produto`;
+    const expectedUrl = `${secretObject.endpoint}/product`;
 
     const actual = await sut.uploadProduct(product.eanCode, product);
     expect(actual).toEqual(expected);
