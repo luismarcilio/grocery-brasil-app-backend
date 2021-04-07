@@ -27,14 +27,14 @@ export class TextSearchRepositoryImpl implements TextSearchEngineRepository {
         "TEXT_SEARCH_API_ID"
       );
       const { endpoint, apiId } = JSON.parse(secretString);
-      const url = `${endpoint}/produto`;
+      const url = `${endpoint}/product`;
       const other:any = {...product};
       other["id"]=documentId;
       const httpRequest: HttpRequest = {
-        body: product,
+        body: other,
         headers: {
           "Content-Type": "application/json",
-          "X-API-ID": apiId,
+          "x-api-key": apiId,
         },
       };
 
