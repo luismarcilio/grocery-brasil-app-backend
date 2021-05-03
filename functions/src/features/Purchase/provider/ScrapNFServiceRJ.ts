@@ -114,10 +114,6 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
         purchaseItem.unity.name = $(element)
           .find("tbody > tr > td.fixo-prod-serv-uc > span")
           .text();
-        purchaseItem.unityValue = +$(element)
-          .find("tbody > tr > td.fixo-prod-serv-vb > span")
-          .text()
-          .replace(",", ".");
         purchaseItem.totalValue = +$(element)
           .find("tbody > tr > td.fixo-prod-serv-vb > span")
           .text()
@@ -142,6 +138,7 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
           )
           .text()
           .replace(",", ".");
+        purchaseItem.unityValue = purchaseItem.totalValue/purchaseItem.units;
         purchase.purchaseItemList.push(purchaseItem);
       }
     });
