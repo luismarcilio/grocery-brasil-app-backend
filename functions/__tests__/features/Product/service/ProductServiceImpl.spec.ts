@@ -57,12 +57,14 @@ describe("ProductService implementation", () => {
     );
     await sut.saveItemsFromPurchase(purchase);
     expect(save).toHaveBeenNthCalledWith(1, {
+      productId: "00001",
       eanCode: "00001",
       name: "product1",
       ncmCode: "00001",
       unity: { name: "UN" },
     });
     expect(save).toHaveBeenNthCalledWith(2, {
+      productId: "00002-product-2",
       eanCode: "",
       name: "product/2",
       ncmCode: "00002",
@@ -92,6 +94,7 @@ describe("ProductService implementation", () => {
     expect(getProductById).toHaveBeenNthCalledWith(1, "00001");
     expect(getProductById).toHaveBeenNthCalledWith(2, "00002-PRODUCT-2");
     expect(save).toHaveBeenNthCalledWith(1, {
+      productId: "00002-product-2",
       eanCode: "",
       name: "product/2",
       ncmCode: "00002",

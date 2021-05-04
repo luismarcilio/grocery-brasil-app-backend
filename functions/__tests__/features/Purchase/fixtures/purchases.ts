@@ -39,6 +39,7 @@ export const purchase: Purchase = {
   purchaseItemList: [
     {
       product: {
+        productId: "00001",
         eanCode: "00001",
         name: "product1",
         ncmCode: "00001",
@@ -51,6 +52,7 @@ export const purchase: Purchase = {
     },
     {
       product: {
+        productId: "00002-product-2",
         eanCode: "",
         name: "product/2",
         ncmCode: "00002",
