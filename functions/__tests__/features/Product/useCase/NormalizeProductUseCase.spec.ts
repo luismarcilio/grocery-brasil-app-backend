@@ -16,6 +16,7 @@ describe("Normalize product data", () => {
   const sut: UseCase<Product> = new NormalizeProductUseCase(productService);
 
   const expected: Product = {
+    productId: "12038974012",
     name: "someNormalizedProduct",
     eanCode: "12038974012",
     ncmCode: "098741",
@@ -23,6 +24,7 @@ describe("Normalize product data", () => {
   };
 
   const input: Product = {
+    productId: "12038974012",
     name: "someProduct",
     eanCode: "12038974012",
     ncmCode: "098741",

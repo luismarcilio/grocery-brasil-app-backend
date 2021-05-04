@@ -1,6 +1,7 @@
 import { Unity } from "./Unity";
 import { Company } from "./Company";
 export interface Product {
+  productId: string;
   name: string;
   eanCode: string;
   ncmCode: string;

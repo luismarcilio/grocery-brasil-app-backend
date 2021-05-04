@@ -3,7 +3,7 @@ import { Purchase } from "../../../model/Purchase";
 import { PurchaseItem } from "../../../model/PurchaseItem";
 import { FiscalNote } from "../../../model/FiscalNote";
 import cheerio = require("cheerio");
-import { parseDate } from "../../../core/utils";
+import { getDocId, parseDate } from "../../../core/utils";
 import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ScrapNFServiceMG implements ScrapNFProvider {
@@ -89,6 +89,7 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
         .text();
       const purchaseItem: PurchaseItem = {
         product: {
+          productId: '',
           name: $(element)
             .find("div.panel-heading.panel-collapse > h4 > div > div.col-md-4")
             .text()
@@ -128,6 +129,7 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
           .replace("R$ ", "")
           .replace(",", "."),
       };
+      purchaseItem.product.productId = getDocId(purchaseItem.product);
       purchase.purchaseItemList.push(purchaseItem);
     });
 

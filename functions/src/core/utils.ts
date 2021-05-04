@@ -4,6 +4,7 @@
 import { ApplicationException, MessageIds } from "./ApplicationException";
 import { Geohash } from "../model/Geohash";
 import * as ngeohash from "ngeohash";
+import { Product } from "../model/Product";
 
 export function parseDate(dateString: string): Date {
   const year = +dateString.split("/")[2];
@@ -38,3 +39,11 @@ export const calculateGeohash = (lat: number, lon: number): Geohash => {
   };
   return geohash;
 };
+
+export const getDocId = (product: Product): string => {
+  const normalizedItemName = product.name.replace(/[^a-zA-Z0-9]+/g, "-");
+  const productDocId = !product.eanCode
+    ? product.ncmCode + "-" + normalizedItemName
+    : product.eanCode;
+  return productDocId;
+}

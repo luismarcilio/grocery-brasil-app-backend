@@ -3,7 +3,7 @@ import { Purchase } from "../../../model/Purchase";
 import { PurchaseItem } from "../../../model/PurchaseItem";
 import { FiscalNote } from "../../../model/FiscalNote";
 import cheerio = require("cheerio");
-import { parseDate } from "../../../core/utils";
+import { getDocId, parseDate } from "../../../core/utils";
 import { withLog, loggerLevel } from "../../../core/Logging";
 
 export class ScrapNFServiceRJ implements ScrapNFProvider {
@@ -90,6 +90,7 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
       if ($(element).attr("class") === "toggle box") {
         purchaseItem = {
           product: {
+            productId:"",
             name: "",
             eanCode: "",
             ncmCode: "",
@@ -139,6 +140,7 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
           .text()
           .replace(",", ".");
         purchaseItem.unityValue = purchaseItem.totalValue/purchaseItem.units;
+        purchaseItem.product.productId = getDocId(purchaseItem.product);
         purchase.purchaseItemList.push(purchaseItem);
       }
     });

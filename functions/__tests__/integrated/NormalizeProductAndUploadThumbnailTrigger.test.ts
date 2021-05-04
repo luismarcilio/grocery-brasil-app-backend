@@ -6,6 +6,7 @@ describe("NormalizeProductAndUploadThumbnailTrigger", () => {
     jest.setTimeout(30000);
     const sut = makeNormalizeProductAndUploadThumbnailTrigger();
     const product: Product = {
+      productId: "7891962051338",
       eanCode: "7891962051338",
       name: "PAO DE FORMA TRADICIONAL 400G VISCONTI",
       ncmCode: "19059010",

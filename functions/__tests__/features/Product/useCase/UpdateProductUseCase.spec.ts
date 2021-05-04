@@ -16,6 +16,7 @@ describe("Update product data", () => {
   const sut: UseCase<Product> = new UpdateProductUseCase(productService);
 
   const input: Product = {
+    productId: "12038974012",
     name: "someProduct",
     eanCode: "12038974012",
     ncmCode: "098741",
