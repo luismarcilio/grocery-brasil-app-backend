@@ -1,3 +1,5 @@
+import { logger } from "./Logging";
+
 export interface ApplicationException {
   messageId: MessageIds;
   message?: string;
@@ -16,6 +18,7 @@ export class ScrapNfException implements ApplicationException {
   constructor(builder: { messageId: MessageIds; message: string }) {
     this.messageId = builder.messageId;
     this.message = builder.message;
+    logger.error({messageId: this.messageId, message: this.message, stack: Error().stack});
   }
 }
 
@@ -26,6 +29,7 @@ export class PurchaseException implements ApplicationException {
   constructor(builder: { messageId: MessageIds; message: string }) {
     this.messageId = builder.messageId;
     this.message = builder.message;
+    logger.error({messageId: this.messageId, message: this.message, stack: Error().stack});
   }
 }
 
@@ -36,6 +40,7 @@ export class ProductException implements ApplicationException {
   constructor(builder: { messageId: MessageIds; message: string }) {
     this.messageId = builder.messageId;
     this.message = builder.message;
+    logger.error({messageId: this.messageId, message: this.message, stack: Error().stack});
   }
 }
 
@@ -46,6 +51,7 @@ export class UserException implements ApplicationException {
   constructor(builder: { messageId: MessageIds; message: string }) {
     this.messageId = builder.messageId;
     this.message = builder.message;
+    logger.error({messageId: this.messageId, message: this.message, stack: Error().stack});
   }
 }
 
@@ -56,6 +62,7 @@ export class AddressException implements ApplicationException {
   constructor(builder: { messageId: MessageIds; message: string }) {
     this.messageId = builder.messageId;
     this.message = builder.message;
+    logger.error({messageId: this.messageId, message: this.message, stack: Error().stack});
   }
 }
 
@@ -66,6 +73,7 @@ export class SecretException implements ApplicationException {
   constructor(builder: { messageId: MessageIds; message: string }) {
     this.messageId = builder.messageId;
     this.message = builder.message;
+    logger.error({messageId: this.messageId, message: this.message, stack: Error().stack});
   }
 }
 
@@ -76,5 +84,6 @@ export class HttpAdapterException implements ApplicationException {
   constructor(builder: { messageId: MessageIds; message: string }) {
     this.messageId = builder.messageId;
     this.message = builder.message;
+    logger.error({messageId: this.messageId, message: this.message, stack: Error().stack});
   }
 }
