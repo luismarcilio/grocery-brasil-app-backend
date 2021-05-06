@@ -27,9 +27,12 @@ export function withLog(level: loggerLevel) {
   ) {
     const targetMethod = descriptor.value;
     descriptor.value = function (...args: any[]) {
+
+      const returnData = targetMethod.apply(this, args);
       const logData = {
         method: propertyKey,
         args,
+        return: returnData
       };
       switch (level) {
         case loggerLevel.DEBUG:
@@ -42,7 +45,7 @@ export function withLog(level: loggerLevel) {
           logger.error(logData);
           break;
       }
-      return targetMethod.apply(this, args);
+      return returnData;
     };
   };
 }
