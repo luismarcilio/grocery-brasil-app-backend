@@ -8,7 +8,7 @@ import {
   PurchaseException,
 } from "../../core/ApplicationException";
 import { Purchase } from "../../model/Purchase";
-import { withLog, loggerLevel } from "../../core/Logging";
+import { withLog, loggerLevel, logger } from "../../core/Logging";
 
 export class ParseAndSaveNFController implements Controller {
   private readonly savePurchaseUseCase: SavePurchaseUseCase;
@@ -50,6 +50,7 @@ export class ParseAndSaveNFController implements Controller {
 
       const purchase: Purchase = result as Purchase;
       if (!request.body.user) {
+        logger.error("user not found");
         const response: HttpResponse = {
           status: 500,
           body: { status: "user not found" },
@@ -59,6 +60,7 @@ export class ParseAndSaveNFController implements Controller {
       purchase.user = request.body.user;
       const saveResult = await this.savePurchaseUseCase.execute(purchase);
       if (saveResult.constructor.name === "PurchaseException") {
+        logger.error(saveResult);
         const response: HttpResponse = {
           status: 500,
           body: { status: (saveResult as PurchaseException).message },
@@ -71,6 +73,7 @@ export class ParseAndSaveNFController implements Controller {
       };
       return response;
     } catch (error) {
+      logger.error(error);
       const response: HttpResponse = {
         status: 500,
         body: { status: error },
