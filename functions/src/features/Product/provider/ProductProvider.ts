@@ -18,6 +18,6 @@ export interface ProductProvider
     ProductProviderNormalizeProduct {
   save: (product: Product) => Promise<void>;
   saveNf: (product: Product, productPurchase: ProductPurchase) => Promise<void>;
-  getProductById: (docId: string) => Promise<Product>;
+  getProductById: (docId: string) => Promise<Product|null>;
   getDocId: (product: Product) => string;
 }

@@ -83,7 +83,7 @@ export class ProductProviderImpl implements ProductProvider {
       );
     }
   }
-  async getProductById(docId: string): Promise<Product> {
+  async getProductById(docId: string): Promise<Product|null> {
     try {
       return await this.productRepository.getProductById(docId);
     } catch (error) {

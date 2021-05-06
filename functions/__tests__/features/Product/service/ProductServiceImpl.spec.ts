@@ -49,12 +49,7 @@ describe("ProductService implementation", () => {
       .spyOn(productProviderStub, "getDocId")
       .mockReturnValueOnce("00002-product-2");
 
-    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
-      new ProductException({
-        messageId: MessageIds.NOT_FOUND,
-        message: "Product not found",
-      })
-    );
+    jest.spyOn(productProviderStub, "getProductById").mockResolvedValue(null);
     await sut.saveItemsFromPurchase(purchase);
     expect(save).toHaveBeenNthCalledWith(1, {
       productId: "00001",
@@ -76,12 +71,7 @@ describe("ProductService implementation", () => {
     jest.spyOn(productProviderStub, "save").mockResolvedValue();
     jest.spyOn(productProviderStub, "saveNf").mockResolvedValue();
 
-    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
-      new ProductException({
-        messageId: MessageIds.NOT_FOUND,
-        message: "Product not found",
-      })
-    );
+    jest.spyOn(productProviderStub, "getProductById").mockResolvedValue(null);
     jest
       .spyOn(productProviderStub, "getProductById")
       .mockResolvedValueOnce(purchase.purchaseItemList[0].product);
@@ -110,12 +100,8 @@ describe("ProductService implementation", () => {
       .spyOn(productProviderStub, "getDocId")
       .mockReturnValueOnce("00002-product-2");
 
-    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
-      new ProductException({
-        messageId: MessageIds.NOT_FOUND,
-        message: "Product not found",
-      })
-    );
+    jest.spyOn(productProviderStub, "getProductById").mockResolvedValue(null);
+
     const productPurchase: ProductPurchase[] = [
       {
         accessKey: purchase.fiscalNote.accessKey,
@@ -148,12 +134,8 @@ describe("ProductService implementation", () => {
     jest.spyOn(productProviderStub, "saveNf").mockRejectedValue("Error");
     jest.spyOn(productProviderStub, "getDocId").mockReturnValue("DocId");
 
-    jest.spyOn(productProviderStub, "getProductById").mockRejectedValue(
-      new ProductException({
-        messageId: MessageIds.NOT_FOUND,
-        message: "Product not found",
-      })
-    );
+    jest.spyOn(productProviderStub, "getProductById").mockResolvedValue(null);
+
     const actual = await sut.saveItemsFromPurchase(purchase);
     expect(actual).toEqual(
       new ProductException({

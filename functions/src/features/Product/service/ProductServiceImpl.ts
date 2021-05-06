@@ -74,9 +74,8 @@ export class ProductServiceImpl implements ProductService {
         const docId: string = this.productProvider.getDocId(
           purchaseItem.product
         );
-        try {
-          await this.productProvider.getProductById(docId);
-        } catch (error) {
+        const product = await this.productProvider.getProductById(docId);
+        if(! product){
           await this.productProvider.save(purchaseItem.product);
         }
         const purchaseLocation = purchase.fiscalNote.company.address.location;

@@ -7,5 +7,5 @@ export interface ProductRepository {
     nfId: string,
     productPurchase: ProductPurchase
   ) => Promise<void>;
-  getProductById: (productId: string) => Promise<Product>;
+  getProductById: (productId: string) => Promise<Product|null>;
 }

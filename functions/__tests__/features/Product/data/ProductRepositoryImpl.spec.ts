@@ -8,7 +8,6 @@ import {
 } from "../../../../src/core/ApplicationException";
 import { ProductPurchase } from "../../../../src/model/Product";
 import { purchase } from "../../Purchase/fixtures/purchases";
-import { ProductException } from "../../../../src/core/ApplicationException";
 import { product } from "../fixture/product";
 
 describe("ProductRepositoryImpl", () => {
@@ -95,7 +94,7 @@ describe("ProductRepositoryImpl", () => {
       const actual = await sut.getProductById("productId");
       expect(actual).toEqual(product);
     });
-    it("should fail with not found if not present", async () => {
+    it("should return null if not present", async () => {
       jest.clearAllMocks();
       const documentSnapshotNotFound = { ...docSnapshot };
       documentSnapshotNotFound.exists = false;
@@ -106,12 +105,9 @@ describe("ProductRepositoryImpl", () => {
         .spyOn(doc(), "get")
         .mockReturnValue((documentSnapshotNotFound as unknown) as any);
       jest.spyOn(documentSnapshotNotFound, "data").mockReturnValue(product);
-      await expect(sut.getProductById("productId")).rejects.toEqual(
-        new ProductException({
-          messageId: MessageIds.NOT_FOUND,
-          message: "product productId not found",
-        })
-      );
+      const actual = await sut.getProductById("productId");
+      expect(actual).toBeNull;
+
     });
     it("should fail with unexpected on error", async () => {
       jest.clearAllMocks();

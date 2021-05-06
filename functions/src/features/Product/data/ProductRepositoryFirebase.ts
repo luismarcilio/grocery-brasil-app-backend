@@ -2,7 +2,6 @@ import { ProductRepository } from "./ProductRepository";
 import { ProductPurchase, Product } from "../../../model/Product";
 import {
   ProductException,
-  MessageIds,
 } from "../../../core/ApplicationException";
 import { errorToApplicationException } from "../../../core/utils";
 import { withLog, loggerLevel } from "../../../core/Logging";
@@ -43,19 +42,14 @@ export class ProductRepositoryFirebase implements ProductRepository {
     }
   }
   @withLog(loggerLevel.DEBUG)
-  async getProductById(productId: string): Promise<Product> {
+  async getProductById(productId: string): Promise<Product | null> {
     try {
       const dbNfDoc = await this.firestore
         .collection("PRODUTOS")
         .doc(productId)
         .get();
       if (!dbNfDoc.exists) {
-        return Promise.reject(
-          new ProductException({
-            messageId: MessageIds.NOT_FOUND,
-            message: `product ${productId} not found`,
-          })
-        );
+        return Promise.resolve(null);
       }
       return <Product>dbNfDoc.data();
     } catch (error) {
