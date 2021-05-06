@@ -53,15 +53,15 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
             )
               .text()
               .replace(/[\n\t]/g, " ")
-              .replace(/\s{2,}/g, "") +
+              .replace(/\s{2,}/g, "")
+              .replace(/\b0{1,}/g,'') + //Google has issues with street numbers beginning with zero
             " " +
             $(
               "#Emitente > fieldset > table > tbody > tr:nth-child(3) > td:nth-child(1) > span"
             )
               .text()
               .replace(/[\n\t]/g, " ")
-              .replace(/\s{2,}/g, "")
-              .replace(/\b0{1,}/g,'') + //Google has issues with street numbers beginning with zero
+              .replace(/\s{2,}/g, "")+
             ", CEP: " +
             $(
               "#Emitente > fieldset > table > tbody > tr:nth-child(3) > td:nth-child(2) > span"

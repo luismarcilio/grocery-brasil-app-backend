@@ -28,7 +28,7 @@ describe("ScrapNFServiceRJ", () => {
       taxIdentification: "61.585.865/0444-42",
       address: {
         rawAddress:
-          "AVENIDA NOSSA SENHORA DE COPACABANA,00734 COPACABANA, CEP: 22050-001",
+          "AVENIDA NOSSA SENHORA DE COPACABANA,734 COPACABANA, CEP: 22050-001",
       },
     });
 
