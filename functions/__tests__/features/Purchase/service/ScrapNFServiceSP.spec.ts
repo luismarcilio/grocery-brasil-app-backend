@@ -27,11 +27,28 @@ describe("ScrapNFServiceSP", () => {
       name: "PIMENTA VERDE ALIMENTOS LTDA",
       taxIdentification: "09.060.964/0117-20",
       address: {
-        rawAddress:
-          "RODOVIA PRESIDENTE DUTRA, S/N, PIRATINGUY, CEP: 12580-000",
+        rawAddress: "RODOVIA PRESIDENTE DUTRA, S/N, PIRATINGUY, CEP: 12580-000",
       },
     });
 
+    expect({
+      product: {
+        eanCode: "7894900530025",
+        name: "Agua Crystal Pet 1L SG",
+        ncmCode: "22011000",
+        productId: "7894900530025",
+        unity: {
+          name: "UN",
+        },
+      },
+      totalValue: 7.9,
+      units: 1,
+      unity: {
+        name: "UN",
+      },
+      unityValue: 7.9,
+    }).toStrictEqual(purchase.purchaseItemList[2]);
+    expect(6).toEqual(purchase.purchaseItemList.length);
     const totalValue = purchase.purchaseItemList
       .map((p) => p.totalValue)
       .reduce((v1, v2) => v1 + v2, 0);
