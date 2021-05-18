@@ -56,6 +56,7 @@ import { ScrapNFServiceSP } from "./features/Purchase/provider/ScrapNFServiceSP"
 //3rd party
 admin.initializeApp();
 const firestore = admin.firestore();
+firestore.settings({ignoreUndefinedProperties: true});
 const cache = new NodeCache();
 const storage = new Storage();
 const secretManagerServiceClient = new SecretManagerServiceClient();
