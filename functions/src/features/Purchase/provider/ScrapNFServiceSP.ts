@@ -3,7 +3,7 @@ import { Purchase } from "../../../model/Purchase";
 // import { PurchaseItem } from "../../../model/PurchaseItem";
 import { FiscalNote } from "../../../model/FiscalNote";
 import cheerio = require("cheerio");
-import { getDocId, parseDate } from "../../../core/utils";
+import { getDocId, parseDate2 } from "../../../core/utils";
 import { withLog, loggerLevel } from "../../../core/Logging";
 import { PurchaseItem } from "../../../model/PurchaseItem";
 
@@ -61,7 +61,7 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
               .replace(/\s{2,}/g, " "),
         },
       },
-      date: parseDate(stringDate),
+      date: parseDate2(stringDate),
     };
 
     const totalAmount: number = +cfe$("#conteudo_lblCfeValorTotal")
