@@ -76,13 +76,19 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
 
     produtos$("#conteudo_grvProdutosServicos > tbody > tr").each(
       (_, element: cheerio.Element) => {
-        if(cheerio(element).find("tr > td:nth-child(1)").text().trim() === "Núm."){
+        const header = cheerio(element).find("tr > th");
+        if (header.length) {
           return;
         }
-        const eanCode = +cheerio(element).find("tr > td:nth-child(8)").text().trim();
+        const eanCode = +cheerio(element)
+          .find("tr > td:nth-child(8)")
+          .text()
+          .trim();
         const ncmCode = +cheerio(element)
-          .find("#tr > td:nth-child(9)")
-          .text().trim();
+          .find("tr > td:nth-child(9)")
+          .text()
+          .replace(/[\n\t]/g, "")
+          .trim();
         const purchaseItem: PurchaseItem = {
           product: {
             productId: "",
@@ -109,14 +115,15 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
               .replace(/[\n\t]/g, ""),
           },
           totalValue: +cheerio(element)
-            .find(
-              "tr > td:nth-child(5)"
-            )
+            .find("tr > td:nth-child(5)")
             .text()
             .replace(",", "."),
           units: +cheerio(element)
             .find("tr > td:nth-child(3)")
-            .text(),
+            .text()
+            .replace(/[\n\t]/g, "")
+            .trim()
+            .replace(",", "."),
           unityValue: +cheerio(element)
             .find("tr > td:nth-child(12)")
             .text()
