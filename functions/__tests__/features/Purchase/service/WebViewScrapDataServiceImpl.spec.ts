@@ -104,7 +104,7 @@ describe("WebViewScrapDataServiceImpl", () => {
     parseURL.mockReturnValue(expectedUrlResult);
     getUrlByUF.mockResolvedValue("urlForMG");
     getWebViewJavascriptByUF.mockResolvedValue("someJS");
-    minify.mockResolvedValue("someMinifiedJS(accessKey)"); 
+    minify.mockResolvedValue("someMinifiedJS($$ACCESS_KEY$$)"); 
 
     const actual = await sut.getWebViewScrapData(sampleInitialURL);
     expect(actual).toEqual(expected);
