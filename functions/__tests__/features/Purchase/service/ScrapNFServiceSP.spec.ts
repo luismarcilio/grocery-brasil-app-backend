@@ -30,7 +30,7 @@ describe("ScrapNFServiceSP", () => {
         rawAddress: "RODOVIA PRESIDENTE DUTRA, S/N, PIRATINGUY, CEP: 12580-000",
       },
     });
-
+    expect(new Date(2021,4,2)).toStrictEqual(purchase.fiscalNote.date);
     expect({
       product: {
         eanCode: "7894900530025",
