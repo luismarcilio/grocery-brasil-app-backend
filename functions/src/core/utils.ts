@@ -14,6 +14,13 @@ export function parseDate(dateString: string): Date {
   return new Date(year, mon, day);
 }
 
+export function parseDate2(dateString: string): Date {
+  const year = +dateString.split("-")[0];
+  const mon = +dateString.split("-")[1] - 1;
+  const day = +dateString.split("-")[2].split(" ")[0];
+  return new Date(year, mon, day);
+}
+
 export const errorToApplicationException = <T extends ApplicationException>(
   error: any,
   constructor: new (data: { messageId: MessageIds; message: string }) => T
@@ -46,4 +53,4 @@ export const getDocId = (product: Product): string => {
     ? product.ncmCode + "-" + normalizedItemName
     : product.eanCode;
   return productDocId;
-}
+};
