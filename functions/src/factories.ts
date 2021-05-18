@@ -50,6 +50,7 @@ import {
   AuthenticationMiddlewareTest
 } from "./presentation/middlewares/AuthenticationMiddleware";
 import NodeCache = require("node-cache");
+import { ScrapNFServiceSP } from "./features/Purchase/provider/ScrapNFServiceSP";
 
 
 //3rd party
@@ -115,6 +116,7 @@ const addressProvider = new AddressProviderImpl(addressDataSource);
 const scrapNfProviderFactory = new ScrapNfProviderFactoryImpl([
   { uf: "MG", scrapNfProvider: ScrapNFServiceMG.instance() },
   { uf: "RJ", scrapNfProvider: ScrapNFServiceRJ.instance() },
+  { uf: "SP", scrapNfProvider: ScrapNFServiceSP.instance() }
 ]);
 
 //Services
