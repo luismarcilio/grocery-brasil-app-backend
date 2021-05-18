@@ -4,7 +4,6 @@ import axios from "axios";
 import * as filetype from "file-type";
 import * as admin from "firebase-admin";
 import * as sharp from "sharp";
-import * as UglifyJS from "uglify-es";
 import { AddressDataSourceGoogleImpl } from "./features/Address/data/AddressDataSourceGoogleImpl";
 import { AddressProviderImpl } from "./features/Address/provider/AddressProviderImpl";
 import { FileServerRepositoryGCP } from "./features/FileServer/repository/FileServerRepositoryGCP";
@@ -20,7 +19,7 @@ import { ProductServiceImpl } from "./features/Product/service/ProductServiceImp
 import { NormalizeProductUseCase } from "./features/Product/useCase/NormalizeProductUseCase";
 import { UploadThumbnailUseCase } from "./features/Product/useCase/UploadThumbnailUseCase";
 import { UploadToTextSearchEngineUseCase } from "./features/Product/useCase/UploadToTextSearchEngineUseCase";
-import { MinifierAdapterUglifyJs } from "./features/Purchase/adapter/MinifierAdapterUglifyJs";
+import { MinifierAdapterBypass } from "./features/Purchase/adapter/MinifierAdapterBypass";
 import { PurchaseProviderImpl } from "./features/Purchase/data/PurchaseProviderImpl";
 import { PurchaseRepositoryFirebase } from "./features/Purchase/data/PurchaseRepositoryFirebase";
 import { WebViewScrapDataProviderImpl } from "./features/Purchase/data/WebViewScrapDataProviderImpl";
@@ -61,7 +60,7 @@ const storage = new Storage();
 const secretManagerServiceClient = new SecretManagerServiceClient();
 
 //Adapters
-const minifierAdapter = new MinifierAdapterUglifyJs(UglifyJS.minify);
+const minifierAdapter = new MinifierAdapterBypass();
 const mimeTypeAdapter = new MimeTypeAdapterFileType(filetype);
 const httpAdapter = new AxiosHttpAdapter(axios);
 const imageManipulationAdapter = new ImageManipulationAdapterSharp(sharp);
