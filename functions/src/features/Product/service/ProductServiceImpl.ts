@@ -90,7 +90,7 @@ export class ProductServiceImpl implements ProductService {
           company: purchase.fiscalNote.company,
           unityValue: purchaseItem.unityValue,
           date: purchase.fiscalNote.date,
-          discount: purchase.totalDiscount
+          discount: purchaseItem.discount
         };
         await this.productProvider.saveNf(
           purchaseItem.product,
