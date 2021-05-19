@@ -36,5 +36,10 @@ describe("ScrapNFServiceRJ", () => {
       .map((p) => p.totalValue)
       .reduce((v1, v2) => v1 + v2, 0);
     expect(totalValue).toBeCloseTo(113.28);
+
+    const totalDiscount = purchase.purchaseItemList
+    .map(p => p.discount)
+    .reduce((v1,v2) => v1+v2,0);
+    expect(totalDiscount).toBeCloseTo(13.94);
   });
 });
