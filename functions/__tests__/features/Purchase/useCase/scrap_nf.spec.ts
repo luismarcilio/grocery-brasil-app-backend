@@ -20,7 +20,7 @@ describe('scrap NF html', () => {
             }
         },
         totalAmount: 10.5,
-        totalDiscount: 0,
+        totalDiscount: 3,
         purchaseItemList: []
     };
 

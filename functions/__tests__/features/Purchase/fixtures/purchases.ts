@@ -36,7 +36,7 @@ export const purchase: Purchase = {
     },
   },
   totalAmount: 10.5,
-  totalDiscount: 0,
+  totalDiscount: 3,
   purchaseItemList: [
     {
       product: {
@@ -50,7 +50,7 @@ export const purchase: Purchase = {
       unityValue: 11.5,
       units: 1,
       totalValue: 11.5,
-      discount: 0
+      discount: 1
     },
     {
       product: {
@@ -64,7 +64,7 @@ export const purchase: Purchase = {
       unityValue: 12.5,
       units: 1,
       totalValue: 12.5,
-      discount: 0
+      discount: 2
     },
   ],
 };

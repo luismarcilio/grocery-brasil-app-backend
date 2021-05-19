@@ -23,7 +23,7 @@ describe("ScrapNFServiceImpl", () => {
     },
     totalAmount: 10.5,
     purchaseItemList: [],
-    totalDiscount: 0
+    totalDiscount: 3
   };
   class ScrapNfProviderStub {
     scrap = (html: string): Purchase => {
