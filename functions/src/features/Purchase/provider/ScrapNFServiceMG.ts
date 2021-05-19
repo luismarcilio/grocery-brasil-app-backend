@@ -75,6 +75,7 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
       fiscalNote,
       totalAmount,
       purchaseItemList: [],
+      totalDiscount: 0      
     };
     $("#accordion1 > div").each((_, element: cheerio.Element) => {
       const eanCode = +$(element)
@@ -128,6 +129,7 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
           .text()
           .replace("R$ ", "")
           .replace(",", "."),
+        discount: 0
       };
       purchaseItem.product.productId = getDocId(purchaseItem.product);
       purchase.purchaseItemList.push(purchaseItem);

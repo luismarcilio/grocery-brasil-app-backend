@@ -7,4 +7,5 @@ export interface PurchaseItem {
   unityValue: number
   units: number
   totalValue: number
+  discount: number
 }

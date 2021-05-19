@@ -47,6 +47,7 @@ describe("ScrapNFServiceSP", () => {
         name: "UN",
       },
       unityValue: 7.9,
+      discount: 0
     }).toStrictEqual(purchase.purchaseItemList[2]);
     expect(6).toEqual(purchase.purchaseItemList.length);
     const totalValue = purchase.purchaseItemList

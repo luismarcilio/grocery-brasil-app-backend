@@ -63,6 +63,7 @@ export class PurchaseServiceImpl implements PurchaseService {
       company: purchase.fiscalNote.company,
       totalAmount: purchase.totalAmount,
       date: purchase.fiscalNote.date,
+      totalDiscount: purchase.totalDiscount
     };
     const fullAddress = await this.purchaseProvider.saveResume(purchaseResume);
     return fullAddress;

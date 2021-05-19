@@ -19,6 +19,7 @@ describe("Save purchase", () => {
       },
     },
     totalAmount: 10.5,
+    totalDiscount: 0,
     purchaseItemList: [],
   };
 

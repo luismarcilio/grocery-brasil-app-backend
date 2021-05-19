@@ -61,6 +61,7 @@ describe("ProductRepositoryImpl", () => {
       company: purchase.fiscalNote.company,
       date: purchase.fiscalNote.date,
       unityValue: purchase.purchaseItemList[0].unityValue,
+      discount: purchase.purchaseItemList[0].discount
     };
     it("should save the product purchase information", async () => {
       jest.clearAllMocks();

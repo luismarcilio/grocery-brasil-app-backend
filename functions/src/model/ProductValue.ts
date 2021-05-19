@@ -6,4 +6,5 @@ export interface ProductValue {
   product: Product
   date: Date
   value: number
+  discount: number
 }

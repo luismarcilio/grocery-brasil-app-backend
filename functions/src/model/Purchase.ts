@@ -7,6 +7,7 @@ export interface Purchase {
   user?: User;
   fiscalNote: FiscalNote;
   totalAmount: number;
+  totalDiscount: number;
   purchaseItemList: PurchaseItem[];
 }
 
@@ -16,4 +17,5 @@ export interface PurchaseResume {
   company: Company;
   date: Date;
   totalAmount: number;
+  totalDiscount: number;
 }

@@ -64,6 +64,7 @@ describe("save purchase service", () => {
       company: purchaseWithAddress.fiscalNote.company,
       date: purchaseWithAddress.fiscalNote.date,
       totalAmount: purchaseWithAddress.totalAmount,
+      totalDiscount: purchaseWithAddress.totalDiscount
     };
     getAddressFromRawAddress.mockResolvedValue(someAddress);
 

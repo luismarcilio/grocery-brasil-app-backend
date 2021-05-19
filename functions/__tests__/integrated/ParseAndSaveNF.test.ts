@@ -9,7 +9,7 @@ describe("Express Functions", () => {
     "__tests__/features/Purchase/service/fixtures/valid_nf_from_mg.xhtml";
   const readFilePromise = promisify(fs.readFile);
 
-  it("should save the NF", async () => {
+  it("should save the NF from MG", async () => {
     jest.setTimeout(30000);
     const html = (await readFilePromise(htmlFile)).toString();
     const userId = "testUserId";

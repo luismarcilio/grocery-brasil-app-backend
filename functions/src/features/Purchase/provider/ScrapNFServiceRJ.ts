@@ -54,14 +54,14 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
               .text()
               .replace(/[\n\t]/g, " ")
               .replace(/\s{2,}/g, "")
-              .replace(/\b0{1,}/g,'') + //Google has issues with street numbers beginning with zero
+              .replace(/\b0{1,}/g, "") + //Google has issues with street numbers beginning with zero
             " " +
             $(
               "#Emitente > fieldset > table > tbody > tr:nth-child(3) > td:nth-child(1) > span"
             )
               .text()
               .replace(/[\n\t]/g, " ")
-              .replace(/\s{2,}/g, "")+
+              .replace(/\s{2,}/g, "") +
             ", CEP: " +
             $(
               "#Emitente > fieldset > table > tbody > tr:nth-child(3) > td:nth-child(2) > span"
@@ -79,11 +79,16 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
     )
       .text()
       .replace(",", ".");
-
+    const totalDiscount: number = +$(
+      "#Totais > fieldset > fieldset > table > tbody > tr:nth-child(4) > td:nth-child(3) > span"
+    )
+      .text()
+      .replace(",", ".");
     const purchase: Purchase = {
       fiscalNote,
       totalAmount,
       purchaseItemList: [],
+      totalDiscount,
     };
 
     let purchaseItem: PurchaseItem;
@@ -91,7 +96,7 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
       if ($(element).attr("class") === "toggle box") {
         purchaseItem = {
           product: {
-            productId:"",
+            productId: "",
             name: "",
             eanCode: "",
             ncmCode: "",
@@ -105,6 +110,7 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
           unityValue: 0,
           units: 0,
           totalValue: 0,
+          discount: 0,
         };
 
         purchaseItem.product.name = $(element)
@@ -140,7 +146,13 @@ export class ScrapNFServiceRJ implements ScrapNFProvider {
           )
           .text()
           .replace(",", ".");
-        purchaseItem.unityValue = purchaseItem.totalValue/purchaseItem.units;
+        purchaseItem.discount = +$(element)
+          .find(
+            "tbody > tr > td > table:nth-child(1) > tbody > tr:nth-child(4) > td:nth-child(1) > span"
+          )
+          .text()
+          .replace(",", ".");
+        purchaseItem.unityValue = purchaseItem.totalValue / purchaseItem.units;
         purchaseItem.product.productId = getDocId(purchaseItem.product);
         purchase.purchaseItemList.push(purchaseItem);
       }

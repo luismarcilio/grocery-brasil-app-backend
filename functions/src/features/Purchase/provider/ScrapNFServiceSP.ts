@@ -72,6 +72,7 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
       fiscalNote,
       totalAmount,
       purchaseItemList: [],
+      totalDiscount: 0
     };
 
     produtos$("#conteudo_grvProdutosServicos > tbody > tr").each(
@@ -128,6 +129,7 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
             .find("tr > td:nth-child(12)")
             .text()
             .replace(",", "."),
+          discount: 0
         };
         purchaseItem.product.productId = getDocId(purchaseItem.product);
         purchase.purchaseItemList.push(purchaseItem);
