@@ -108,14 +108,14 @@ describe("ProductService implementation", () => {
         company: purchase.fiscalNote.company,
         date: purchase.fiscalNote.date,
         unityValue: purchase.purchaseItemList[0].unityValue,
-        discount: purchase.purchaseItemList[0].discount
+        discount: purchase.purchaseItemList[0].discount/purchase.purchaseItemList[0].units
       },
       {
         accessKey: purchase.fiscalNote.accessKey,
         company: purchase.fiscalNote.company,
         date: purchase.fiscalNote.date,
         unityValue: purchase.purchaseItemList[1].unityValue,
-        discount: purchase.purchaseItemList[1].discount
+        discount: purchase.purchaseItemList[1].discount/purchase.purchaseItemList[1].units
       },
     ];
     await sut.saveItemsFromPurchase(purchase);

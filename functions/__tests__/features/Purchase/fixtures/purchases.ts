@@ -48,8 +48,8 @@ export const purchase: Purchase = {
       },
       unity: { name: "UN" },
       unityValue: 11.5,
-      units: 1,
-      totalValue: 11.5,
+      units: 2,
+      totalValue: 23.0,
       discount: 1
     },
     {
@@ -62,8 +62,8 @@ export const purchase: Purchase = {
       },
       unity: { name: "UN" },
       unityValue: 12.5,
-      units: 1,
-      totalValue: 12.5,
+      units: 3,
+      totalValue: 37.5,
       discount: 2
     },
   ],
