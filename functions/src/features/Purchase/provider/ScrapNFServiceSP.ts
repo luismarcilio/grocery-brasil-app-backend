@@ -11,6 +11,7 @@ interface SpHtmlData {
   cfe: string;
   emitente: string;
   produtos: string;
+  totais: string;
 }
 
 export class ScrapNFServiceSP implements ScrapNFProvider {
@@ -31,6 +32,7 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
     const cfe$ = cheerio.load(spHtmlData.cfe);
     const emitente$ = cheerio.load(spHtmlData.emitente);
     const produtos$ = cheerio.load(spHtmlData.produtos);
+    const totais$ = cheerio.load(spHtmlData.totais);
     const stringDate = cfe$("#conteudo_lblDataEmissao").text();
 
     const fiscalNote: FiscalNote = {
@@ -68,11 +70,16 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
       .text()
       .replace(",", ".");
 
+    const totalDiscount: number = +totais$(
+      "#conteudo_lblTotaisValorTotalDescontoItem"
+    )
+      .text()
+      .replace(",", ".");
     const purchase: Purchase = {
       fiscalNote,
       totalAmount,
       purchaseItemList: [],
-      totalDiscount: 0
+      totalDiscount,
     };
 
     produtos$("#conteudo_grvProdutosServicos > tbody > tr").each(
@@ -129,7 +136,11 @@ export class ScrapNFServiceSP implements ScrapNFProvider {
             .find("tr > td:nth-child(12)")
             .text()
             .replace(",", "."),
-          discount: 0
+          discount: +cheerio(element)
+            .find("tr > td:nth-child(15)")
+            .text()
+            .replace("Não Informado", "0")
+            .replace(",", "."),
         };
         purchaseItem.product.productId = getDocId(purchaseItem.product);
         purchase.purchaseItemList.push(purchaseItem);
