@@ -71,11 +71,17 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
       .replace("R$ ", "")
       .replace(",", ".");
 
+    const totalDiscount: number = +$(
+      "#formPrincipal\\:j_idt102\\:j_idt2445 > div > table:nth-child(9) > tbody > tr > td:nth-child(3)"
+    )
+      .text()
+      .replace("R$ ", "")
+      .replace(",", ".");
     const purchase: Purchase = {
       fiscalNote,
       totalAmount,
       purchaseItemList: [],
-      totalDiscount: 0      
+      totalDiscount,
     };
     $("#accordion1 > div").each((_, element: cheerio.Element) => {
       const eanCode = +$(element)
@@ -90,7 +96,7 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
         .text();
       const purchaseItem: PurchaseItem = {
         product: {
-          productId: '',
+          productId: "",
           name: $(element)
             .find("div.panel-heading.panel-collapse > h4 > div > div.col-md-4")
             .text()
@@ -129,7 +135,13 @@ export class ScrapNFServiceMG implements ScrapNFProvider {
           .text()
           .replace("R$ ", "")
           .replace(",", "."),
-        discount: 0
+        discount: +$(element)
+          .find(
+            "div.panel-body.collapse  > table:nth-child(7) > tbody > tr > td:nth-child(1)"
+          )
+          .text()
+          .replace("R$ ", "")
+          .replace(",", "."),
       };
       purchaseItem.product.productId = getDocId(purchaseItem.product);
       purchase.purchaseItemList.push(purchaseItem);
